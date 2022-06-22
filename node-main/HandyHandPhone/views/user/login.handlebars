@@ -1,155 +1,87 @@
-<!-- Pills navs -->
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link active"
-      id="tab-login"
-      data-mdb-toggle="pill"
-      href="#pills-login"
-      role="tab"
-      aria-controls="pills-login"
-      aria-selected="true"
-      >Login</a
-    >
-  </li>
-  <li class="nav-item" role="presentation">
-    <a
-      class="nav-link"
-      id="tab-register"
-      data-mdb-toggle="pill"
-      href="#pills-register"
-      role="tab"
-      aria-controls="pills-register"
-      aria-selected="false"
-      >Register</a
-    >
-  </li>
-</ul>
-<!-- Pills navs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .intro {
+  height: 100%;
+}
 
-<!-- Pills content -->
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
+@media (min-height: 300px) and (max-height: 450px) {
+  .intro {
+    height: auto;
+  }
+}
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
+.fas.fa-laptop {
+  font-size: 19rem;
+}
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
+@media (max-width: 991px) {
+  .fas.fa-laptop {
+    font-size: 12rem;
+  }
+};
+  </style>
+</head>
+<body>
+  <form action="" method = "post">
+  <section class="intro">
+  <div class="mask d-flex align-items-center h-100 gradient-custom">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+          <div class="card">
+            <div class="card-body p-5">
 
-      <p class="text-center">or:</p>
+              <div class="row d-flex align-items-center">
+                <div class="col-md-6 col-xl-7">
 
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
-        <label class="form-label" for="loginName">Email or username</label>
-      </div>
+                  <div class="text-center pt-md-5 pb-5 my-md-5" style="padding-right: 24px;">
+                    <i class="fas fa-laptop" style="color: #D6D6D6;"></i>
+                  </div>
 
-      <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
-        <label class="form-label" for="loginPassword">Password</label>
-      </div>
+                </div>
+                <div class="col-md-6 col-xl-4 text-center">
 
-      <!-- 2 column grid layout -->
-      <div class="row mb-4">
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Checkbox -->
-          <div class="form-check mb-3 mb-md-0">
-            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-            <label class="form-check-label" for="loginCheck"> Remember me </label>
+                  <h2 class="fw-bold mb-4 pb-2">User Login</h2>
+
+                  <div class="form-outline mb-3">
+                    <input type="name" id="typeName" class="form-control form-control-lg" required>
+                    <label class="form-label" for="typeName">Username</label>
+                  </div>
+
+                  <div class="form-outline mb-3">
+                    <input type="email" id="typeEmail" class="form-control form-control-lg" required>
+                    <label class="form-label" for="typeEmail">Email</label>
+                  </div>
+
+                   <div class="form-outline mb-4">
+                    <input type="password" id="typePassword" class="form-control form-control-lg" required>
+                    <label class="form-label" for="typePassword">Password</label>
+                  </div>
+
+                  <div class="text-center">
+                    <button class="btn btn-info btn-block btn-lg" type="submit">Login</button>
+                    <p class="small mt-3 mb-4 text-muted">Forgot <span class="fw-bold"><a href="#!" class="text-muted">Username</a> / <a href="#!" class="text-muted">Password</a>?</span></p>
+                    <a href="/user/register" class="link-info">Create your Account <i class="fas fa-long-arrow-alt-right"></i></a>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Simple link -->
-          <a href="#!">Forgot password?</a>
-        </div>
       </div>
-
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-
-
-
-
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-      </div>
-    </form>
+    </div>
   </div>
-  <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign up with:</p>
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
+</section>
 
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Name input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerName" class="form-control" />
-        <label class="form-label" for="registerName">Name</label>
-      </div>
-
-      <!-- Username input -->
-      <div class="form-outline mb-4">
-        <input type="text" id="registerUsername" class="form-control" />
-        <label class="form-label" for="registerUsername">Username</label>
-      </div>
-
-      <!-- Email input -->
-      <div class="form-outline mb-4">
-        <input type="email" id="registerEmail" class="form-control" />
-        <label class="form-label" for="registerEmail">Email</label>
-      </div>
-
-      <!-- Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="registerPassword" class="form-control" />
-        <label class="form-label" for="registerPassword">Password</label>
-      </div>
-
-      <!-- Repeat Password input -->
-      <div class="form-outline mb-4">
-        <input type="password" id="registerRepeatPassword" class="form-control" />
-        <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-      </div>
-
-
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
-    </form>
-  </div>
-</div>
-<!-- Pills content -->
+</form>
+</body>
+</html>

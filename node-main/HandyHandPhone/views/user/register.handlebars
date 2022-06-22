@@ -1,115 +1,109 @@
-<section class="intro">
-  <div class="mask d-flex align-items-center h-100 gradient-custom">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card">
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2">Registration Form</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+body,
+.intro {
+  height: 100%;
+  width:100%;
+}
 
-              <form action="">
+@media (min-width: 550px) and (max-width: 750px) {
+  html,
+  body,
+  .intro {
+    height: 750px;
+  }
+}
 
-                <div class="row">
-                  <div class="col-md-6 mb-4">
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  .intro {
+    height: 750px;
+  }
+}
 
-                    <div class="form-outline">
-                      <input type="text" id="firstName" class="form-control" />
-                      <label class="form-label" for="firstName">First Name</label>
+.mask-custom {
+  backdrop-filter: blur(15px);
+  background-color: rgba(255,255,255,.2);
+  border-radius: 3em;
+  border: 2px solid hsl(160, 100%, 50%);
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+  </style>
+</head>
+<body>
+  <section class="intro">
+  <div class="bg-image h-100">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+            <div class="card mask-custom">
+              <div class="card-body p-5 text-black">
+
+                <div class="my-4">
+
+                  <h2 class="text-center mb-5">Register Form</h2>
+
+                  <form method = "post">
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-outline form-white">
+                          <input type="text" id="form3Example2" class="form-control form-control-lg" name = "name" value="{{name}}"/>
+                          <label class="form-label" for="form3Example2">Username</label>
+                        </div>
+                      </div>
                     </div>
 
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                      <input type="text" id="lastName" class="form-control" />
-                      <label class="form-label" for="lastName">Last Name</label>
+                    <!-- Email input -->
+                    <div class="form-outline form-white mb-4">
+                      <input type="email" id="form3Example3" class="form-control form-control-lg" name = "email" value="{{email}}">
+                      <label class="form-label" for="form3Example3">Email address</label>
                     </div>
 
-                  </div>
+                    <!-- Password input -->
+                    <div class="form-outline form-white mb-4">
+                      <input type="password" id="form3Example4" class="form-control form-control-lg" name = "password"/>
+                      <label class="form-label" for="form3Example4">Password</label>
+                    </div>
+
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-light btn-block mb-4">Sign up</button>
+
+                    <!-- Register buttons -->
+                    <div class="text-center">
+                      <p>or sign up with:</p>
+                      <button type="button" class="btn btn-light btn-floating mx-1">
+                        <i class="fab fa-facebook-f"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-light btn-floating mx-1">
+                        <i class="fab fa-google"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-light btn-floating mx-1">
+                        <i class="fab fa-twitter"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-light btn-floating mx-1">
+                        <i class="fab fa-github"></i>
+                      </button>
+                    </div>
+                  </form>
+
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline datepicker">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="birthdayDate"
-                      />
-                      <label for="birthdayDate" class="form-label">Birthday</label>
-                    </div>
-
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <h6 class="mb-2 pb-1">Gender: </h6>
-
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="femaleGender"
-                        value="option1"
-                      />
-                      <label class="form-check-label" for="femaleGender">Female</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="maleGender"
-                        value="option2"
-                      />
-                      <label class="form-check-label" for="maleGender">Male</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="otherGender"
-                        value="option3"
-                      />
-                      <label class="form-check-label" for="otherGender">Other</label>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                      <input type="email" id="emailAddress" class="form-control" />
-                      <label class="form-label" for="emailAddress">Email</label>
-                    </div>
-
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                      <input type="tel" id="phoneNumber" class="form-control" />
-                      <label class="form-label" for="phoneNumber">Phone Number</label>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <div class="mt-4">
-                      <input class="btn btn-warning btn-lg" type="submit" value="Submit" />
-                    </div>
-
-                  </div>
-                </div>
-
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -117,3 +111,5 @@
     </div>
   </div>
 </section>
+</body>
+</html>

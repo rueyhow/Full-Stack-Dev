@@ -35,15 +35,11 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async function (req, res) {
-    let { name, email, password, password2 } = req.body;
+    let { name, email, password} = req.body;
 
     let isValid = true;
     if (password.length < 6) {
         flashMessage(res, 'error', 'Password must be at least 6 char-acters');
-        isValid = false;
-    }
-    if (password != password2) {
-        flashMessage(res, 'error', 'Passwords do not match');
         isValid = false;
     }
     if (!isValid) {
@@ -58,7 +54,7 @@ router.post('/register', async function (req, res) {
         let user = await User.findOne({ where: { email: email } });
         if (user) {
             // If user is found, that means email has already been registered
-            flashMessage(res, 'error', email + ' alreay registered');
+            flashMessage(res, 'error', email + ' already registered');
             res.render('user/register', {
                 name, email
             });
@@ -131,7 +127,7 @@ router.get('/verify/:userId/:token', async function (req, res) {
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         // Success redirect URL
-        successRedirect: '/video/listVideos',
+        successRedirect: '/',
         // Failure redirect URL 
         failureRedirect: '/user/login',
         /* Setting the failureFlash option to true instructs Passport to flash 

@@ -8,6 +8,6 @@ const User = db.define('user',
         email: { type: Sequelize.STRING },
         verified: { type: Sequelize.BOOLEAN },
         password: { type: Sequelize.STRING }
-    });
+    }); 
 
 module.exports = User;
