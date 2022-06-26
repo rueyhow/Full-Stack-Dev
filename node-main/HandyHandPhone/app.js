@@ -101,11 +101,13 @@ app.use(function (req, res, next) {
 // mainRoute is declared to point to routes/main.js
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
+const ProductRoute = require('./routes/product');
 
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/', mainRoute);
 app.use('/user', userRoute);
+app.use('/product' , ProductRoute);
 
 
 /*
