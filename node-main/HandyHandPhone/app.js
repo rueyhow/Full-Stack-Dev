@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 require('dotenv').config();
+const fileUpload = require("express-fileupload")
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -34,6 +35,8 @@ app.engine('handlebars', engine({
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
 app.set('view engine', 'handlebars');
+
+app.use(fileUpload());
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -102,12 +105,14 @@ app.use(function (req, res, next) {
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const ProductRoute = require('./routes/product');
+const adminRoute = require("./routes/admin")
 
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/product' , ProductRoute);
+app.use('/admin' , adminRoute)
 
 
 /*

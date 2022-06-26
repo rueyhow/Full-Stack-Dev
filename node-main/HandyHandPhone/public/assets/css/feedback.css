@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+  }
+
+  .demo {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .penName {
+    text-align: center;
+    font-size: 36px;
+  }
+  
+  .mainCard {
+    text-align: center;
+    display: block;
+    margin: 60px auto;
+    background-color: white;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    -webkit-animation-name: mainCard;
+            animation-name: mainCard;
+    -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+  }
+  
+  @-webkit-keyframes mainCard {
+    0% {
+      transform: scale(0);
+    }
+  }
+  
+  @keyframes mainCard {
+    0% {
+      transform: scale(0);
+    }
+  }
+  .mainCardHeader {
+    background-color: AQUAMARINE;
+    height: 100px;
+    width: 100%;
+    -webkit-animation-name: mainCardHeader;
+            animation-name: mainCardHeader;
+    -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+    -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+  }
+  
+  @-webkit-keyframes mainCardHeader {
+    0% {
+      transform: scaleY(0);
+    }
+  }
+  
+  @keyframes mainCardHeader {
+    0% {
+      transform: scaleY(0);
+    }
+  }
+  .mainCardContent {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: -50px;
+    height: 100%;
+    width: 90%;
+  }
+  
+  .miniCard {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 20px 20px 0;
+    background-color: white;
+    height: 300px;
+    width: 250px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -webkit-animation-name: miniCard;
+            animation-name: miniCard;
+    -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+  }
+  
+  @-webkit-keyframes miniCard {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes miniCard {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

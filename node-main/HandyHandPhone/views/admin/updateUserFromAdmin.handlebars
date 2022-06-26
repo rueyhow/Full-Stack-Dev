@@ -1,0 +1,58 @@
+<form method="POST" action="" enctype="multipart/form-data">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    {{#ifeq user.profilePicture "none"}}
+                    <img class="rounded-circle mt-5" width="150px" height="150px" src="/assets/img/profile.jpg">
+                    {{else}}
+                    <img src="data:image/png;base64, {{user.profilePicture}}" height="150px" width="150px">
+                    {{/ifeq}}
+
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Name</label>
+                            <input type="text" class="form-control" value="{{user.name}}" placeholder="first name"
+                                name="name">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Mobile Number</label>
+                            <input type="text" class="form-control" placeholder="enter phone number"
+                                value="{{user.mobile}}" name="mobile">
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Email ID</label>
+                            <input type="text" class="form-control" placeholder="enter email id" value="{{user.email}}"
+                                name="email">
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-4">
+                        <div class="col-md-12"><label class="labels">Enter your profile description (optional)</label>
+                            <input type="textarea" class="form-control" placeholder="Description" name="description">
+                        </div>
+                    </div>
+
+
+                    <div class="mt-5 text">
+                        <button class="btn btn-primary profile-button" type="submit">Save
+                            Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
