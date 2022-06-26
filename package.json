@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "filereader": "^0.10.3"
+  }
+}

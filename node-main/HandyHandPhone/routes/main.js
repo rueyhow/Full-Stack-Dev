@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 
-router.get('/', (req, res) => {
-	// renders views/index.handlebars, passing title as an object
+
+router.get('/', async function(req, res){
 	res.render('home');
 });
+
 
 router.get('/about', (req, res) => {
 	const author = 'Your Name';

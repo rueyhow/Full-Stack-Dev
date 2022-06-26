@@ -9,6 +9,7 @@ const flashMessage = (res, messageType, message, icon, dismissable) => {
         case 'error':
             alert = res.flashMessenger.danger(message);
             alert.titleIcon = 'fas fa-exclamation-circle';
+            alert.canBeDismissed = true;
             break;
         case 'info':
             alert = res.flashMessenger.info(message);
