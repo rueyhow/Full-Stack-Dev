@@ -16,32 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `sessions`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `verified` tinyint(1) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int unsigned NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `sessions`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (5,'Ra How','rahow32@gmail.com',0,'$2a$10$WYPShShoFFG7t1apFXrGB.uIlJcIehx7XuMkwn64C8Qg0ipNk8VCm','2022-06-26 01:30:22','2022-06-26 01:30:22'),(6,'rueyhow','sabertoothruey@gmail.com',0,'$2a$10$Fpkz6L/CS.h978S7BUNjk.68S4OQtoIYoc1nO3VV0AiwuygUAZEMi','2022-06-26 01:48:17','2022-06-26 01:48:17'),(7,'Handy','mui_theng@yahoo.com.sg',0,'$2a$10$OipSuhovZdY/BBggapluEOBFcfUlHUAE04ImTpMM1cTVpX1taixzK','2022-06-26 15:35:26','2022-06-26 15:35:26'),(8,'rahow323','123456@gmail.com',0,'$2a$10$sPPHNu63UPlDjxsaW44eD.c8vJpvgklyoWjhHnZwuABtWqplvPCqi','2022-06-26 15:41:20','2022-06-26 15:41:20');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES ('E0IbmuvBbn5z7qqjHCvOuqEi4Y7bz-EI',1656284352,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{},\"passport\":{\"user\":12}}');
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26 16:26:12
+-- Dump completed on 2022-06-27  6:07:02

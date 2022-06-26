@@ -16,28 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sessions`
+-- Table structure for table `videos`
 --
 
-DROP TABLE IF EXISTS `sessions`;
+DROP TABLE IF EXISTS `videos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sessions` (
-  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `expires` int unsigned NOT NULL,
-  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  PRIMARY KEY (`session_id`)
+CREATE TABLE `videos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `story` varchar(2000) DEFAULT NULL,
+  `starring` varchar(255) DEFAULT NULL,
+  `posterURL` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `subtitles` varchar(255) DEFAULT NULL,
+  `classification` varchar(255) DEFAULT NULL,
+  `dateRelease` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `userId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sessions`
+-- Dumping data for table `videos`
 --
 
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('JSWPuYUPLOZhs_it2SVzcfyzh7MSmSh6',1656233007,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}'),('Vjfu7j08r3CoRjnvXEuTZR4qcbTshhqh',1656184779,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{}}');
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26 16:26:13
+-- Dump completed on 2022-06-27  6:07:02
