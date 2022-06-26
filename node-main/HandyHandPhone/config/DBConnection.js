@@ -1,6 +1,7 @@
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Video = require('../models/Video');
+const Product = require('../models/Product');
 
 // If drop is true, all existing tables are dropped and recreated 
 const setUpDB = (drop) => {
