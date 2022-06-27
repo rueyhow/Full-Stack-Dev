@@ -13,6 +13,8 @@ router.get('/about', (req, res) => {
 	res.render('about', { author });
 });
 
+
+
 router.post('/flash', (req, res) => {
 	const message = 'This is an important message';
 	const error = 'This is an error message';
