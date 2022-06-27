@@ -12,7 +12,8 @@ const User = db.define('user',
         member : {type:Sequelize.BOOLEAN},
         admin : {type:Sequelize.BOOLEAN},
         description : {type:Sequelize.STRING , allowNull : true},
-        profilePicture : {type:Sequelize.STRING , allowNull : true}
+        profilePicture : {type:Sequelize.STRING , allowNull : true},
+        websitePoints : {type:Sequelize.INTEGER}
     }); 
 
 module.exports = User;

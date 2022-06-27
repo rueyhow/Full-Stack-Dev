@@ -105,7 +105,9 @@ app.use(function (req, res, next) {
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const ProductRoute = require('./routes/product');
-const adminRoute = require("./routes/admin")
+const adminRoute = require("./routes/admin");
+const voucherRoute = require("./routes/voucher");
+
 
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
@@ -113,6 +115,7 @@ app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/product' , ProductRoute);
 app.use('/admin' , adminRoute)
+app.use('/voucher' , voucherRoute)
 
 
 /*
