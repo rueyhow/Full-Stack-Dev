@@ -12,6 +12,9 @@ function localStrategy(passport) {
                     if (!user) {
                         return done(null, false, { message: 'No User Found' });
                     }
+                    if (!user.verified) {
+                        return done(null, false, { message: 'Email not verified' });
+                    }
                     // Match password
                     isMatch = bcrypt.compareSync(password, user.password);
                     if (!isMatch) {

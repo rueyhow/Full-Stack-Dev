@@ -12,25 +12,33 @@ const jwt = require('jsonwebtoken');
 const { NONE, DatabaseError } = require('sequelize');
 const fs = require("fs");
 const ensureAuthenticated = require('../helpers/auth');
+require('../helpers/auth2');
 
-// const sgMail = require('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail');
 
-// function sendEmail(toEmail, url) {
-//     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//     const message = {
-//         to: toEmail,
-//         from: `Video Jotter <${process.env.SENDGRID_SENDER_EMAIL}>`,
-//         subject: 'Verify Video Jotter Account',
-//         html: `Thank you registering with Video Jotter.<br><br> Please <a href=\"${url}"><strong>verify</strong></a> your account.`
-//     };
+function sendEmail(toEmail, url1) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const message = {
+        to: toEmail,
+        templateId: "d-b16b1c206dd14343ae5f5429430c92e3",
+        from: `Handy Hand Phone <${process.env.SENDGRID_SENDER_EMAIL}>`,
+        personalizations: [
+            {
+              to: toEmail,
+              dynamic_template_data: {
+                url: url1
+              },
+            },
+          ],
+    };
 
-//     // Returns the promise from SendGrid to the calling function
-//     return new Promise((resolve, reject) => {
-//         sgMail.send(message)
-//             .then(response => resolve(response))
-//             .catch(err => reject(err));
-//     });
-// }
+    // Returns the promise from SendGrid to the calling function
+    return new Promise((resolve, reject) => {
+        sgMail.send(message)
+            .then(response => resolve(response))
+            .catch(err => reject(err));
+    });
+}
 
 router.get('/login', (req, res) => {
     res.render('user/login');
@@ -72,22 +80,20 @@ router.post('/register', async function (req, res) {
             // Use hashed password
             let user = await User.create({ name, email, password: hash, verified: 0 , mobile : 0 , member : false , admin : false, description : null , profilePicture : "none" , websitePoints : 0});
 
-            flashMessage(res,"success" , email + "has been registered successfully")
-            res.redirect('login')
-            // // Send email
-            // let token = jwt.sign(email, process.env.APP_SECRET);
-            // let url = `${process.env.BASE_URL}:${process.env.PORT}/user/verify/${user.id}/${token}`;
-            // sendEmail(user.email, url)
-            //     .then(response => {
-            //         console.log(response);
-            //         flashMessage(res, 'success', user.email + ' registered successfully');
-            //         res.redirect('/user/login');
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //         flashMessage(res, 'error', 'Error when sending email to ' + user.email);
-            //         res.redirect('/');
-            //     });
+            // Send email
+            let token = jwt.sign(email, process.env.APP_SECRET);
+            let url = `${process.env.BASE_URL}:${process.env.PORT}/user/verify/${user.id}/${token}`;
+            sendEmail(user.email, url)
+                .then(response => {
+                    console.log(response);
+                    flashMessage(res, 'success', "Please verify " + user.email + " before accessing your handy hand phone account");
+                    res.redirect('/user/login');
+                })
+                .catch(err => {
+                    console.log(err);
+                    flashMessage(res, 'error', 'Error when sending email to ' + user.email);
+                    res.redirect('/');
+                });
         }
     }
     catch (err) {
@@ -95,43 +101,44 @@ router.post('/register', async function (req, res) {
     }
 });
 
-// router.get('/verify/:userId/:token', async function (req, res) {
-//     let id = req.params.userId;
-//     let token = req.params.token;
+// verify user with jwt token
+router.get('/verify/:userId/:token', async function (req, res) {
+    let id = req.params.userId;
+    let token = req.params.token;
 
-//     try {
-//         // Check if user is found
-//         let user = await User.findByPk(id);
-//         if (!user) {
-//             flashMessage(res, 'error', 'User not found');
-//             res.redirect('/user/login');
-//             return;
-//         }
-//         // Check if user has been verified
-//         if (user.verified) {
-//             flashMessage(res, 'info', 'User already verified');
-//             res.redirect('/user/login');
-//             return;
-//         }
-//         // Verify JWT token sent via URL 
-//         let authData = jwt.verify(token, process.env.APP_SECRET);
-//         if (authData != user.email) {
-//             flashMessage(res, 'error', 'Unauthorised Access');
-//             res.redirect('/user/login');
-//             return;
-//         }
+    try {
+        // Check if user is found
+        let user = await User.findByPk(id);
+        if (!user) {
+            flashMessage(res, 'error', 'User not found');
+            res.redirect('/user/login');
+            return;
+        }
+        // Check if user has been verified
+        if (user.verified) {
+            flashMessage(res, 'info', 'User already verified');
+            res.redirect('/user/login');
+            return;
+        }
+        // Verify JWT token sent via URL 
+        let authData = jwt.verify(token, process.env.APP_SECRET);
+        if (authData != user.email) {
+            flashMessage(res, 'error', 'Unauthorised Access');
+            res.redirect('/user/login');
+            return;
+        }
 
-//         let result = await User.update(
-//             { verified: 1 },
-//             { where: { id: user.id } });
-//         console.log(result[0] + ' user updated');
-//         flashMessage(res, 'success', user.email + ' verified. Please login');
-//         res.redirect('/user/login');
-//     }
-//     catch (err) {
-//         console.log(err);
-//     }
-// });
+        let result = await User.update(
+            { verified: 1 },
+            { where: { id: user.id } });
+        console.log(result[0] + ' user updated');
+        flashMessage(res, 'success', user.email + ' verified. Please login');
+        res.redirect('/user/login');
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
@@ -152,6 +159,7 @@ router.get('/logout', (req, res) => {
 });
 
 
+// profile page routes
 router.get('/profilePage/:id' ,ensureAuthenticated, (req,res) => {
     res.render('user/profilePage');
 });
@@ -195,6 +203,18 @@ router.post('/profilePage/:id' ,ensureAuthenticated, (req,res) =>{
     res.redirect('/');
 });
 
+// google authentication
 
 
+router.get('/auth/google', passport.authenticate('google' , {scope : ['email' , 'profile']}));
+
+router.get('/google/callback' , passport.authenticate('google' , {successRedirect : '/', failureRedirect : '/user/auth/failure' , failureMessage : true}) , (req,res) =>{
+
+});
+
+
+router.get('/auth/failure' , (req,res)=>{
+    flashMessage(res, "error" , "Email has not been verified or you have not created your account");
+    res.redirect("/");
+})
 module.exports = router;

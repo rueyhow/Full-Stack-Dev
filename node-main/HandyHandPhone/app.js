@@ -90,6 +90,7 @@ const passportConfig = require('./config/passportConfig');
 passportConfig.localStrategy(passport);
 
 // Initilize Passport middleware 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
