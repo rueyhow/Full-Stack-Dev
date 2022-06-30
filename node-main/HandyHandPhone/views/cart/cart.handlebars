@@ -20,16 +20,34 @@
         <!-- Start DEMO HTML (Use the following code into your project)-->
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
-                    <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Products</h4>
-                    {{user.id}}
-                    {{#each cartItem}}
-                    <div class="row">{{this.product.name}}</div>
-                    {{/each}}
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                     <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Cart</h4>
-                    <div class="cart"></div>
+                    <div class="cart">
+                    {{#each cartItems}}
+                        <div class="row">
+                            <div class="col">
+                                <div class="card p-2">
+                                    <div>Name: {{this.product.name}}</div>
+                                    <div>Price: {{calculate this.product.price this.quantity}}</div>
+                                    <div>Quantity: {{this.quantity}}</div>
+                                    <div>
+                                        <a href="#" class="btn btn-primary quantity-btn" data-value="add" data-id="{{this.id}}">+</a>
+                                        <a href="#" class="btn btn-secondary quantity-btn" data-value="minus" data-id="{{this.id}}">-</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                    <script>
+                        const modifyQuantityBtn = document.querySelectorAll(".quantity-btn");
+                        modifyQuantityBtn.forEach((btn) => {
+                            btn.addEventListener("click", () => {
+                                fetch(`/cart/cart/${btn.dataset.id}/${btn.dataset.value}`, {method: 'POST'})
+                                location.reload();
+                            })
+                        })
+                    </script>
+                    </div>
                 </div>
             </div>
         </div>

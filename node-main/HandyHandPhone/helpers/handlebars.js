@@ -21,5 +21,10 @@ const ifeq = function (a, b, options) {
     return options.inverse(this);
 };
 
+const calculate = function (a, b) {
+    a = parseInt(a)
+    b = parseInt(b)
+    return a * b;
+}
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq};
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate};
