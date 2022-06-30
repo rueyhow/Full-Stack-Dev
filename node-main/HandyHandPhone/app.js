@@ -90,6 +90,7 @@ const passportConfig = require('./config/passportConfig');
 passportConfig.localStrategy(passport);
 
 // Initilize Passport middleware 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -104,17 +105,28 @@ app.use(function (req, res, next) {
 // mainRoute is declared to point to routes/main.js
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
+<<<<<<< HEAD
 const ProductRoute = require('./routes/product');
 const adminRoute = require("./routes/admin")
 const cartRoute = require("./routes/cart")
+=======
+const productRoute = require('./routes/product');
+const adminRoute = require("./routes/admin");
+const voucherRoute = require("./routes/voucher");
+
+>>>>>>> 577bbbebbba4acc7e28e270a30bac012f227e48d
 
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
 app.use('/', mainRoute);
 app.use('/user', userRoute);
-app.use('/product' , ProductRoute);
+app.use('/product' , productRoute);
 app.use('/admin' , adminRoute)
+<<<<<<< HEAD
 app.use('/cart' , cartRoute)
+=======
+app.use('/voucher' , voucherRoute)
+>>>>>>> 577bbbebbba4acc7e28e270a30bac012f227e48d
 
 
 // IRFAN'S MOCK DATA //

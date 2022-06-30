@@ -19,10 +19,11 @@
     "express-handlebars": "^6.0.2",
     "express-mysql-session": "^2.1.8",
     "express-session": "^1.15.6",
+    "fileupload": "^0.2.2",
     "flash-messenger": "^1.1.1",
     "fs": "^0.0.1-security",
     "handlebars": "^4.7.7",
-    "handlebars-helpers": "^0.10.0",
+    "handlebars-helpers": "^0.9.8",
     "hbs": "^4.2.0",
     "i": "^0.3.7",
     "jsonwebtoken": "^8.5.1",
@@ -30,9 +31,15 @@
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
     "node-fetch": "^2.6.7",
+<<<<<<< HEAD
     "nodemon": "^2.0.16",
     "os": "^0.1.2",
+=======
+    "nodemon": "^1.3.3",
+>>>>>>> 577bbbebbba4acc7e28e270a30bac012f227e48d
     "passport": "^0.5.2",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
     "sequelize": "^6.20.0"
   }
