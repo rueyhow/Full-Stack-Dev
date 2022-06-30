@@ -106,6 +106,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const ProductRoute = require('./routes/product');
 const adminRoute = require("./routes/admin")
+const cartRoute = require("./routes/cart")
 
 
 // Any URL with the pattern ‘/*’ is directed to routes/main.js
@@ -113,7 +114,43 @@ app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/product' , ProductRoute);
 app.use('/admin' , adminRoute)
+app.use('/cart' , cartRoute)
 
+
+// IRFAN'S MOCK DATA //
+const Product = require('./models/Product')
+Product.findAndCountAll()
+	.then(async (data) => {
+	if (data.count == 0) {
+		Product.create({
+			name: 'Iphone 500',
+			price: 300,
+			stock: 20,
+			description: 'A wonderfull Iphone!!'
+		})
+		Product.create({
+			name: 'Handphone Seventeen',
+			price: 400,
+			stock: 15,
+			description: 'An outstanding mobile device!!'
+		})
+	}
+})
+
+const User = require('./models/User')
+const CartItem = require('./models/cart')
+User.findByPk(12) // Ruey how
+	.then(async user => {
+		const product = await Product.findOne({ where: {name: 'Handphone Seventeen' }})
+		const count = await CartItem.findAndCountAll({where: { productId: product.id, userId: user.id }})
+		if (count.count == 0) {
+			await CartItem.create({
+				productId: product.id,
+				userId: user.id,
+				quantity: 1
+			})
+		}
+	})
 
 /*
 * Creates a port for express server since we don't want our app to clash with well known
