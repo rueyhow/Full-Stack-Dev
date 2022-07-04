@@ -7,6 +7,35 @@ const { urlencoded } = require('express');
 const Feedback = require('../models/Feedback');
 const Ticket = require("../models/Ticket").Ticket;
 const Response = require("../models/Ticket").Response;
+const bcrypt = require('bcryptjs');
+
+const jwt = require('jsonwebtoken');
+const sgMail = require('@sendgrid/mail');
+
+function sendEmail(toEmail, url1) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const message = {
+        to: toEmail,
+        templateId: "d-b16b1c206dd14343ae5f5429430c92e3",
+        from: `Handy Hand Phone <${process.env.SENDGRID_SENDER_EMAIL}>`,
+        personalizations: [
+            {
+              to: toEmail,
+              dynamic_template_data: {
+                url: url1
+              },
+            },
+          ],
+    };
+
+    // Returns the promise from SendGrid to the calling function
+    return new Promise((resolve, reject) => {
+        sgMail.send(message)
+            .then(response => resolve(response))
+            .catch(err => reject(err));
+    });
+}
+
 
 router.get('/AdminPage', function (req, res, next) {
     User.findAll()
@@ -22,7 +51,58 @@ router.get('/AdminPage', function (req, res, next) {
 });
 
 
+router.post('/AdminPage' , async (req,res)=>{
+    let { name, email, password} = req.body;
 
+    let isValid = true;
+    if (password.length < 6) {
+        flashMessage(res, 'error', 'Password must be at least 6 char-acters');
+        isValid = false;
+    }
+    if (!isValid) {
+        res.render('user/register', {
+            name, email
+        });
+        return;
+    }
+
+    try {
+        // If all is well, checks if user is already registered
+        let user = await User.findOne({ where: { email: email } });
+        if (user) {
+            // If user is found, that means email has already been registered
+            flashMessage(res, 'error', email + ' already registered');
+            res.render('user/register', {
+                name, email
+            });
+        }
+        else {
+            // Create new user record 
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(password, salt);
+            // Use hashed password
+            let user = await User.create({ name, email, password: hash, verified: 0 , mobile : 0 , member : false , admin : true, description : null , profilePicture : "none" , websitePoints : 0});
+
+            // Send email
+            let token = jwt.sign(email, process.env.APP_SECRET);
+            let url = `${process.env.BASE_URL}:${process.env.PORT}/user/verify/${user.id}/${token}`;
+            sendEmail(user.email, url)
+                .then(response => {
+                    console.log(response);
+                    flashMessage(res, 'success', "Please verify " + user.email + " before accessing your handy hand admin account");
+                    res.redirect('back');
+                })
+                .catch(err => {
+                    console.log(err);
+                    flashMessage(res, 'error', 'Error when sending email to ' + user.email);
+                    res.redirect('back');
+                });
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
 
 router.get('/updateAdmin/:id', (req, res) => {
     var id = req.params.id;
