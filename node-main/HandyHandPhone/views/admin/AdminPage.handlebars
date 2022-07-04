@@ -1,4 +1,15 @@
-<h1 class="text-center mt-3 mb-3"></h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/feedback.css">
+</head>
+<body>
+  {{!-- update user information section --}}
+  <h1 class="text-center mt-3 mb-3"></h1>
 <div class="card">
     {{!-- <div class="card-header">
         <div class="row">
@@ -81,3 +92,33 @@
 <h1>You are not authorised</h1>
 {{/ifeq}}
 </div>
+  {{!-- feedback portion --}}
+    {{#ifeq user.admin true}}
+<div class="demo">
+<h2 class="penName">HandyHandPhone Feedback</h2>
+<div class="mainCard">
+  <div class="mainCardHeader"></div>
+  <div class="mainCardContent">
+    {{#ifeq feedbackdata.length 0}}
+    <h1>no feedback</h1>
+    {{else}}
+    {{#each feedbackdata}}
+    <div class="miniCard">
+        <h4>{{this.subject}}</h4>
+        <p>{{this.name}}</p>
+        <p>{{this.email}}</p>
+        <p>{{this.message}}</p>
+        <p>Reply Status : {{this.status}}</p>
+        <a href="" class ="btn btn-primary">Reply</a>
+        <a href="/admin/deletefeedback/{{this.id}}" class ="btn btn-danger">Delete</a>
+    </div>
+    {{/each}}
+  </div>
+</div>
+  {{/ifeq}}
+</div>
+{{else}}
+<h1>Your are not authorised</h1>
+{{/ifeq}}
+</body>
+</html>
