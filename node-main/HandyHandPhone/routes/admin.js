@@ -37,17 +37,12 @@ function sendEmail(toEmail, url1) {
 }
 
 
-router.get('/AdminPage', function (req, res, next) {
-    User.findAll()
-        .then((sampleData) => {
-            Feedback.findAll()
-                .then((data) => {
-                    res.render('admin/AdminPage', { sampleData: sampleData , feedbackdata: data })
-                })
-                .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
+router.get('/AdminPage', async(req, res, next) =>{
 
+    const sampleData = await User.findAll();
+    const data = await Feedback.findAll();
+    const TicketData = await Ticket.findAll();
+    res.render('admin/AdminPage', { sampleData: sampleData , feedbackdata: data , TicketData : TicketData });
 });
 
 

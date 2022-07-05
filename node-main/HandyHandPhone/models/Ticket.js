@@ -10,8 +10,17 @@ Ticket.init(
         ticketId : {
             type: Sequelize.INTEGER , primaryKey : true , allowNull : false , autoIncrement : true
         },
-        problem: {
+        message: {
             type: Sequelize.STRING
+        },
+        type : {
+            type: Sequelize.STRING
+        },
+        category : {
+            type: Sequelize.STRING
+        },
+        status : {
+            type: Sequelize.BOOLEAN
         }
     },
     { 
