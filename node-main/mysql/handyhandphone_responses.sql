@@ -16,33 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `feedbacks`
+-- Table structure for table `responses`
 --
 
-DROP TABLE IF EXISTS `feedbacks`;
+DROP TABLE IF EXISTS `responses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `feedbacks` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
+CREATE TABLE `responses` (
+  `senderId` int NOT NULL AUTO_INCREMENT,
+  `reply` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ticketId` int DEFAULT NULL,
+  PRIMARY KEY (`senderId`),
+  KEY `ticketId` (`ticketId`),
+  CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`ticketId`) REFERENCES `tickets` (`ticketId`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedbacks`
+-- Dumping data for table `responses`
 --
 
-LOCK TABLES `feedbacks` WRITE;
-/*!40000 ALTER TABLE `feedbacks` DISABLE KEYS */;
-INSERT INTO `feedbacks` VALUES (8,'rueyhow','sabertoothruey@gmail.com','intro','hello world','2022-06-27 05:56:47','2022-06-27 05:56:47',0);
-/*!40000 ALTER TABLE `feedbacks` ENABLE KEYS */;
+LOCK TABLES `responses` WRITE;
+/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:31
+-- Dump completed on 2022-07-06  4:38:30

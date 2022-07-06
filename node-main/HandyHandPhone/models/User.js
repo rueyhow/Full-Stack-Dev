@@ -2,7 +2,9 @@ const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
 // Create users table in MySQL Database
-const User = db.define('user',
+class User extends Sequelize.Model {}
+
+User.init(
     {
         name: { type: Sequelize.STRING },
         email: { type: Sequelize.STRING },
@@ -12,9 +14,11 @@ const User = db.define('user',
         member : {type:Sequelize.BOOLEAN},
         admin : {type:Sequelize.BOOLEAN},
         description : {type:Sequelize.STRING , allowNull : true},
-        profilePicture : {type:Sequelize.STRING , allowNull : true},
-        websitePoints : {type:Sequelize.INTEGER},
-    });  
-
+        profilePicture : {type:Sequelize.STRING , allowNull : true}
+    },
+    {
+        sequelize: db,
+        modelName: "user"
+    }); 
 
 module.exports = User;

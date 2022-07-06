@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="CodeHim">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- Style CSS -->
+   <link rel="stylesheet" href="/assets/css/cartcss/style.css">
+    <!-- Demo CSS (No need to include it into your project) -->
+    <link rel="stylesheet" href="/assets/css/cartcss/demo.css">
+
+</head>
+
+<body>
+
+    <main>
+        <!-- Start DEMO HTML (Use the following code into your project)-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                    <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Cart</h4>
+                    <div class="cart">
+                    {{#each cartItems}}
+                        <div class="row">
+                            <div class="col">
+                                <div class="card p-2">
+                                    <div>Name: {{this.product.name}}</div>
+                                    <div>Price: {{calculate this.product.price this.quantity}}</div>
+                                    <div>Quantity: {{this.quantity}}</div>
+                                    <div>
+                                        <a href="#" class="btn btn-primary quantity-btn" data-value="add" data-id="{{this.id}}">+</a>
+                                        <a href="#" class="btn btn-secondary quantity-btn" data-value="minus" data-id="{{this.id}}">-</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                    <script>
+                        const modifyQuantityBtn = document.querySelectorAll(".quantity-btn");
+                        modifyQuantityBtn.forEach((btn) => {
+                            btn.addEventListener("click", () => {
+                                fetch(`/cart/cart/${btn.dataset.id}/${btn.dataset.value}`, {method: 'POST'})
+                                location.reload();
+                            })
+                        })
+                    </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EDMO HTML (Happy Coding!)-->
+    </main>
+
+    <script>
+    </script>
+</body>
+
+</html>
