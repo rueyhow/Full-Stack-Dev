@@ -5,7 +5,7 @@ const router = express.Router();
 const Ticket = require("../models/Ticket").Ticket;
 const Response = require("../models/Ticket").Response;
 const os = require("os");
-
+const User = require('../models/User');
 
 
 router.get('/ticketPage', ensureAuthenticated, (req, res) => {
@@ -25,12 +25,31 @@ router.post('/ticketPage/:id/:type', async (req, res) => {
 
 router.get('/replyTicket/:id' , ensureAuthenticated , async(req,res)=>{
     var id = req.params.id;
-    
-    const TicketData = await Ticket.findOne({where:{ticketId : id}});
+    const ResponseData = await Response.findAll({where:{ticketId : id}})
+    Ticket.findOne({where:{ticketId : id}})
+    .then(async(data)=>{
+        var user1 = await User.findByPk(data.userId)
+        var TicketData = await Ticket.findAll({where:{ticketId : id}});
+        res.render("ticket/replyTicket" , {TicketData : TicketData , ResponseData : ResponseData , user1 : user1 , TicketId : id});
+    });
 
-    const ResponseData = await Response.findOne({where:{ticketId : id}})
-
-    
-    res.render("ticket/replyTicket" , {TicketData : TicketData , ResponseData : ResponseData});
 })
+
+router.post('/replyTicket/:id' , (req,res)=>{
+    let {reply} = req.body;
+    var senderId = os.userInfo.uid;
+    Ticket.findOne({where:{ticketId : req.params.id}})
+    .then((data)=>{
+        let reponse = Response.create({senderId : senderId , reply : reply , ticketId : req.params.id})
+        if(reponse){
+            flashMessage(res,"success" , "response successfully sent and ticket has been updated")
+            res.redirect("back");
+        }
+        else{
+            flashMessage(res,"error" , "something gone wrong")
+            res.redirect("back"); 
+        }
+    });
+
+});
 module.exports = router;

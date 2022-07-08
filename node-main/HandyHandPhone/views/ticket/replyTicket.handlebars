@@ -1,12 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #243B55, #141E30);
+        }
+
+        .separator {
+            margin: 3rem 0;
+            border-bottom: 1px dashed #fff;
+        }
+
+        .text-uppercase {
+            letter-spacing: 0.1em;
+        }
+
+        .text-gray {
+            color: black;
+        }
+
+        .vertical-nav {
+            min-width: 13rem;
+            width: 13rem;
+            height: 50vh;
+            position: fixed;
+            top: 10;
+            left: 0;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+        }
+
+        .page-content {
+            width: calc(100% - 17rem);
+            margin-left: 17rem;
+            transition: all 0.4s;
+        }
+
+        /* for toggle behavior */
+    </style>
 </head>
+
 <body>
-    
+    <div class="body1">
+
+        <!-- Vertical navbar -->
+
+        <div class="vertical-nav bg-dark" id="sidebar">
+            <div class="py-4 px-3 mb-4 bg-dark">
+                <div class="media-body">
+                    <h4 class="font-weight-white text-white mb-0">Ticket Information</h4>
+                    <p class="font-weight-white text-white mb-0">Ticket Submitted by : {{user1.name}}</p>
+                </div>
+            </div>
+            {{#each TicketData}}
+            <div class="nav flex-column bg-dark mb-0">
+                <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Message :
+                    {{this.message}}</p>
+                <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Category :
+                    {{this.category}}</p>
+                <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Finish Status :
+                    {{this.status}}</p>
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- End vertical navbar -->
+
+        
+        <div class="page-content p-5" id="content">
+            <!-- Toggle button -->
+            <!-- Demo content -->
+            <h2 class="display-4 text-white">Ticket Response Section</h2>
+            <p class="lead text-white mb-0">This is where your ticket issues will be held and settled
+            </p>
+            {{#each ResponseData}}
+            <div class="text-white">
+                <div class = "text-center border border-light p-5">
+                    <p>Responses to this ticket</p>
+                    <p>{{this.senderId}}</p>
+                    <p>Reply : {{this.reply}}</p>
+                </div>
+            </div>
+            {{/each}}
+            <div class="separator"></div>
+            {{!-- response forms section --}}
+            <div class="text-white">
+                <form class="text-center border border-light p-5" method="POST" action = "">
+
+                    <p class="h4 mb-4">Send your response</p>
+                    <p>Ticket Id {{TicketId}}</p>
+                    <p>Your user ID {{user.id}}</p>
+                    <!-- Message -->
+                    <div class="form-group">
+                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"
+                            placeholder="Message" name="reply"></textarea>
+                    </div>
+                    <!-- Send button -->
+                    <button class="btn btn-info btn-block" type="submit">Send</button>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
 </body>
+
 </html>

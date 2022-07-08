@@ -34,8 +34,11 @@ class Response extends Sequelize.Model {}
 
 Response.init(
     {
-        senderId : {
+        ResponseId : {
             type: Sequelize.INTEGER , primaryKey : true , allowNull : false , autoIncrement : true
+        },
+        senderId : {
+            type: Sequelize.INTEGER
         },
         reply: {
             type: Sequelize.STRING
