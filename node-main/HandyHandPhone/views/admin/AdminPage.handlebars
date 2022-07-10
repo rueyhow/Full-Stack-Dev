@@ -199,7 +199,10 @@
             <th>Ticket Type</th>
             <th>Ticket Category</th>
             <th>Ticket Completion Status</th>
-            <th>Reply to ticket</th>
+            <th>View Ticket</th>
+            <th>Take Up Ticket</th>
+            <th>Assigned Status</th>
+
             <th>Delete Ticket</th>
           </tr>
           {{#each TicketData}}
@@ -210,8 +213,15 @@
             <td>{{this.category}}</td>
             <td>{{this.status}}</td>
             <td>
-              <a href="/ticket/replyTicket/{{this.ticketId}}" class="btn btn-primary btn-sm">Reply</a>
+              <a href="/ticket/replyTicket/{{this.ticketId}}" class="btn btn-primary btn-sm">View</a>
             </td>
+            {{#ifeq this.assigned false}}
+            <td><a href="/ticket/takeUpTicket/{{this.ticketId}}/{{user.id}}" class="btn btn-primary btn-sm">Take Up Ticket</a></td>
+            {{else}}
+            <td><h5>Ticket has already been taken up and assigned</h5></td>
+            {{/ifeq}}
+            <td>{{this.assigned}}</td>
+
             <td>
               {{#ifeq this.status true}}
               <a href="" class="btn btn-primary btn-sm">Delete</a>

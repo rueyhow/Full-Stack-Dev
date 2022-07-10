@@ -21,6 +21,10 @@ Ticket.init(
         },
         status : {
             type: Sequelize.BOOLEAN
+        },
+        assigned : 
+        {
+            type: Sequelize.BOOLEAN
         }
     },
     { 
@@ -52,4 +56,36 @@ Response.init(
 Response.belongsTo(Ticket , {foreignKey: "ticketId"})
 Ticket.hasMany(Response , {foreignKey : "ticketId"})
 
-module.exports = {Ticket , Response};
+
+class Permissions extends Sequelize.Model {}
+
+Permissions.init(
+    {
+        TicketID : 
+        {
+            type: Sequelize.INTEGER ,
+        },
+        AdminID : 
+        {
+            type: Sequelize.INTEGER , allowNull : false 
+        },
+        AdminName :
+        {
+            type: Sequelize.STRING , allowNull : false 
+        },
+        level : 
+        {
+            type : Sequelize.INTEGER, allowNull : false 
+        }
+
+    },
+    { 
+        sequelize: db, 
+        modelName: "Permissions"
+    }
+)
+
+Permissions.belongsTo(Ticket , {foreignKey: "ticketId"})
+Ticket.hasMany(Permissions , {foreignKey : "ticketId"})
+
+module.exports = {Ticket , Response , Permissions};

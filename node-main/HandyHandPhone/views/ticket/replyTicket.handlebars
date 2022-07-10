@@ -65,13 +65,15 @@
                     {{this.category}}</p>
                 <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Finish Status :
                     {{this.status}}</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Give Permission
+                </button>
             </div>
             {{/each}}
         </div>
 
         <!-- End vertical navbar -->
 
-        
         <div class="page-content p-5" id="content">
             <!-- Toggle button -->
             <!-- Demo content -->
@@ -80,7 +82,7 @@
             </p>
             {{#each ResponseData}}
             <div class="text-white">
-                <div class = "text-center border border-light p-5">
+                <div class="text-center border border-light p-5">
                     <p>Responses to this ticket</p>
                     <p>{{this.senderId}}</p>
                     <p>Reply : {{this.reply}}</p>
@@ -90,7 +92,7 @@
             <div class="separator"></div>
             {{!-- response forms section --}}
             <div class="text-white">
-                <form class="text-center border border-light p-5" method="POST" action = "">
+                <form class="text-center border border-light p-5" method="POST" action="">
 
                     <p class="h4 mb-4">Send your response</p>
                     <p>Ticket Id {{TicketId}}</p>
@@ -108,6 +110,50 @@
 
         </div>
 
+    </div>
+
+
+
+    {{!-- admin users popup --}}
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Admin Users (Give Permission)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{#getProperty AdminUsers}}
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <span>Name of admin : {{property}} Permission : {{value}}</span>
+                                    </div>
+                                    <div class="align-self-center">
+                                         <a href="/ticket/giveTicketPermission/{{property}}" class="btn btn-success">Give Permission</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    {{/getProperty}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

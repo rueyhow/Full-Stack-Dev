@@ -7,6 +7,7 @@ const { urlencoded } = require('express');
 const Feedback = require('../models/Feedback');
 const Ticket = require("../models/Ticket").Ticket;
 const Response = require("../models/Ticket").Response;
+const Permissions = require("../models/Ticket").Permissions;
 const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');

@@ -27,4 +27,12 @@ const calculate = function (a, b) {
     return a * b;
 }
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate};
+const getProperty = function(context , options){
+    var ret = "";
+    for(var prop in context)
+    {
+        ret = ret + options.fn({property:prop,value:context[prop]});
+    }
+    return ret;
+}
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty};
