@@ -25,6 +25,9 @@ Ticket.init(
         assigned : 
         {
             type: Sequelize.BOOLEAN
+        },
+        completedReason : {
+            type: Sequelize.STRING , allowNull : true
         }
     },
     { 

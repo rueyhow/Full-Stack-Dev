@@ -41,6 +41,11 @@
             transition: all 0.4s;
         }
 
+        #permi {
+            position: relative;
+            width: 180px;
+        }
+
         /* for toggle behavior */
     </style>
 </head>
@@ -57,19 +62,32 @@
                     <p class="font-weight-white text-white mb-0">Ticket Submitted by : {{user1.name}}</p>
                 </div>
             </div>
-            {{#each TicketData}}
+            {{#ifeq TicketData.status false}}
             <div class="nav flex-column bg-dark mb-0">
                 <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Message :
-                    {{this.message}}</p>
+                    {{TicketData.message}}</p>
                 <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Category :
-                    {{this.category}}</p>
+                    {{TicketData.category}}</p>
                 <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Finish Status :
-                    {{this.status}}</p>
+                    {{TicketData.status}}</p>
+            </div>
+
+            <div class="nav flex-column bg-dark mb-0">
+                {{#ifeq PermissionData null}}
+                <a class="btn btn-warning" href="/ticket/requestAccess">
+                    Request Access
+                </a>
+                {{else}}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Give Permission
                 </button>
+                {{/ifeq}}
             </div>
-            {{/each}}
+            {{else}}
+            <div class="nav flex-column bg-dark mb-0">
+                <h2 class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket has been closed</h2>
+            </div>
+            {{/ifeq}}
         </div>
 
         <!-- End vertical navbar -->
@@ -89,7 +107,9 @@
                 </div>
             </div>
             {{/each}}
+
             <div class="separator"></div>
+            {{#ifeq TicketData.status false}}
             {{!-- response forms section --}}
             <div class="text-white">
                 <form class="text-center border border-light p-5" method="POST" action="">
@@ -107,7 +127,13 @@
 
                 </form>
             </div>
-
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter1">
+                Complete Ticket
+            </button>
+            {{else}}
+            <h1 class = "text-white font-weight-bold text-uppercase large">Ticket Closed</h1>
+            {{/ifeq}}
+            
         </div>
 
     </div>
@@ -118,7 +144,7 @@
     <!-- Button trigger modal -->
 
 
-    <!-- Modal -->
+    <!-- Modal Give permission -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -138,9 +164,17 @@
                                     <div class="media-body text-left">
                                         <span>Name of admin : {{property}} Permission : {{value}}</span>
                                     </div>
+                                    {{#ifeq value "false"}}
                                     <div class="align-self-center">
-                                         <a href="/ticket/giveTicketPermission/{{property}}" class="btn btn-success">Give Permission</a>
+                                        <a href="/ticket/giveTicketPermission/{{property}}" class="btn btn-success"
+                                            id="permi">Give Permission</a>
                                     </div>
+                                    {{else}}
+                                    <div class="align-self-center">
+                                        <a href="/ticket/removeTicketPermission/{{property}}" class="btn btn-danger"
+                                            id="permi">Remove Permission</a>
+                                    </div>
+                                    {{/ifeq}}
                                 </div>
                             </div>
                         </div>
@@ -152,6 +186,44 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Complete Ticket -->
+
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle1">Complete Ticket (select reason)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/ticket/completeTicket" method="POST">
+                        <label>Reasons</label>
+                        <select class="browser-default custom-select mb-4" name="category">
+                            <option value="" disabled>Choose option</option>
+                            <option value="Problem has been solved" name="category" selected>Problem has been solved
+                            </option>
+                            <option value="No reply from sender after 2 weeks" name="category">No reply from sender
+                                after 2 weeks</option>
+                            <option value="Sender replying with irrelevant information" name="category">Sender replying
+                                with irrelevant information</option>
+                            <option value="Others" name="category">Others</option>
+                        </select>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit and Close Ticket</button>
+                </div>
+
+                </form>
             </div>
         </div>
     </div>
