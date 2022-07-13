@@ -16,33 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `feedbacks`
+-- Table structure for table `sessions`
 --
 
-DROP TABLE IF EXISTS `feedbacks`;
+DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `feedbacks` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int unsigned NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedbacks`
+-- Dumping data for table `sessions`
 --
 
-LOCK TABLES `feedbacks` WRITE;
-/*!40000 ALTER TABLE `feedbacks` DISABLE KEYS */;
-INSERT INTO `feedbacks` VALUES (8,'rueyhow','sabertoothruey@gmail.com','intro','hello world','2022-06-27 05:56:47','2022-06-27 05:56:47',0);
-/*!40000 ALTER TABLE `feedbacks` ENABLE KEYS */;
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES ('SbbTH1hlXqG3T6wfg2eKaLeSBAZRqWyn',1657663104,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{},\"passport\":{\"user\":41}}'),('zPyuanhQogocR57Y-mReqtdcfUoAmr1l',1657415160,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"flash\":{},\"passport\":{\"user\":36}}');
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:31
+-- Dump completed on 2022-07-14  6:52:39

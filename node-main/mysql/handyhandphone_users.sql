@@ -16,31 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `responses`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `responses`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `responses` (
-  `senderId` int NOT NULL AUTO_INCREMENT,
-  `reply` varchar(255) DEFAULT NULL,
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `verified` tinyint(1) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `ticketId` int DEFAULT NULL,
-  PRIMARY KEY (`senderId`),
-  KEY `ticketId` (`ticketId`),
-  CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`ticketId`) REFERENCES `tickets` (`ticketId`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `mobile` int DEFAULT NULL,
+  `member` tinyint DEFAULT '0',
+  `admin` tinyint DEFAULT '0',
+  `description` varchar(150) DEFAULT '"none"',
+  `profilePicture` longtext,
+  `websitePoints` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `responses`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `responses` WRITE;
-/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (36,'rahow32','rahow32@gmail.com',1,'$2a$10$eJuHaQ2NELWTZHiTZx8r0u9wrMo0d9VsX43Wo4v6iqlhk6TItTC1m','2022-06-30 05:13:06','2022-06-30 05:17:06',0,0,1,NULL,'none',0),(41,'rueyhow','sabertoothruey@gmail.com',1,'$2a$10$bBJeoCvYULmJ/nbVvseZKOVr9Wxzns1Qkel5aAXSZCdrz9egR14xy','2022-07-05 05:34:58','2022-07-05 05:34:58',0,0,1,NULL,'none',NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:30
+-- Dump completed on 2022-07-14  6:52:40

@@ -16,35 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `vouchers`
+-- Table structure for table `responses`
 --
 
-DROP TABLE IF EXISTS `vouchers`;
+DROP TABLE IF EXISTS `responses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vouchers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `percentage` int DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `price` int DEFAULT NULL,
+CREATE TABLE `responses` (
+  `senderId` int DEFAULT NULL,
+  `reply` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `userId` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `userId` (`userId`),
-  CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ticketId` int DEFAULT NULL,
+  `responseId` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`responseId`),
+  KEY `ticketId` (`ticketId`),
+  CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`ticketId`) REFERENCES `tickets` (`ticketId`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vouchers`
+-- Dumping data for table `responses`
 --
 
-LOCK TABLES `vouchers` WRITE;
-/*!40000 ALTER TABLE `vouchers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vouchers` ENABLE KEYS */;
+LOCK TABLES `responses` WRITE;
+/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
+INSERT INTO `responses` VALUES (41,'hello','2022-07-13 04:28:49','2022-07-13 04:28:49',15,7);
+/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:31
+-- Dump completed on 2022-07-14  6:52:40

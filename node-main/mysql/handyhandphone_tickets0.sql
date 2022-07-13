@@ -16,31 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `products`
+-- Table structure for table `tickets`
 --
 
-DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `tickets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `price` decimal(10,0) DEFAULT NULL,
-  `stock` int DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+CREATE TABLE `tickets` (
+  `ticketId` int NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `userId` int DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `category` varchar(45) DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  `assigned` tinyint DEFAULT NULL,
+  `completedReason` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ticketId`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `products`
+-- Dumping data for table `tickets`
 --
 
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+LOCK TABLES `tickets` WRITE;
+/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+INSERT INTO `tickets` VALUES (15,'hello','2022-07-13 04:28:26','2022-07-13 04:39:18',41,'bugs','Problem has been solved',1,1,'Problem has been solved'),(16,'hello world','2022-07-13 04:28:31','2022-07-13 04:28:31',41,'bugs','Transaction did not go through',0,0,NULL);
+/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:31
+-- Dump completed on 2022-07-14  6:52:40

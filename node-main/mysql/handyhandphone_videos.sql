@@ -16,38 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `videos`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `videos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `videos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `verified` tinyint(1) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `story` varchar(2000) DEFAULT NULL,
+  `starring` varchar(255) DEFAULT NULL,
+  `posterURL` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `subtitles` varchar(255) DEFAULT NULL,
+  `classification` varchar(255) DEFAULT NULL,
+  `dateRelease` datetime DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `mobile` int DEFAULT NULL,
-  `member` tinyint DEFAULT '0',
-  `admin` tinyint DEFAULT '0',
-  `description` varchar(150) DEFAULT '"none"',
-  `profilePicture` longtext,
-  `websitePoints` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `userId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `videos`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (36,'rahow32','rahow32@gmail.com',1,'$2a$10$eJuHaQ2NELWTZHiTZx8r0u9wrMo0d9VsX43Wo4v6iqlhk6TItTC1m','2022-06-30 05:13:06','2022-06-30 05:17:06',0,0,1,NULL,'none',0),(41,'rueyhow','sabertoothruey@gmail.com',0,'$2a$10$bBJeoCvYULmJ/nbVvseZKOVr9Wxzns1Qkel5aAXSZCdrz9egR14xy','2022-07-05 05:34:58','2022-07-05 05:34:58',0,0,1,NULL,'none',NULL);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-06  4:38:30
+-- Dump completed on 2022-07-14  6:52:40
