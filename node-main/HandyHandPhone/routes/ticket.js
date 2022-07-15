@@ -51,11 +51,18 @@ router.post('/ticketPage/:id/:type', async (req, res) => {
 
 
     let { message, category } = req.body;
-    let ticket = await Ticket.create({ message: message, type: type, category: category, status: false, userId: uid, assigned: false })
-
-
-    flashMessage(res, "success", "Ticket submitted successfully")
-    res.redirect("back");
+    if(req.user.dataValues.admin == false){
+        let ticket = await Ticket.create({ message: message, type: type, category: category, status: false, userId: uid, assigned: false })
+        
+        flashMessage(res, "success", "Ticket submitted successfully")
+        res.redirect("back");
+    }
+    else
+    {
+        flashMessage(res ,  "error", "Admins can not submit tickets")
+        res.redirect("back")
+    }
+    
 });
 
 // reply ticket page
@@ -88,14 +95,14 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
     }
     Ticket.findOne({ where: { ticketId: id } })
         .then(async (data) => {
-            var user1 = await User.findByPk(data.userId)
+            var user1 = await User.findByPk(data.userId);
             var TicketData = await Ticket.findOne({ where: { ticketId: id } });
             var PermissionData = await Permissions.findOne({ where: { AdminID: userId, ticketId: id } });
             if (PermissionData) {
                 res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: PermissionData.id });
             }
             else {
-                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null });
+                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null});
             }
 
         });
@@ -171,6 +178,7 @@ router.get('/giveTicketPermission/:name', async (req, res) => {
         res.redirect("back");
     }
     else {
+
         let permission = Permissions.create({ TicketID: id[5], AdminID: admin.id, level: 2, AdminName: name });
         flashMessage(res, "success", "Admin is given permission");
         res.redirect("back");
@@ -182,17 +190,27 @@ router.get('/giveTicketPermission/:name', async (req, res) => {
 
 router.get('/removeTicketPermission/:name', async (req, res) => {
     var name = req.params.name;
+    console.log(name);
     var id = req.headers.referer.split('/');
     var userId = req.user.dataValues.id;
     console.log(id[5])
     const admin = await User.findOne({ where: { name: name } })
-
     const checkPermission = await Permissions.findOne({ where: { AdminID: admin.id } })
 
     if (checkPermission) {
-        await checkPermission.destroy();
-        flashMessage(res, "success", "Permission has been removed");
-        res.redirect("back");
+        if (checkPermission.level == 1){
+            flashMessage(res, "error", "You cannot remove the permission of the ticket master");
+            res.redirect("back");
+        }
+        else 
+        {
+            await checkPermission.destroy();
+            console.log(checkPermission.level);
+            flashMessage(res, "success", "Permission has been removed");
+            res.redirect("back");
+
+        }
+
     }
     else {
         flashMessage(res, "error", "Admin not found");
@@ -208,7 +226,7 @@ router.get('/requestAccess', async (req, res) => {
     var userId = req.user.dataValues.id;
 
     // finding ticket master information
-    const TicketMaster = await Permissions.findOne({ where: { level: 1 } });
+    const TicketMaster = await Permissions.findOne({ where: { level: 1  , TicketID : id} });
 
     const TicketMasterUser = await User.findOne({ where: { id: TicketMaster.AdminID } });
 
@@ -251,14 +269,14 @@ router.get("/giveAccess/:id/:TicketId", async (req, res) => {
 
 router.post("/completeTicket", async (req, res) => {
     try {
-        let { category } = req.body;
+        let { reason } = req.body;
         console.log(category);
         var TicketId = req.headers.referer.split('/')[5];
         if (category) {
             Ticket.findOne({ where: { ticketId: TicketId } })
                 .then(async (ticket) => {
                     ticket.status = true;
-                    ticket.completedReason = category;
+                    ticket.completedReason = reason;
                     await ticket.save();
                     flashMessage(res, "success", "Ticket has been closed due to reason : " + category);
                     res.redirect("../admin/AdminPage");
@@ -275,4 +293,5 @@ router.post("/completeTicket", async (req, res) => {
     }
 
 });
+
 module.exports = router;
