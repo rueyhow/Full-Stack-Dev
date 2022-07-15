@@ -6,11 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/lightbox.css"  rel="stylesheet">
     <style>
         body {
             background: linear-gradient(to right, #243B55, #141E30);
         }
-
+        .imagebox{
+            display: flex;
+            flex-direction: row;
+        }
+        .gallery {
+            margin : 10px 50px;
+        }
+        .gallery img{
+            transition: 1s;
+            padding: 15px;
+            width: 200px;
+        }
+        .gallery img:hover{
+            filter: grayscale(10%);
+            transform : scale(1.2);
+        }
         .separator {
             margin: 3rem 0;
             border-bottom: 1px dashed #fff;
@@ -44,6 +60,17 @@
         #permi {
             position: relative;
             width: 180px;
+        }
+
+        #result {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px 0;
+        }
+
+        .thumbnail {
+            height: 100px;
         }
 
         /* for toggle behavior */
@@ -99,22 +126,35 @@
             </p>
             <div class="separator"></div>
             <p class="lead text-white mb-0 text-bold">Ticket Message :
-            {{TicketData.message}}</p>
+                {{TicketData.message}}</p>
             {{#each ResponseData}}
             <div class="text-white">
                 <div class="text-center border border-light p-5">
                     <p>Responses to this ticket</p>
                     <p>{{this.senderId}}</p>
                     <p>Reply : {{this.reply}}</p>
+                    {{!-- images --}}
+                    <div class="imagebox">
+                    {{#each this.TicketImages}}
+                    <div class="gallery">
+                        <div class="img-w">
+                            <a data-lightbox = "images" href="data:image/jpeg;base64,{{this.base64}}"><img id = "image" src="data:image/jpeg;base64,{{this.base64}}" alt="" /></a>
+                        </div>
+                    </div>
+                        {{/each}}
+                                                
+                    </div>
                 </div>
             </div>
             {{/each}}
+
 
             <div class="separator"></div>
             {{#ifeq TicketData.status false}}
             {{!-- response forms section --}}
             <div class="text-white">
-                <form class="text-center border border-light p-5" method="POST" action="">
+                <form class="text-center border border-light p-5" method="POST" id="form69"
+                    enctype="multipart/form-data">
                     <p class="h4 mb-4">Send your response</p>
                     <p>Ticket Id {{TicketId}}</p>
                     <p>Your user ID {{user.id}}</p>
@@ -123,20 +163,29 @@
                         <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"
                             placeholder="Message" name="reply"></textarea>
                     </div>
-                    <!-- Send button -->
-                    <button class="btn btn-info btn-block" type="submit">Send</button>
 
+                    {{!-- images --}}
+                    {{!-- <input type="file" name="img"> --}}
+
+                    {{!-- test --}}
+                    <label for="files">Upload Images (Visualise Problem)</label>
+                    <input id="files" type="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"
+                        name="imageFile">
+
+                    <output id="result"></output>
+                    <button class="btn btn-info btn-block" type="submit">Send</button>
+                    <!-- Send button -->
                 </form>
             </div>
-             {{#ifeq user.admin true}}
+            {{#ifeq user.admin true}}
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter1">
                 Complete Ticket
             </button>
             {{/ifeq}}
             {{else}}
-            <h1 class = "text-white font-weight-bold text-uppercase large">Ticket Closed</h1>
+            <h1 class="text-white font-weight-bold text-uppercase large">Ticket Closed</h1>
             {{/ifeq}}
-            
+
         </div>
 
     </div>
@@ -210,11 +259,14 @@
                         <label>Reasons</label>
                         <select class="browser-default custom-select mb-4" name="reason">
                             <option value="" disabled>Choose option</option>
-                            <option value="Problem has been solved" name="reason" selected>Problem has been solved
+                            <option value="Problem has been solved" name="reason" selected>Problem has been
+                                solved
                             </option>
-                            <option value="No reply from sender after 2 weeks" name="reason">No reply from sender
+                            <option value="No reply from sender after 2 weeks" name="reason">No reply from
+                                sender
                                 after 2 weeks</option>
-                            <option value="Sender replying with irrelevant information" name="reason">Sender replying
+                            <option value="Sender replying with irrelevant information" name="reason">Sender
+                                replying
                                 with irrelevant information</option>
                             <option value="Others" name="reason">Others</option>
                         </select>
@@ -231,5 +283,30 @@
         </div>
     </div>
 </body>
+<script>
+    document.querySelector("#files").addEventListener("change", (e) => { //CHANGE EVENT FOR UPLOADING PHOTOS
+        if (window.File && window.FileReader && window.FileList && window.Blob) { //CHECK IF FILE API IS SUPPORTED
+            const files = e.target.files; //FILE LIST OBJECT CONTAINING UPLOADED FILES
+            const output = document.querySelector("#result");
+            output.innerHTML = "";
+            for (let i = 0; i < files.length; i++) { // LOOP THROUGH THE FILE LIST OBJECT
+                if (!files[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
+                const picReader = new FileReader(); // RETRIEVE DATA URI 
+                picReader.addEventListener("load", function (event) { // LOAD EVENT FOR DISPLAYING PHOTOS
+                    const picFile = event.target;
+                    const div = document.createElement("div");
+                    div.innerHTML = `<img class="thumbnail" src="${picFile.result}" title="${picFile.name}" name "image${i}"/>`;
+                    output.appendChild(div);
 
+                });
+                picReader.readAsDataURL(files[i]); //READ THE IMAGE
+            }
+        } else {
+            alert("Your browser does not support File API");
+        }
+    });
+
+
+</script>
+<script src="/js/lightbox-plus-jquery.min.js"></script>
 </html>

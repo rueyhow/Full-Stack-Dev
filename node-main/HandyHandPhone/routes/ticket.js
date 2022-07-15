@@ -5,11 +5,14 @@ const router = express.Router();
 const Ticket = require("../models/Ticket").Ticket;
 const Response = require("../models/Ticket").Response;
 const Permissions = require("../models/Ticket").Permissions;
+const TicketImages = require("../models/Ticket").TicketImages;
 const os = require("os");
 const User = require('../models/User');
-// send request email
-
 const sgMail = require('@sendgrid/mail');
+const multer = require("multer");
+const path = require('path');
+const upload = require("express-fileupload")
+
 
 function sendRequest(toEmail, url1, userId, id, name) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -51,18 +54,17 @@ router.post('/ticketPage/:id/:type', async (req, res) => {
 
 
     let { message, category } = req.body;
-    if(req.user.dataValues.admin == false){
+    if (req.user.dataValues.admin == false) {
         let ticket = await Ticket.create({ message: message, type: type, category: category, status: false, userId: uid, assigned: false })
-        
+
         flashMessage(res, "success", "Ticket submitted successfully")
         res.redirect("back");
     }
-    else
-    {
-        flashMessage(res ,  "error", "Admins can not submit tickets")
+    else {
+        flashMessage(res, "error", "Admins can not submit tickets")
         res.redirect("back")
     }
-    
+
 });
 
 // reply ticket page
@@ -74,7 +76,7 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
     var id = req.params.id;
 
     const AdminUsers = await User.findAll({ where: { admin: true } })
-    const ResponseData = await Response.findAll({ where: { ticketId: id } })
+    const ResponseData = await Response.findAll({ where: { ticketId: id } , include : {model : TicketImages , as : "TicketImages"} })
 
 
     for (let permitted of AdminUsers) {
@@ -102,7 +104,7 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
                 res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: PermissionData.id });
             }
             else {
-                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null});
+                res.render("ticket/replyTicket" , { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null});
             }
 
         });
@@ -112,25 +114,38 @@ router.post('/replyTicket/:id', async (req, res) => {
     const userId = req.user.dataValues.id;
     const TicketPermission = await Permissions.findOne({ where: { adminID: userId, TicketID: req.params.id } })
     const TicketStatus = await Ticket.findOne({ where: { ticketId: req.params.id } })
-    if (TicketPermission) {
+    const User = await Ticket.findAll({ where: { ticketId: req.params.id, userId: userId } })
+    const buffer = require('buffer/').Buffer;
+
+    if (TicketPermission || User) {
         if (TicketStatus.status == false) {
             let { reply } = req.body;
-            var senderId = os.userInfo.uid;
             Ticket.findOne({ where: { ticketId: req.params.id } })
-                .then((data) => {
-                    let reponse = Response.create({ senderId: userId, reply: reply, ticketId: req.params.id })
-                    if (reponse) {
-                        flashMessage(res, "success", "response successfully sent and ticket has been updated")
-                        res.redirect("back");
-                    }
-                    else {
-                        flashMessage(res, "error", "something gone wrong")
-                        res.redirect("back");
-                    }
+                .then(async(data) => {
+                    Response.create({ senderId: userId, reply: reply, ticketId: req.params.id })
+                    .then(async(response)=>{
+                            if (req.files) {
+                                const datalength = req.files.imageFile.length;
+                                for (let i = 0 ; i < datalength ; i++){
+                                    const imageFile = req.files.imageFile[i].data;
+                                    const base64 = buffer.from(imageFile).toString('base64');
+                                    let image = await TicketImages.create({base64 : base64 , ResponseId : response.ResponseId})
+                                }
+                                // img.mv(path.resolve("D:/FSDP/FullStackProj/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/"  + Date.now().toString() + filename), function (req, res, err) {})
+                                flashMessage(res, "success", "img got")
+                                res.redirect("back");
+                            }
+                            else
+                            {
+                                flashMessage(res, "success", "no img")
+                                res.redirect("back");
+                            }
+                            // flashMessage(res, "success", "response successfully sent and ticket has been updated")
+                            // res.redirect("back");
+                    })
                 });
         }
-        else
-        {
+        else {
             flashMessage(res, "error", "Ticket has been closed , this ticket is only for viewing")
             res.redirect("back");
         }
@@ -198,12 +213,11 @@ router.get('/removeTicketPermission/:name', async (req, res) => {
     const checkPermission = await Permissions.findOne({ where: { AdminID: admin.id } })
 
     if (checkPermission) {
-        if (checkPermission.level == 1){
+        if (checkPermission.level == 1) {
             flashMessage(res, "error", "You cannot remove the permission of the ticket master");
             res.redirect("back");
         }
-        else 
-        {
+        else {
             await checkPermission.destroy();
             console.log(checkPermission.level);
             flashMessage(res, "success", "Permission has been removed");
@@ -226,7 +240,7 @@ router.get('/requestAccess', async (req, res) => {
     var userId = req.user.dataValues.id;
 
     // finding ticket master information
-    const TicketMaster = await Permissions.findOne({ where: { level: 1  , TicketID : id} });
+    const TicketMaster = await Permissions.findOne({ where: { level: 1, TicketID: id } });
 
     const TicketMasterUser = await User.findOne({ where: { id: TicketMaster.AdminID } });
 
@@ -293,5 +307,6 @@ router.post("/completeTicket", async (req, res) => {
     }
 
 });
+
 
 module.exports = router;

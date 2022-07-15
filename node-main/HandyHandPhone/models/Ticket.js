@@ -3,92 +3,115 @@ const db = require('../config/DBConfig');
 const User = require('./User')
 
 
-class Ticket extends Sequelize.Model {}
+class Ticket extends Sequelize.Model { }
 
 Ticket.init(
     {
-        ticketId : {
-            type: Sequelize.INTEGER , primaryKey : true , allowNull : false , autoIncrement : true
+        ticketId: {
+            type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true
         },
         message: {
             type: Sequelize.STRING
         },
-        type : {
+        type: {
             type: Sequelize.STRING
         },
-        category : {
+        category: {
             type: Sequelize.STRING
         },
-        status : {
+        status: {
             type: Sequelize.BOOLEAN
         },
-        assigned : 
+        assigned:
         {
             type: Sequelize.BOOLEAN
         },
-        completedReason : {
-            type: Sequelize.STRING , allowNull : true
+        completedReason: {
+            type: Sequelize.STRING, allowNull: true
         }
     },
-    { 
-        sequelize: db, 
+    {
+        sequelize: db,
         modelName: "Ticket"
     });
-Ticket.belongsTo(User, { foreignKey: "userId"})
+Ticket.belongsTo(User, { foreignKey: "userId" })
 User.hasMany(Ticket, { foreignKey: "userId" })
 
-class Response extends Sequelize.Model {}
+class Response extends Sequelize.Model { }
 
 Response.init(
     {
-        ResponseId : {
-            type: Sequelize.INTEGER , primaryKey : true , allowNull : false , autoIncrement : true
+        ResponseId: {
+            type: Sequelize.INTEGER, primaryKey: true, allowNull: false, autoIncrement: true
         },
-        senderId : {
+        senderId: {
             type: Sequelize.INTEGER
         },
         reply: {
             type: Sequelize.STRING
         }
     },
-    { 
-        sequelize: db, 
+    {
+        sequelize: db,
         modelName: "Response"
     });
 
-Response.belongsTo(Ticket , {foreignKey: "ticketId"})
-Ticket.hasMany(Response , {foreignKey : "ticketId"})
+Response.belongsTo(Ticket, { foreignKey: "ticketId" })
+Ticket.hasMany(Response, { foreignKey: "ticketId" })
 
 
-class Permissions extends Sequelize.Model {}
+class Permissions extends Sequelize.Model { }
 
 Permissions.init(
     {
-        TicketID : 
+        TicketID:
         {
-            type: Sequelize.INTEGER ,
+            type: Sequelize.INTEGER,
         },
-        AdminID : 
+        AdminID:
         {
-            type: Sequelize.INTEGER , allowNull : false 
+            type: Sequelize.INTEGER, allowNull: false
         },
-        AdminName :
+        AdminName:
         {
-            type: Sequelize.STRING , allowNull : false 
+            type: Sequelize.STRING, allowNull: false
         },
-        level : 
+        level:
         {
-            type : Sequelize.INTEGER, allowNull : false 
+            type: Sequelize.INTEGER, allowNull: false
         }
 
     },
-    { 
-        sequelize: db, 
+    {
+        sequelize: db,
         modelName: "Permissions"
     }
 )
 
-Permissions.belongsTo(Ticket , {foreignKey: "ticketId"})
-Ticket.hasMany(Permissions , {foreignKey : "ticketId"})
+Permissions.belongsTo(Ticket, { foreignKey: "ticketId" })
+Ticket.hasMany(Permissions, { foreignKey: "ticketId" })
 
-module.exports = {Ticket , Response , Permissions};
+
+
+// uploaded images in ticket 
+class TicketImages extends Sequelize.Model { }
+
+TicketImages.init({
+    ResponseId : {
+        type: Sequelize.INTEGER, allowNull : false
+    },
+    base64: {
+        type: Sequelize.STRING, allowNull: false
+    }
+},
+    {
+        sequelize: db,
+        modelName: "TicketImages"
+    }
+)
+
+TicketImages.belongsTo(Response, { foreignKey: "ResponseId" })
+Response.hasMany(TicketImages, { foreignKey: "ResponseId" })
+
+
+module.exports = { Ticket, Response, Permissions  , TicketImages};
