@@ -11,7 +11,8 @@ const User = require('../models/User');
 const sgMail = require('@sendgrid/mail');
 const multer = require("multer");
 const path = require('path');
-const upload = require("express-fileupload")
+const upload = require("express-fileupload");
+const mySQLDB = require('../config/DBConfig');
 
 
 function sendRequest(toEmail, url1, userId, id, name) {
@@ -76,8 +77,8 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
     var id = req.params.id;
 
     const AdminUsers = await User.findAll({ where: { admin: true } })
-    const ResponseData = await Response.findAll({ where: { ticketId: id } , include : {model : TicketImages}})
-
+    const ResponseData = await Response.findAll({ where: { ticketId: id }, include: { model: TicketImages } });
+    const ImageData = await TicketImages.findAll();
 
     for (let permitted of AdminUsers) {
 
@@ -100,11 +101,29 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
             var user1 = await User.findByPk(data.userId);
             var TicketData = await Ticket.findOne({ where: { ticketId: id } });
             var PermissionData = await Permissions.findOne({ where: { AdminID: userId, ticketId: id } });
+
+            // test big query
+            // var query = `SELECT u.profilePicture AS "profilePic" , u.id AS "userId"  , u.name AS "name" , r.reply AS "reply" , t.base64 AS "img" , r.ticketId AS "ticketId" , u.admin AS "admin"  from users u 
+            // inner join responses r on u.id = r.senderId
+            // inner join ticketimages t on r.responseId = t.ResponseId
+            // where r.ticketId = ${id};`;
+
+            // const results = await mySQLDB.query(query , (results , fields ,error)=>{
+            //     if (error) {
+            //         return console.log(error.message);
+            //       }
+            //     else
+            //     {
+            //         console.log(fields);
+            //         mySQLDB.close();
+            //     }
+            // });
+
             if (PermissionData) {
-                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: PermissionData.id });
+                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: PermissionData.id, ImageData: ImageData });
             }
             else {
-                res.render("ticket/replyTicket" , { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null});
+                res.render("ticket/replyTicket", { TicketData: TicketData, ResponseData: ResponseData, user1: user1, TicketId: id, AdminUsers: PermittedUsers, PermissionData: null, ImageData: ImageData });
             }
 
         });
@@ -121,28 +140,37 @@ router.post('/replyTicket/:id', async (req, res) => {
         if (TicketStatus.status == false) {
             let { reply } = req.body;
             Ticket.findOne({ where: { ticketId: req.params.id } })
-                .then(async(data) => {
+                .then(async (data) => {
                     Response.create({ senderId: userId, reply: reply, ticketId: req.params.id })
-                    .then(async(response)=>{
+                        .then(async (response) => {
                             if (req.files) {
                                 const datalength = req.files.imageFile.length;
-                                for (let i = 0 ; i < datalength ; i++){
-                                    const imageFile = req.files.imageFile[i].data;
-                                    const base64 = buffer.from(imageFile).toString('base64');
-                                    let image = await TicketImages.create({base64 : base64 , ResponseId : response.ResponseId})
+                                var date =  Date.now().toString();
+                                if (datalength == undefined) {
+                                    req.files.imageFile.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + req.files.imageFile.name), function (err) { 
+                                    })
+                                    let image = await TicketImages.create({ base64: "/img/responseImages/" + date + req.files.imageFile.name, ResponseId: response.ResponseId })
                                 }
-                                // img.mv(path.resolve("D:/FSDP/FullStackProj/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/"  + Date.now().toString() + filename), function (req, res, err) {})
+                                else {
+                                    for (let i = 0; i <= datalength - 1; i++) {
+                                        const img = req.files.imageFile[i];
+                                        const filename = req.files.imageFile[i].name;
+                                        console.log(img, filename)
+                                        img.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + filename), function (err) { })
+                                        let image = await TicketImages.create({ base64: "/img/responseImages/" + date + filename, ResponseId: response.ResponseId })
+                                    }
+                                }
+
                                 flashMessage(res, "success", "img got")
                                 res.redirect("back");
                             }
-                            else
-                            {
+                            else {
                                 flashMessage(res, "success", "no img")
                                 res.redirect("back");
                             }
                             // flashMessage(res, "success", "response successfully sent and ticket has been updated")
                             // res.redirect("back");
-                    })
+                        })
                 });
         }
         else {
@@ -284,15 +312,14 @@ router.get("/giveAccess/:id/:TicketId", async (req, res) => {
 router.post("/completeTicket", async (req, res) => {
     try {
         let { reason } = req.body;
-        console.log(category);
         var TicketId = req.headers.referer.split('/')[5];
-        if (category) {
+        if (reason) {
             Ticket.findOne({ where: { ticketId: TicketId } })
                 .then(async (ticket) => {
                     ticket.status = true;
                     ticket.completedReason = reason;
                     await ticket.save();
-                    flashMessage(res, "success", "Ticket has been closed due to reason : " + category);
+                    flashMessage(res, "success", "Ticket has been closed due to reason : " + reason);
                     res.redirect("../admin/AdminPage");
                 })
 
@@ -308,5 +335,15 @@ router.post("/completeTicket", async (req, res) => {
 
 });
 
+
+router.get("/downloadPictures/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    TicketImages.findAll({ where: { ResponseId: id } })
+        .then((data) => {
+            console.log(data)
+        })
+
+});
 
 module.exports = router;

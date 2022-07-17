@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
+
 // Create users table in MySQL Database
 class User extends Sequelize.Model {}
 
