@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 require('dotenv').config();
-const fileUpload = require("express-fileupload")
+const fileUpload = require("express-fileupload");
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications

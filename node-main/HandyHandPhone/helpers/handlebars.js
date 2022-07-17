@@ -27,6 +27,13 @@ const calculate = function (a, b) {
     return a * b;
 }
 
+
+const addition = function (a, b) {
+    a = parseInt(a)
+    b = parseInt(b)
+    return a + b;
+}
+
 const getProperty = function(context , options){
     var ret = "";
     for(var prop in context)
@@ -35,4 +42,5 @@ const getProperty = function(context , options){
     }
     return ret;
 }
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty};
+
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition};

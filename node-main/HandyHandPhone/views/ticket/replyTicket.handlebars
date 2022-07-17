@@ -6,73 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/lightbox.css"  rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/replyTicket.css">
     <style>
-        body {
-            background: linear-gradient(to right, #243B55, #141E30);
-        }
-        .imagebox{
-            display: flex;
-            flex-direction: row;
-        }
-        .gallery {
-            margin : 10px 50px;
-        }
-        .gallery img{
-            transition: 1s;
-            padding: 15px;
-            width: 200px;
-        }
-        .gallery img:hover{
-            filter: grayscale(10%);
-            transform : scale(1.2);
-        }
-        .separator {
-            margin: 3rem 0;
-            border-bottom: 1px dashed #fff;
-        }
-
-        .text-uppercase {
-            letter-spacing: 0.1em;
-        }
-
-        .text-gray {
-            color: black;
-        }
-
-        .vertical-nav {
-            min-width: 13rem;
-            width: 13rem;
-            height: 50vh;
-            position: fixed;
-            top: 10;
-            left: 0;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s;
-        }
-
-        .page-content {
-            width: calc(100% - 17rem);
-            margin-left: 17rem;
-            transition: all 0.4s;
-        }
-
-        #permi {
-            position: relative;
-            width: 180px;
-        }
-
-        #result {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 10px 0;
-        }
-
-        .thumbnail {
-            height: 100px;
-        }
-
         /* for toggle behavior */
     </style>
 </head>
@@ -127,29 +63,63 @@
             <div class="separator"></div>
             <p class="lead text-white mb-0 text-bold">Ticket Message :
                 {{TicketData.message}}</p>
+
             {{#each ResponseData}}
-            <div class="text-white">
-                <div class="text-center border border-light p-5">
-                    <p>Responses to this ticket</p>
-                    <p>{{this.senderId}}</p>
-                    <p>Reply : {{this.reply}}</p>
-                    {{!-- images --}}
-                    <div class="imagebox">
-                    {{#each this.TicketImages}}
-                    <div class="gallery">
-                        <div class="img-w">
-                            <a data-lightbox = "images" href="data:image/jpeg;base64,{{this.base64}}"><img id = "image" src="data:image/jpeg;base64,{{this.base64}}" alt="" /></a>
+            <div class="projcard-container">
+                <div class="projcard projcard-blue">
+                    <div class="projcard-innerbox">
+                        <img class="projcard-img" src="https://picsum.photos/800/600?image=1041" />
+                        <div class="projcard-textbox">
+                            <div class="projcard-title">{{this.User.name}}</div>
+                            <div class="projcard-subtitle">Ticket Response {{addition @index 1}}</div>
+                            <div class="projcard-bar"></div>
+                            <div class="projcard-description">{{this.reply}}</div>
+
+                            <!-- Button trigger modal -->
+                            {{#ifeq this.TicketImages false}}
+                            <h6>No Images submitted</h6>
+                            {{else}}
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter-{{@index}}">
+                                View Images Submitted
+                            </button>
+                            {{/ifeq}}
                         </div>
                     </div>
-                        {{/each}}
-                                                
+                </div>
+                    <div class="modal fade" id="exampleModalCenter-{{@index}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{#each this.TicketImages}}
+                                <div class="gallery">
+                                    <div class="img-w">
+                                        <a data-lightbox="images" href="data:image/jpeg;base64,{{this.base64}}"><img
+                                                id="image" src="data:image/jpeg;base64,{{this.base64}}" alt="" /></a>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
+            <div class="separator"></div>
             {{/each}}
 
 
-            <div class="separator"></div>
             {{#ifeq TicketData.status false}}
             {{!-- response forms section --}}
             <div class="text-white">
@@ -283,30 +253,7 @@
         </div>
     </div>
 </body>
-<script>
-    document.querySelector("#files").addEventListener("change", (e) => { //CHANGE EVENT FOR UPLOADING PHOTOS
-        if (window.File && window.FileReader && window.FileList && window.Blob) { //CHECK IF FILE API IS SUPPORTED
-            const files = e.target.files; //FILE LIST OBJECT CONTAINING UPLOADED FILES
-            const output = document.querySelector("#result");
-            output.innerHTML = "";
-            for (let i = 0; i < files.length; i++) { // LOOP THROUGH THE FILE LIST OBJECT
-                if (!files[i].type.match("image")) continue; // ONLY PHOTOS (SKIP CURRENT ITERATION IF NOT A PHOTO)
-                const picReader = new FileReader(); // RETRIEVE DATA URI 
-                picReader.addEventListener("load", function (event) { // LOAD EVENT FOR DISPLAYING PHOTOS
-                    const picFile = event.target;
-                    const div = document.createElement("div");
-                    div.innerHTML = `<img class="thumbnail" src="${picFile.result}" title="${picFile.name}" name "image${i}"/>`;
-                    output.appendChild(div);
-
-                });
-                picReader.readAsDataURL(files[i]); //READ THE IMAGE
-            }
-        } else {
-            alert("Your browser does not support File API");
-        }
-    });
-
-
-</script>
 <script src="/js/lightbox-plus-jquery.min.js"></script>
+<script src="/assets/js/replyTicket.js"></script>
+
 </html>

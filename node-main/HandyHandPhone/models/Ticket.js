@@ -56,9 +56,12 @@ Response.init(
         modelName: "Response"
     });
 
+
 Response.belongsTo(Ticket, { foreignKey: "ticketId" })
 Ticket.hasMany(Response, { foreignKey: "ticketId" })
 
+Response.belongsTo(User, {foreignKey: "senderId" })
+User.hasMany(Response, {foreignKey: "senderId" })
 
 class Permissions extends Sequelize.Model { }
 

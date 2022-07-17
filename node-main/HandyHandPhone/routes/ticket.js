@@ -76,7 +76,7 @@ router.get('/replyTicket/:id', ensureAuthenticated, async (req, res) => {
     var id = req.params.id;
 
     const AdminUsers = await User.findAll({ where: { admin: true } })
-    const ResponseData = await Response.findAll({ where: { ticketId: id } , include : {model : TicketImages , as : "TicketImages"} })
+    const ResponseData = await Response.findAll({ where: { ticketId: id } , include : {model : TicketImages}})
 
 
     for (let permitted of AdminUsers) {
