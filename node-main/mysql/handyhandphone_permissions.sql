@@ -31,7 +31,7 @@ CREATE TABLE `permissions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `AdminName` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
-INSERT INTO `permissions` VALUES (41,1,'2022-07-13 04:28:38','2022-07-13 04:28:38',15,18,'rueyhow');
+INSERT INTO `permissions` VALUES (41,1,'2022-07-18 06:09:24','2022-07-18 06:09:24',20,20,'rueyhow'),(41,1,'2022-07-18 06:32:03','2022-07-18 06:32:03',21,21,'rueyhow');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-14  6:52:39
+-- Dump completed on 2022-07-18  6:55:14

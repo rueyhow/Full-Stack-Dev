@@ -32,7 +32,7 @@ CREATE TABLE `responses` (
   PRIMARY KEY (`responseId`),
   KEY `ticketId` (`ticketId`),
   CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`ticketId`) REFERENCES `tickets` (`ticketId`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `responses` (
 
 LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-INSERT INTO `responses` VALUES (41,'hello','2022-07-13 04:28:49','2022-07-13 04:28:49',15,7);
+INSERT INTO `responses` VALUES (41,'hello','2022-07-18 06:52:32','2022-07-18 06:52:32',20,107),(41,'sqs','2022-07-18 06:52:37','2022-07-18 06:52:37',20,108);
 /*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-14  6:52:40
+-- Dump completed on 2022-07-18  6:55:14

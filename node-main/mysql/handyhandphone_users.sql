@@ -37,7 +37,7 @@ CREATE TABLE `users` (
   `profilePicture` longtext,
   `websitePoints` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (36,'rahow32','rahow32@gmail.com',1,'$2a$10$eJuHaQ2NELWTZHiTZx8r0u9wrMo0d9VsX43Wo4v6iqlhk6TItTC1m','2022-06-30 05:13:06','2022-06-30 05:17:06',0,0,1,NULL,'none',0),(41,'rueyhow','sabertoothruey@gmail.com',1,'$2a$10$bBJeoCvYULmJ/nbVvseZKOVr9Wxzns1Qkel5aAXSZCdrz9egR14xy','2022-07-05 05:34:58','2022-07-05 05:34:58',0,0,1,NULL,'none',NULL);
+INSERT INTO `users` VALUES (36,'rahow32','rahow32@gmail.com',1,'$2a$10$eJuHaQ2NELWTZHiTZx8r0u9wrMo0d9VsX43Wo4v6iqlhk6TItTC1m','2022-06-30 05:13:06','2022-06-30 05:17:06',0,0,1,NULL,'none',0),(41,'rueyhow','sabertoothruey@gmail.com',1,'$2a$10$bBJeoCvYULmJ/nbVvseZKOVr9Wxzns1Qkel5aAXSZCdrz9egR14xy','2022-07-05 05:34:58','2022-07-05 05:34:58',0,0,1,NULL,'none',NULL),(42,'rh','212737S@mymail.nyp.edu.sg',1,'$2a$10$gs6QYm4OGtm20ylf/1.FuO1ez47kWjPQjQYEeD/y5YCrTcOKuiCWu','2022-07-15 23:51:52','2022-07-15 23:51:52',0,0,0,NULL,'none',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-14  6:52:40
+-- Dump completed on 2022-07-18  6:55:15

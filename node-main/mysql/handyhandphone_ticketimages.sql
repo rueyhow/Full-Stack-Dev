@@ -16,38 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `videos`
+-- Table structure for table `ticketimages`
 --
 
-DROP TABLE IF EXISTS `videos`;
+DROP TABLE IF EXISTS `ticketimages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `videos` (
+CREATE TABLE `ticketimages` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) DEFAULT NULL,
-  `story` varchar(2000) DEFAULT NULL,
-  `starring` varchar(255) DEFAULT NULL,
-  `posterURL` varchar(255) DEFAULT NULL,
-  `language` varchar(255) DEFAULT NULL,
-  `subtitles` varchar(255) DEFAULT NULL,
-  `classification` varchar(255) DEFAULT NULL,
-  `dateRelease` datetime DEFAULT NULL,
+  `ResponseId` int NOT NULL,
+  `base64` longtext NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `userId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `userId` (`userId`),
-  CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `ResponseId` (`ResponseId`),
+  CONSTRAINT `ticketimages_ibfk_1` FOREIGN KEY (`ResponseId`) REFERENCES `responses` (`responseId`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `videos`
+-- Dumping data for table `ticketimages`
 --
 
-LOCK TABLES `videos` WRITE;
-/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
+LOCK TABLES `ticketimages` WRITE;
+/*!40000 ALTER TABLE `ticketimages` DISABLE KEYS */;
+INSERT INTO `ticketimages` VALUES (32,107,'/img/responseImages/1658098352145WhatsApp Image 2022-07-08 at 4.48.25 AM.jpeg','2022-07-18 06:52:32','2022-07-18 06:52:32'),(33,107,'/img/responseImages/1658098352145a9be408562a040ba822f01bbd909d120.png','2022-07-18 06:52:32','2022-07-18 06:52:32'),(34,108,'/img/responseImages/1658098357296a9be408562a040ba822f01bbd909d120.png','2022-07-18 06:52:37','2022-07-18 06:52:37');
+/*!40000 ALTER TABLE `ticketimages` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

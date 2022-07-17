@@ -36,7 +36,7 @@ CREATE TABLE `tickets` (
   PRIMARY KEY (`ticketId`),
   KEY `userId` (`userId`),
   CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `tickets` (
 
 LOCK TABLES `tickets` WRITE;
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-INSERT INTO `tickets` VALUES (15,'hello','2022-07-13 04:28:26','2022-07-13 04:39:18',41,'bugs','Problem has been solved',1,1,'Problem has been solved'),(16,'hello world','2022-07-13 04:28:31','2022-07-13 04:28:31',41,'bugs','Transaction did not go through',0,0,NULL);
+INSERT INTO `tickets` VALUES (20,'hello','2022-07-18 06:09:07','2022-07-18 06:09:24',42,'bugs','Transaction did not go through',0,1,NULL),(21,'hello','2022-07-18 06:29:45','2022-07-18 06:32:03',42,'bugs','Transaction did not go through',0,1,NULL);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-14  6:52:40
+-- Dump completed on 2022-07-18  6:55:14
