@@ -9,12 +9,24 @@ const TicketImages = require("../models/Ticket").TicketImages;
 const os = require("os");
 const User = require('../models/User');
 const sgMail = require('@sendgrid/mail');
-const multer = require("multer");
 const path = require('path');
-const upload = require("express-fileupload");
 const mySQLDB = require('../config/DBConfig');
+const fs = require('fs');
+const Multer = require('multer');
+const fetch = require('node-fetch') 
 
 
+JSZip = require('jszip') 
+// to zip them up 
+
+const micro = require('micro') 
+// to serve them
+
+
+const { Storage } = require('@google-cloud/storage');
+
+
+// sending request email function
 function sendRequest(toEmail, url1, userId, id, name) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const message = {
@@ -40,10 +52,25 @@ function sendRequest(toEmail, url1, userId, id, name) {
             .catch(err => reject(err));
     });
 }
+// uploading images to google cloud storage
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+        filesize: 20 * 1024 * 1024, // 20 MB MAX
+    }
+});
 
+let projectId = 'handyhandphone'
+let keyfilename = 'driven-rig-356715-94c546ae6ace.json';
 
+const storage = new Storage({
+    projectId,
+    keyfilename: path.join(__dirname, '../handyhandphone-1075b995e1de.json')
+})
 
+const bucket = storage.bucket("handyhandphone");
 
+// actual routes
 router.get('/ticketPage', ensureAuthenticated, (req, res) => {
     res.render("ticket/ticket");
 });
@@ -135,34 +162,78 @@ router.post('/replyTicket/:id', async (req, res) => {
     const TicketStatus = await Ticket.findOne({ where: { ticketId: req.params.id } })
     const User = await Ticket.findAll({ where: { ticketId: req.params.id, userId: userId } })
     const buffer = require('buffer/').Buffer;
+    const id = req.headers.referer.split('/')[5];
+    console.log(id);
+    // check whether user is an admin
+    var checkAdmin = false;
 
+    if(req.user.dataValues.admin == true){
+        checkAdmin = true;
+    }
     if (TicketPermission || User) {
         if (TicketStatus.status == false) {
             let { reply } = req.body;
-            Ticket.findOne({ where: { ticketId: req.params.id } })
+            Ticket.findOne({ where: { ticketId: id } })
                 .then(async (data) => {
-                    Response.create({ senderId: userId, reply: reply, ticketId: req.params.id })
+                    Response.create({ senderId: userId, reply: reply, ticketId: id  , admin : checkAdmin})
                         .then(async (response) => {
                             if (req.files) {
                                 const datalength = req.files.imageFile.length;
-                                var date =  Date.now().toString();
+                                // var date =  Date.now().toString();
+                                // if (datalength == undefined) {
+                                //     req.files.imageFile.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + req.files.imageFile.name), function (err) { 
+                                //     })
+                                //     let image = await TicketImages.create({ base64: "/img/responseImages/" + date + req.files.imageFile.name, ResponseId: response.ResponseId })
+                                // }
+                                // else {
+                                //     for (let i = 0; i <= datalength - 1; i++) {
+                                //         const img = req.files.imageFile[i];
+                                //         const filename = req.files.imageFile[i].name;
+                                //         console.log(img, filename)
+                                //         img.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + filename), function (err) { })
+                                //         let image = await TicketImages.create({ base64: "/img/responseImages/" + date + filename, ResponseId: response.ResponseId , TicketId : req.params.id })
+                                //     }
+                                // }
+
+                                // saving into google cloud storage
+
+                                var date = Date.now().toString();
                                 if (datalength == undefined) {
-                                    req.files.imageFile.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + req.files.imageFile.name), function (err) { 
-                                    })
-                                    let image = await TicketImages.create({ base64: "/img/responseImages/" + date + req.files.imageFile.name, ResponseId: response.ResponseId })
+                                    const blob = bucket.file(date + req.files.imageFile.name);
+                                    const blobStream = blob.createWriteStream({
+                                        resumable: false,
+                                        gzip: true,
+                                    });
+
+                                    blobStream.on('finish', async () => {
+                                        let image = await TicketImages.create({ base64: date + req.files.imageFile.name, ResponseId: response.ResponseId , TicketId : id})
+                                        flashMessage(res, "success", "img got")
+                                        res.redirect("back");
+                                    });
+                                    blobStream.end(req.files.imageFile.data);
                                 }
                                 else {
                                     for (let i = 0; i <= datalength - 1; i++) {
-                                        const img = req.files.imageFile[i];
-                                        const filename = req.files.imageFile[i].name;
-                                        console.log(img, filename)
-                                        img.mv(path.resolve("D:/FSDP/HHP - Full Stack/Full-Stack-Dev/node-main/HandyHandPhone/public/img/responseImages/" + date + filename), function (err) { })
-                                        let image = await TicketImages.create({ base64: "/img/responseImages/" + date + filename, ResponseId: response.ResponseId })
+                                        const mainFile = req.files.imageFile[i]
+                                        const blob = bucket.file(date + mainFile.name);
+
+
+                                        const blobStream = blob.createWriteStream({
+                                            resumable: false,
+                                            gzip: true,
+                                        });
+
+                                        blobStream.on('finish', async () => {
+                                            let image = await TicketImages.create({ base64: date + mainFile.name, ResponseId: response.ResponseId, TicketId : id })
+                                        });
+                                        blobStream.end(mainFile.data);
+
                                     }
+                                    flashMessage(res, "success", "img got")
+                                    res.redirect("back");
+
                                 }
 
-                                flashMessage(res, "success", "img got")
-                                res.redirect("back");
                             }
                             else {
                                 flashMessage(res, "success", "no img")
@@ -336,14 +407,61 @@ router.post("/completeTicket", async (req, res) => {
 });
 
 
-router.get("/downloadPictures/:id", async (req, res) => {
+router.get("/downloadPictures/:id", async (req, res , cb) => {
     const id = req.params.id;
-    console.log(id);
-    TicketImages.findAll({ where: { ResponseId: id } })
-        .then((data) => {
-            console.log(data)
-        })
+    const Images = await TicketImages.findAll({ where: { ResponseId: id } });
 
+    const ImageInfoArray = [];
+
+
+    for (let i = 0; i < Images.length; i++) {
+        console.log(Images[i].base64)
+        ImageInfoArray.push({ url: `https://storage.googleapis.com/handyhandphone/${Images[i].base64}`, file: `download${i}.png` })
+    }
+    console.log(ImageInfoArray)
+
+    var zip = new JSZip();
+
+    const request = async () => {
+        for (const { file, url } of ImageInfoArray) {
+        const response = await fetch(url);
+        const buffer = await response.buffer();
+        zip.file(file, buffer);
+      }
+    }
+    request()
+    .then(() => {
+        // Set the name of the zip file in the download
+        res.setHeader('Content-Disposition', 'attachment; filename="pictures.zip"')
+    
+        // Send the zip file
+        zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+          .pipe(res).on('finish', function() {
+              console.log("out.zip written.");
+          })
+      })
 });
 
+
+router.get('/deleteTicket/:TicketId', async(req, res, next)=>{
+    const TicketId =  req.params.TicketId;
+
+    const ticket = await Ticket.findByPk(TicketId);
+
+    
+         
+    if(ticket){
+        mySQLDB.query(`DELETE t , p , r FROM ticketimages t 
+        INNER JOIN permissions p on p.TicketID = t.ticketId 
+        INNER JOIN responses r on r.ticketId = t.ticketId 
+        WHERE t.ticketId = ${TicketId} AND r.ticketId = ${TicketId} AND p.TicketID = ${TicketId};`)
+        await ticket.destroy();
+        res.redirect("back");
+    }
+    else
+    {
+        flashMessage(res , "error", "Could not find the ticket");
+        res.redirect("back");
+    }
+});
 module.exports = router;

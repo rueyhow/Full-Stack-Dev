@@ -2,7 +2,11 @@ body {
 
     background: linear-gradient(to right, #243B55, #141E30);
 }
-
+.imageBox{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+}
 .imagebox {
     display: flex;
     flex-direction: row;

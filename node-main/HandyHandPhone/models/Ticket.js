@@ -49,7 +49,11 @@ Response.init(
         },
         reply: {
             type: Sequelize.STRING
-        }
+        },
+        admin : {
+            type: Sequelize.BOOLEAN , allowNull: false
+        },
+
     },
     {
         sequelize: db,
@@ -59,9 +63,6 @@ Response.init(
 
 Response.belongsTo(Ticket, { foreignKey: "ticketId" })
 Ticket.hasMany(Response, { foreignKey: "ticketId" })
-
-Response.belongsTo(User, {foreignKey: "senderId" })
-User.hasMany(Response, {foreignKey: "senderId" })
 
 class Permissions extends Sequelize.Model { }
 
@@ -105,6 +106,9 @@ TicketImages.init({
     },
     base64: {
         type: Sequelize.STRING, allowNull: false
+    } , 
+    TicketId :{
+        type: Sequelize.INTEGER, allowNull : false
     }
 },
     {

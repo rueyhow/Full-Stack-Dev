@@ -90,9 +90,6 @@
     </div>
   </div>
 
-  {{else}}
-  <h1>You are not authorised</h1>
-  {{/ifeq}}
   </div>
 
   {{!-- created admin user portion --}}
@@ -224,7 +221,7 @@
 
             <td>
               {{#ifeq this.status true}}
-              <a href="" class="btn btn-primary btn-sm">Delete</a>
+              <a href="/ticket/deleteTicket/{{this.ticketId}}" class="btn btn-primary btn-sm">Delete</a>
               {{else}}
               <h5>Ticket has not been completed</h5>
               {{/ifeq}}
@@ -243,6 +240,9 @@
       </div>
     </div>
   </div>
+  {{else}}
+  <h1>You are not authorised</h1>
+  {{/ifeq}}
 
 </body>
 

@@ -35,9 +35,13 @@
             {{#ifeq user.admin true}}
             <div class="nav flex-column bg-dark mb-0">
                 {{#ifeq PermissionData null}}
+                {{#ifeq TicketData.assigned true}}
                 <a class="btn btn-warning" href="/ticket/requestAccess">
                     Request Access
                 </a>
+                {{else}}
+                <a class="btn btn-warning" href="/ticket/takeUpTicket/{{TicketId}}">Take Up Ticket</a>
+                {{/ifeq}}
                 {{else}}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Give Permission
@@ -69,7 +73,11 @@
 
                 <div class="projcard projcard-blue">
                     <div class="projcard-innerbox">
+                        {{#ifeq this.admin true}}
                         <img class="projcard-img" src="/assets/img/HandyHandPhone-logos.jpeg" />
+                        {{else}}
+                        <img class="projcard-img" src="/assets/img/HandyHandPhone-logo.jpeg" />
+                        {{/ifeq}}
                         <div class="projcard-textbox">
                             <div class="projcard-title">Sent by , User ID : {{this.senderId}}</div>
                             <div class="projcard-subtitle">Ticket Response {{addition @index 1}}</div>
@@ -83,13 +91,14 @@
                             {{#ifeq this.TicketImages false}}
                             <h6>No Image was submitted</h6>
                             {{else}}
-                           <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#exampleModalCenter-{{@index}}">
                                 View Images Submitted
                             </button>
-                            <a href="/ticket/downloadPictures/{{this.ResponseId}}">downloadPictures</a>
+                            <a href="/ticket/downloadPictures/{{this.ResponseId}}"
+                                    class="btn btn-warning">Download Pictures Submitted</a>
+                            </div>
                             {{/ifeq}}
-
                         </div>
                     </div>
                 </div>
@@ -105,15 +114,20 @@
                             </div>
                             <div class="modal-body">
                                 {{#each this.TicketImages}}
-                                <div class="gallery">
-                                    <div class="img-w">
-                                        <a data-lightbox="images"
-                                            href="{{this.base64}}"><img id="image"
-                                                src="{{this.base64}}" alt="" /></a>
-                                    </div> /img/responseImages/1658097957177WhatsApp Image 2022-07-08 at 4.48.25 AM.jpeg
+                                <div class="imageBox">
+                                    <div class="gallery">
+                                        <div class="img-w">
+                                            <a data-lightbox="images"
+                                                href="https://storage.cloud.google.com/handyhandphone/{{this.base64}}"><img
+                                                    id="image"
+                                                    src="https://storage.cloud.google.com/handyhandphone/{{this.base64}}"
+                                                    alt=""/></a>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 {{/each}}
-                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="button" class="btn btn-primary">Save changes</button>
