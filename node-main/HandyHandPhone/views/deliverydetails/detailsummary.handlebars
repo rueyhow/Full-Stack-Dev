@@ -1,0 +1,28 @@
+<div class="container">
+    {{#if deliverydetails}}
+    <div class="card card-body">
+        <h3 class="text-primary">Delivery details Summary</h3>
+        {{#each deliverydetails}}
+        <div class="card border-primary mb-2 w-100 mx-auto">
+            <!-- Display video data -->
+            {{this.firstname}}
+            {{this.lastname}}
+            {{this.unitnumber}}
+            {{this.address}}
+            {{this.phone}}
+            <a href="/deliverydetails/editdetails/{{this.id}}" class="card-link mb-2">
+                <i class="fas fa-pencil-alt"></i>
+                Edit
+            </a>
+            <a href="/deliverydetails/deleteDetails/{{this.id}}" class="card-link mb-2">
+                <i class="fas fa-pencil-alt"></i>
+                Delete
+            </a>
+
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{else}}
+<h3>No details jotted</h3>
+{{/if}}

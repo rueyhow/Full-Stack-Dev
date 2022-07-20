@@ -1,9 +1,10 @@
 const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
+const Orderstatus = require('../models/Orderstatus');
+const Deliverydetails = require('../models/Deliverydetails');
+const Voucher = require('../models/Voucher');
 
-const Voucher = require('../models/Voucher')
-
-const Video = require('../models/Video');
+// const Video = require('../models/Video');
 const Product = require('../models/Product');
 
 // If drop is true, all existing tables are dropped and recreated 

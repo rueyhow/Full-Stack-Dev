@@ -2,23 +2,22 @@ const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 
-
-router.get('/', async function(req, res){
-	res.render('home');
+router.get('/', async function (req, res) {
+    res.render('home');
 });
 
 
 router.get('/about', (req, res) => {
-	const author = 'Your Name';
-	res.render('about', { author });
+    const author = 'Your Name';
+    res.render('about', { author });
 });
 
 
 
 router.post('/flash', (req, res) => {
-	const message = 'This is an important message';
-	const error = 'This is an error message';
-	const error2 = 'This is the second error message';
+    const message = 'This is an important message';
+    const error = 'This is an error message';
+    const error2 = 'This is the second error message';
 
     // req.flash('message', message);
     // req.flash('error', error);
@@ -29,7 +28,7 @@ router.post('/flash', (req, res) => {
     flashMessage(res, 'error', error);
     flashMessage(res, 'error', error2, 'fas fa-sign-in-alt', true);
 
-	res.redirect('/about');
+    res.redirect('/about');
 });
 
 module.exports = router;

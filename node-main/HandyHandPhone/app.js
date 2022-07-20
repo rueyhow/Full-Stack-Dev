@@ -107,6 +107,10 @@ const userRoute = require('./routes/user');
 const ProductRoute = require('./routes/product');
 const adminRoute = require("./routes/admin");
 const voucherRoute = require("./routes/voucher");
+const orderstatusRoute = require("./routes/orderstatus");
+const deliverydetailsRoute = require("./routes/deliverydetails");
+const scheduleRoute = require("./routes/schedule");
+
 
 
 
@@ -114,8 +118,12 @@ const voucherRoute = require("./routes/voucher");
 app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/product' , ProductRoute);
-app.use('/admin' , adminRoute)
-app.use('/voucher' , voucherRoute)
+app.use('/admin' , adminRoute);
+app.use('/voucher' , voucherRoute);
+app.use('/orderstatus', orderstatusRoute);
+app.use('/deliverydetails', deliverydetailsRoute);
+app.use('/schedule', scheduleRoute);
+
 
 
 /*
