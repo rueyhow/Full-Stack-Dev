@@ -2,10 +2,43 @@
 
 <button class="btn border px-auto"><a href="addproduct">Add Product</a></button>
 <div class="card card-body">
-    <h3 class="text-primary">Products</h3> {{#each products}} <div class="card border-primary mb-2 w-100 mx-auto">
-        <!-- Display video data -->
-        <p>{{this.name}}</p> 
-        <a href="/product/editProduct/{{this.id}}" class="card-link mb-2"> <i class="fas fa-pencil-alt"></i> Edit </a>
-        <a href="/product/deleteProduct/{{this.id}}">Delete button</a>
-    </div> {{/each}}
+
+    <div style="width: 60vw; background-color:azure; " class="p-5 mx-auto">
+        <h3 class="text-primary text-center">Featured Products</h3>
+
+        <div style="display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;"></div>
+        {{#each products}}
+
+        <div class="col my-3">
+            <a href="">
+                <h4 class="text-center">{{this.name}}</h4>
+                <img src="" class="img-fluid bg-light p-5"
+                    style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;" alt="prod img">
+                <div class="rating px-auto my-2"
+                    style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p class="text-center">${{this.price}}</p>
+
+                <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
+                    class="btn btn-success mt-auto">Add to cart</button>
+            </a>
+        </div>
+        {{/each}}
+
+    </div>
+    <!--<div class="card border-primary"
+            style="flex-basis: 33%;padding: 10px; min-width: 200px;margin-bottom: 50px;transition: transform 0.2s;">
+
+            <p style="color:black;">{{this.name}}</p>
+            <a href="/product/editProduct/{{this.id}}" class="card-link mb-2"> <i class="fas fa-pencil-alt"></i> Edit
+            </a>
+            <a href="/product/deleteProduct/{{this.id}}">Delete button</a>
+        </div> -->
+</div>
+
 </div>
