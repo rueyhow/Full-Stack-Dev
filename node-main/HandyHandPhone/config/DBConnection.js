@@ -12,11 +12,6 @@ const setUpDB = (drop) => {
         .then(() => {
             console.log('Database connected');
             // ensure user can create /  buy multiple vouchers
-            User.hasMany(Voucher);
-            Voucher.belongsTo(User);
-
-
-
             mySQLDB.sync({
                 force: drop
             });

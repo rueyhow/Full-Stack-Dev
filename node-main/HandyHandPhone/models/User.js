@@ -15,7 +15,10 @@ User.init(
         member : {type:Sequelize.BOOLEAN},
         admin : {type:Sequelize.BOOLEAN},
         description : {type:Sequelize.STRING , allowNull : true},
-        profilePicture : {type:Sequelize.STRING , allowNull : true}
+        profilePicture : {type:Sequelize.STRING , allowNull : true},
+        membershipRank : {type:Sequelize.STRING , allowNull : true},
+        websitePoints: {type:Sequelize.INTEGER , allowNull : false , defaultValue : 0},
+        birthday : {type : Sequelize.DATE , allowNull : true}
     },
     {
         sequelize: db,
