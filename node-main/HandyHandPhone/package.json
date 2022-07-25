@@ -30,6 +30,7 @@
     "handlebars-helpers": "^0.9.8",
     "hbs": "^4.2.0",
     "i": "^0.3.7",
+    "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "jszip": "^3.10.0",
     "lightbox2": "^2.11.3",
