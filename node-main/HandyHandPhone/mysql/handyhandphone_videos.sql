@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: handyhandphone
+-- Host: localhost    Database: handyhandphone
 -- ------------------------------------------------------
--- Server version	8.0.29
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,34 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart_items`
+-- Table structure for table `videos`
 --
 
-DROP TABLE IF EXISTS `cart_items`;
+DROP TABLE IF EXISTS `videos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cart_items` (
+CREATE TABLE `videos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `quantity` int DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `story` varchar(2000) DEFAULT NULL,
+  `starring` varchar(255) DEFAULT NULL,
+  `posterURL` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `subtitles` varchar(255) DEFAULT NULL,
+  `classification` varchar(255) DEFAULT NULL,
+  `dateRelease` datetime DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `userId` int DEFAULT NULL,
-  `productId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
-  KEY `productId` (`productId`),
-  CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cart_items`
+-- Dumping data for table `videos`
 --
 
-LOCK TABLES `cart_items` WRITE;
-/*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-21  6:36:55
+-- Dump completed on 2022-07-25 11:13:41

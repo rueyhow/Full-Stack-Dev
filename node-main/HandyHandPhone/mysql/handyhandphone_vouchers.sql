@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: handyhandphone
+-- Host: localhost    Database: handyhandphone
 -- ------------------------------------------------------
--- Server version	8.0.29
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,36 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tickets`
+-- Table structure for table `vouchers`
 --
 
-DROP TABLE IF EXISTS `tickets`;
+DROP TABLE IF EXISTS `vouchers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tickets` (
-  `ticketId` int NOT NULL AUTO_INCREMENT,
-  `message` varchar(255) DEFAULT NULL,
+CREATE TABLE `vouchers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `VoucherCategory` varchar(255) NOT NULL,
+  `VoucherName` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `discount` float NOT NULL,
+  `price` int DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `userId` int DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
-  `category` varchar(45) DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
-  `assigned` tinyint DEFAULT NULL,
-  `completedReason` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`ticketId`),
-  KEY `userId` (`userId`),
-  CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tickets`
+-- Dumping data for table `vouchers`
 --
 
-LOCK TABLES `tickets` WRITE;
-/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
+LOCK TABLES `vouchers` WRITE;
+/*!40000 ALTER TABLE `vouchers` DISABLE KEYS */;
+INSERT INTO `vouchers` VALUES (1,'discount','25 % OFF ALL PRODUCTS','shop now!',25,500,'2022-07-25 11:03:04','2022-07-25 11:03:04');
+/*!40000 ALTER TABLE `vouchers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-21  6:36:54
+-- Dump completed on 2022-07-25 11:13:41
