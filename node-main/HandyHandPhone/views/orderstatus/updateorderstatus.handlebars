@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <h5 class="mb-0">Customer Order Status</h5>
+        <div class="col-md-10">
+            <div class="rounded">
+                <div class="table-responsive table-borderless">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <div class="toggle-btn">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                </th>
+                                <th>Order #</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            {{#each orderstatus}}
+                            <tr class="cell-1">
+                                <td class="text-center">
+                                    <div class="toggle-btn">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                </td>
+                                <td>{{this.ordernumber}}</td>
+                                <td>{{this.name}}</td>
+                                <td><span class="badge badge-success">{{this.orderstatus}}</span></td>
+                                <td>{{this.date}}</td>
+                                <td><a href="/orderstatus/editorderstatus/{{this.id}}" class="card-link mb-2">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Edit
+                                    </a>
+                                    <a href="/orderstatus/deleteOrderstatus/{{this.id}}"
+                                        onclick="return confirm('Are you sure you want to delete?')"
+                                        class="card-link mb-2">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Delete
+                                    </a>
+                                    <a href="/orderstatus/orderstatus/{{this.id}}" class="card-link mb-2">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

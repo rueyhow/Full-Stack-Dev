@@ -110,8 +110,4 @@ router.get('/deletefeedback/:id', (req, res) => {
 
 });
 
-router.get('/updateorderstatus', (req, res) => {
-    res.render('admin/updateorderstatus');
-});
-
 module.exports = router;

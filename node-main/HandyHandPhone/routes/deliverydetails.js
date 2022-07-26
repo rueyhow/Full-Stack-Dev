@@ -47,7 +47,7 @@ router.post('/editdetails/:id', (req, res) => {
 		{ where: { id: req.params.id } }
 	)
 		.then((result) => {
-			console.log(result[0] + ' video updated');
+			console.log(result[0] + ' updated');
 			res.redirect('/deliverydetails/detailsummary');
 		})
 		.catch(err => console.log(err));

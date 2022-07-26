@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const orderstatus = db.define('orderstatus',
+const Orderstatus = db.define('orderstatus',
     {
         date: { type: Sequelize.DATEONLY},
         orderstatus: { type: Sequelize.STRING},
@@ -9,4 +9,4 @@ const orderstatus = db.define('orderstatus',
 
     }); 
 
-module.exports = orderstatus;
+module.exports = Orderstatus;

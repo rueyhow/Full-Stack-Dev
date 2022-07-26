@@ -3,11 +3,13 @@
     <div class="card">
         <div class="row d-flex justify-content-between px-3 top">
             <div class="d-flex">
-                <h5>ORDER <span class="text-primary font-weight-bold">#{{ordernumber}}</span></h5>
+                <h5>ORDER <span class="text-primary font-weight-bold"
+                        name="ordernumber">#{{orderstatus.ordernumber}}</span>
+                </h5>
             </div>
             <div class="d-flex flex-column text-sm-right">
                 <span class="font-weight-bold">
-                    <p class="mb-0">Expected Arrival {{date}}</p>
+                    <p class="mb-0" name="date">Expected Arrival {{current.date}}</p>
                 </span>
             </div>
         </div>
@@ -15,10 +17,10 @@
         <div class="row d-flex justify-content-center">
             <div class="col-12">
                 <ul id="progressbar" class="text-center">
-                    <li class="active step0"></li>
-                    <li class="active step0"></li>
-                    <li class="step0"></li>
-                    <li class="step0"></li>
+                    <li class="active step0" id="step1"></li>
+                    <li class="step0" id="step2"></li>
+                    <li class="step0" id="step3"></li>
+                    <li class="step0" id="step4"></li>
                 </ul>
             </div>
         </div>
@@ -50,3 +52,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    function step1() {
+        if ("{{orderstatus.orderstatus}}" == 'Order Confirmed') {
+            var a = document.getElementById("step2");
+            a.classList.add("active")
+        }
+        else if ("{{orderstatus.orderstatus}}" == 'Order Out for Delivery') {
+            var a = document.getElementById("step2");
+            a.classList.add("active")
+            var b = document.getElementById("step3");
+            b.classList.add("active")
+        }
+        else if ("{{orderstatus.orderstatus}}" == 'Order Arrived') {
+            var a = document.getElementById("step2");
+            a.classList.add("active")
+            var b = document.getElementById("step3");
+            b.classList.add("active")
+            var c = document.getElementById("step4");
+            c.classList.add("active")
+        }
+    }
+    step1()
+
+</script>
