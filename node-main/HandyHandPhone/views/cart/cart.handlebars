@@ -1,73 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="CodeHim">
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <!-- Style CSS -->
-   <link rel="stylesheet" href="/assets/css/cartcss/style.css">
-    <!-- Demo CSS (No need to include it into your project) -->
-    <link rel="stylesheet" href="/assets/css/cartcss/demo.css">
-
-</head>
-
-<body>
-
-    <main>
-        <!-- Start DEMO HTML (Use the following code into your project)-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                    <h4 class="badge-pill badge-light mt-3 mb-3 p-2 text-center">Cart</h4>
-                    <div class="cart">
-                    {{#each cartItems}}
-                        <div class="row">
-                            <div class="col">
-                                <div class="card p-2">
-                                    <div>Name: {{this.product.name}}</div>
-                                    <div>Price: {{calculate this.product.price this.quantity}}</div>
-                                    <div>Quantity: {{this.quantity}}</div>
-                                    <div>
-                                        <a href="#" class="btn btn-primary quantity-btn" data-action="add" data-id="{{this.id}}">+</a>
-                                        <a href="#" class="btn btn-secondary quantity-btn" data-action="minus" data-id="{{this.id}}">-</a>
-                                    </div>
-                                </div>
-                            </div>
+<div class="container">
+    <div class="card">
+        <div class="card-body mx-3">
+            {{#each cartItems}}
+            <div id="item-{{ this.id }}" class="row item mb-3">
+                {{!-- Picture --}}
+                <div class="col-2 item-picture bg-dark">
+                    <img src="" alt="Item Image">
+                </div>
+                <div class="col-3 item-info mt-3" align="center">
+                    {{!-- Item Name --}}
+                    <div>Name</div>
+                    <strong>{{ this.product.name }}</strong>
+                    {{!-- Optional --}}
+                    {{!-- <div class="row item-description">
+                        <div class="col">Color: Grey</div>
+                        <div class="col">Size: 6.7'</div>
+                    </div> --}}
+                </div>
+                {{!-- Quantity --}}
+                <div class="col-2 item-quantity mt-3">
+                    <div class="text-center">Quantity</div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-link btn-item-quantity" data-action="add" data-id="{{ this.id }}">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                        <div 
+                            id="item-quantity-number-{{ this.id }}" 
+                            class="item-quantity-number d-flex align-items-center"
+                        >
+                            {{ this.quantity }}
                         </div>
-                    {{/each}}
-                    <script>
-                        // get all elements with class="quantity-btn"
-                        const modifyQuantityBtn = document.querySelectorAll(".quantity-btn");
-
-                        // assigns event listener to every button
-                        modifyQuantityBtn.forEach((btn) => {
-                            btn.addEventListener("click", () => { 
-                                // when the button is clicked, the code below will run
-
-                                // send a request to url="/cart/cart/<cart item id>/<action>"
-                                // the url will contain the cart item id and action
-                                // possible actions:
-                                //      add
-                                //      minus
-                                fetch(`/cart/cart/${btn.dataset.id}/${btn.dataset.action}`, { method: 'POST' })
-
-                                // refreshes the page to update the number
-                                location.reload();
-                            })
-                        })
-                    </script>
+                        <button class="btn btn-link btn-item-quantity" data-action="minus" data-id="{{ this.id }}">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
+                {{!-- Unit Price --}}
+                <div class="col-2 item-unit-price mt-3" align="center">
+                    <div>Unit Price</div>
+                    <strong>${{ this.product.price }}</strong>
+                </div>
+                {{!-- Total Price --}}
+                <div id="item-total-price-{{ this.id }}" class="col-2 item-total-price mt-3" align="center">
+                    <div>Total Price</div>
+                    <strong>${{ calculate this.product.price this.quantity }}</strong>
+                </div>
+                {{!-- Delete Button --}}
+                <button data-id="{{ this.id }}" class="col-1 btn btn-danger my-auto btn-delete">Delete</button>
             </div>
+            {{/each}}
+
         </div>
-        <!-- END EDMO HTML (Happy Coding!)-->
-    </main>
+        <div class = "displayTotalPrice">
+            <h1>Total Order Price : {{megaPrice}}</h1>
+            </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-order">Order</button>
+        </div>
+    </div>
+</div>
+<style>
+    .btn-order {
+        background-color: rgba(24, 6, 185, 0.8);
+        color: rgb(255, 255, 255);
+    }
+    .item-picture {
+        min-height: 100px;
+        max-height: 100px;
+        min-width: 75px;
+        max-width: 75px;
+    }
+    .item:last-child {
+        margin-bottom: 0 !important;
+    }
+</style>
+<script>
+    // get all elements with class="quantity-btn"
+    const modifyQuantityBtn = document.querySelectorAll(".btn-item-quantity");
 
-    <script>
-    </script>
-</body>
+    // assigns event listener to every button
+    modifyQuantityBtn.forEach((btn) => {
+        btn.addEventListener("click", async () => { 
+            // when the button is clicked, the code below will run
 
-</html>
+            // send a request to url="/cart/cart/<cart item id>/<action>"
+            // the url will contain the cart item id and action
+            // possible actions:
+            //      add
+            //      minus
+            const itemId = btn.dataset.id;
+            const response = await fetch(`/cart/cart/${itemId}/${btn.dataset.action}`, { method: 'POST' });
+            const { quantity, totalPrice , megaPrice} = await response.json();
+            if (quantity == 0) {
+                const itemDiv = document.getElementById(`item-${itemId}`);
+                itemDiv.remove();
+                return
+            } 
+
+            // change quantity and total price number
+            const quantityDivId = `item-quantity-number-${itemId}`;
+            const quantityDiv = document.getElementById(quantityDivId);
+            quantityDiv.innerText = quantity;
+
+            const totalPriceDivId = `item-total-price-${itemId}`;
+            const totalPriceDiv = document.getElementById(totalPriceDivId);
+            totalPriceDiv.innerText = `$${totalPrice}`;
+
+            const displayTotalPrice = document.querySelectorAll(".displayTotalPrice");
+            displayTotalPrice.innerHTML =`$${megaPrice}`;
+        })
+    })
+
+    const deleteBtns = document.querySelectorAll(".btn-delete");
+    deleteBtns.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            const itemId = btn.dataset.id;
+            const response = await fetch(`/cart/delete/${itemId}`, { method: 'DELETE' });
+            const { destroyed } = await response.json();
+            console.log(`Successfully deleted cart item ${itemId}`);
+            const itemDiv = document.getElementById(`item-${itemId}`);
+            itemDiv.remove();
+        });
+    });
+
+</script>

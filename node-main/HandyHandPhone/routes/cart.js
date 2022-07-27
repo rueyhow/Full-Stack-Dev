@@ -1,54 +1,51 @@
 const express = require('express');
+const ensureAuthenticated = require('../helpers/auth');
+const flashMessage = require('../helpers/messenger');
 const router = express.Router();
 const CartItem = require('../models/cart')
 const Product = require('../models/Product')
 
-router.get('/addcart/:productId',async (req,res) => {
-    Product.findOne(req.params.id)
-    .then (async(product)=>{
-        if (!product){
-            let cartItem = await CartItem.create({name: product.name , price: product.price ,quantity : 1});
-        }
-        else
-        {
-            CartItem.findOne({where:{name:product.name}})
-            .then((product)=>{
-                product.quantity += 1;
-            })
-        }
 
-        
+router.get('/', ensureAuthenticated, async (req, res) => {
+    const userId = req.user.id;
+    const cartItems = await CartItem.findAll({
+        where: { userId },
+        include: { model: Product }
     });
+    const UserCart = await CartItem.findAll({ where: { userId: req.user.dataValues.id } }, { include: Product })
+    var megaPrice = 0;
+    for (var i = 0; i < UserCart.length; i++) {
+        const ItemPrice = await Product.findByPk(UserCart[i].productId);
+        megaPrice += UserCart[i].quantity * ItemPrice.price;
+    }
+    return res.render('cart/cart', { cartItems  , megaPrice : megaPrice});
+});
+
+router.get('/addcart/:productId', ensureAuthenticated, async (req, res) => {
+    // get current user id = req.user.Datavalues.id;
+    // req.params.example
+    const product = await CartItem.findOne({ where: { userId: req.user.dataValues.id, productId: req.params.productId } })
+    if (!product) {
+        let cartItem = await CartItem.create({ quantity: 1, userId: req.user.dataValues.id, productId: req.params.productId });
+        flashMessage(res, "success", "Cart Updated")
+        res.redirect("back")
+    }
+    else {
+        product.quantity += 1;
+        await product.save();
+        flashMessage(res, "success", "Cart Updated");
+        res.redirect("back");
+    }
+});
+
+router.delete('/delete/:cartItemId', ensureAuthenticated, async (req, res) => {
+    const cartItemId = parseInt(req.params.cartItemId);
+    const cartItem = await CartItem.findOne({ where: { id: cartItemId } });
+    await cartItem.destroy();
+    return res.send({ deleted: true });
 });
 
 
-
-
-router.get('/zart', async (req, res) => {
-    const products = await Product.findAll();
-    const userId = req.user.dataValues.id;
-    console.log("userId: ",userId)
-    return res.render('cart/zart', { products, userId })
-})
-
-router.get('/cart', async (req, res) => {
-    const userId = req.user.dataValues.id; // gets the *logged in* user id from the request
-    var cartItems = await CartItem.findAll({ // finds all cart items that belongs to the user,
-        where: { userId: userId }, // through `userId`
-        include: { model: Product } 
-        // [fetching all associated elements](https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#fetching-all-associated-elements)
-    })
-    // will return:
-    // cartitem {
-    //      ...,
-    //      product {
-    //          ...
-    //      }
-    // }
-    // linked product object can be accessed like this:
-    // `const productName = cartObject.product.name`
-    return res.render('cart/cart', { cartItems });
-});
 
 router.post('/cart/:id/create', async (req, res) => {
     // get product id from the url
@@ -62,42 +59,35 @@ router.post('/cart/:id/create', async (req, res) => {
         productId,
         userId,
         // quantity is 1 by default
-    }) 
+    })
 })
 
-router.post('/cart/:id/add', async (req, res) => {
-    // get cart item id from the url
+router.post('/cart/:id/:action', async (req, res) => {
     const cartItemId = req.params.id;
+    const action = req.params.action;
+    const cartItem = await CartItem.findByPk(cartItemId, { include: Product });
 
-    // find the cart item through `cartItemId`
-    const cartItem = await CartItem.findByPk(cartItemId);
+    if (action == 'add') { cartItem.quantity += 1; }
+    else if (action == 'minus') { cartItem.quantity -= 1; }
 
-    // add 1 to the cart item quantity
-    cartItem.quantity += 1;
-    console.log('add') // for debugging
-    // save changes in the database
-    await cartItem.save()
-})
+    const quantity = cartItem.quantity;
+    const totalPrice = cartItem.quantity * cartItem.product.price;
 
-router.post('/cart/:id/minus', async (req, res) => {
-    // get cart item id from the url
-    const cartItemId = req.params.id;
-
-    // find the cart item through `cartItemId`
-    const cartItem = await CartItem.findByPk(cartItemId);
-
-    // minus 1 to the cart item quantity
-    cartItem.quantity -= 1;
-
-    if (cartItem.quantity == 0) {
-        // cart item should not exist with quantity 0
-        await cartItem.destroy(); 
+    if (quantity == 0) {
+        await cartItem.destroy();
+    } else {
+        await cartItem.save();
     }
-    else {
-        // save changes in the database
-        await cartItem.save()
+
+    // calculate total price
+    const UserCart = await CartItem.findAll({ where: { userId: req.user.dataValues.id } }, { include: Product })
+    var megaPrice = 0;
+    for (var i = 0; i < UserCart.length; i++) {
+        const ItemPrice = await Product.findByPk(UserCart[i].productId);
+        megaPrice += UserCart[i].quantity * ItemPrice.price;
     }
-    console.log('minus') // for debugging
-})
+    res.send({ quantity: quantity, totalPrice: totalPrice , megaPrice: megaPrice});
+
+});
 
 module.exports = router;
