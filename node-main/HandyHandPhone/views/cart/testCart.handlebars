@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/testCart.css">
+</head>
+<body>
+    <div class="container">
+
+<!-- cart items details -->
+{{#ifeq cartItems.length 0}}
+
+{{else}}
+<h1 class = "title1">{{user.name}}'s Cart</h1>
+<div class="container cart-page">
+  <table>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+{{#each cartItems}}
+    <tr>
+      <td>
+        <div class="cart-info">
+          <img src="/assets/img/HandyHandPhone-logos.jpeg" alt="" />
+          <div>
+            <p>{{this.product.name}}</p>
+            <small>Price : {{this.product.price}}</small>
+            <br />
+            <a href="/cart/action/{{this.id}}/remove">Remove</a>
+          </div>
+        </div>
+      </td>
+      <td>
+        <a href="/cart/action/{{this.id}}/add" class = "btn btn-primary">+</a>
+        {{this.quantity}}
+        <a href="/cart/action/{{this.id}}/minus" class = "btn btn-primary">-</a>
+        </td>
+      <td>${{calculate this.product.price this.quantity}}</td>
+    </tr>
+{{/each}}
+  </table>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    User Vouchers
+</button>
+<a href="/cart/revokeVouchers" class="btn-btn-success">Revoke Vouchers</a>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Vouchers Available</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          {{#each UserVouchers}}
+  <div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <article class="blog-card">
+        <div class="blog-card__background">
+          <div class="card__background--wrapper">
+            <div class="card__background--main" style="background-image: url('/assets/img/HandyHandPhone-logos.jpeg')">
+              <div class="card__background--layer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card__head">
+        </div>
+        <div class="blog-card__info">
+          <h5>{{this.VoucherCategory}}</h5>
+          <h5>{{this.promotion}}</h5>
+          <h6>Expiry Date : {{this.expiryDate}}</h6>
+          <h6>{{this.description}}</h6>
+          {{#ifeq this.expired false}}
+          <a href="/cart/redeemVoucher/{{this.VoucherCode}}" class="btn btn--with-icon"><i class="btn-icon fa fa-long-arrow-right"></i>Redeem</a>
+          {{else}}
+          <h1>Your Voucher has expired</h1>
+          {{/ifeq}}
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+{{/each}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="total-price">
+    <table>
+      <tr>
+        <td>Subtotal</td>
+        <td>${{megaPrice}}</td>
+      </tr>
+      <tr>
+        <td>Tax</td>
+        <td>${{tax}}</td>
+      </tr>
+      <tr>
+        <td>Delivery Fee</td>
+        <td>${{deliver}}</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>${{total megaPrice tax deliver discount}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+{{/ifeq}}
+
+<!-- Footer -->
+
+</div>
+</body>
+</html>

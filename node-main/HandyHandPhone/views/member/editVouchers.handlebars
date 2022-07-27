@@ -1,0 +1,64 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/assets/css/addVoucher/css">
+
+
+<div class="container contact-form">
+    <div class="contact-image">
+        <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact" />
+    </div>
+    <form method="post" action="/member/editVoucher/{{VoucherFound.id}}" enctype="multipart/form-data">
+        <h3>Edit Existing Voucher</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+
+                    {{!-- <select name="category" id=""></select> --}}
+                    <label for="category" class="col-md-">Choose a category</label>
+                    <select id="category" name="category">
+                        {{#ifeq VoucherFound.VoucherCategory "delivery"}}
+                        <option value="delivery">Delivery</option>
+                        <option value="discount">Discounts</option>
+                        <option value="free-gift">Free Gifts</option>
+                        {{else}}
+                        {{#ifeq VoucherFound.VoucherCategory "discounts"}}
+                        <option value="delivery">Discounts</option>
+                        <option value="discount">Delivery</option>
+                        <option value="free-gift">Free Gifts</option>
+                        {{else}}
+                        <option value="delivery">Free Gifts</option>
+                        <option value="discount">Discounts</option>
+                        <option value="free-gift">Delivery</option>
+                        {{/ifeq}}
+                        {{/ifeq}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="int" name="discount" class="form-control"
+                        value="{{VoucherFound.discount}}" />
+                </div>
+                <div class="form-group">
+                    <input type="int" name="price" class="form-control"
+                        value="{{VoucherFound.price}}" />
+                </div>
+                <div class="form-group">
+                    <input type="int" name="name" class="form-control" placeholder="voucher - name"
+                        value="{{VoucherFound.VoucherName}}" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea name="description" class="form-control" placeholder="{{VoucherFound.description}}"
+                        style="width: 100%; height: 150px;" value = {{VoucherFound.description}}></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" name="btnSubmit" class="btn btn-primary" value="Edit Voucher" />
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

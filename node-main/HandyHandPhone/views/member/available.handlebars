@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="/assets/css/availableVouchers.css">
+</head>
+<body>
+      <div class="voucherdiv">
+     {{#each availableVouchers}}
+    <div class="card" style="width: 18rem;" id = 'card1'>
+    <img class="card-img-top" src="\assets\img\HandyHandPhone-logo.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{this.VoucherCategory}}</h5>
+      <h3>{{this.VoucherName}}</h3>
+      <p class="card-text"><Strong> <h1>Price : {{this.price}}</h1></Strong>
+      </p>
+      <p class="card-text">
+       {{this.description}}
+      </p>
+        <a href="/member/editVoucher/{{this.id}}" class = 'btn2'>Edit</a>
+    </form>
+    </div>
+  </div>
+    {{/each}}
+  </div>
+</body>
+</html>

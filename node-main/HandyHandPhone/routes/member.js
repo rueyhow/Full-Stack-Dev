@@ -74,6 +74,11 @@ router.post('/addVouchers', ensureAuthenticated, async (req, res) => {
             flashMessage(res, "error", "Delivery should have 100% discount")
             res.redirect("back");
         }
+        else {
+            let voucher = await Vouchers.create({ VoucherCategory: category, VoucherName: name, discount: discount, description: description, price: price });
+            flashMessage(res, "success", "Voucher created successfully");
+            res.redirect('back');
+        }
     }
     else {
         let voucher = await Vouchers.create({ VoucherCategory: category, VoucherName: name, discount: discount, description: description, price: price });
@@ -184,5 +189,65 @@ router.get('/redeemBirthdayGift/:id', async (req, res) => {
         flashMessage(res, "error", "Birthday Gift has been redeemed , wait till next year!");
         res.redirect("back");
     }
+});
+
+router.get("/editVoucher", async function (req, res) {
+    const availableVouchers = await Vouchers.findAll();
+    res.render("member/available", { availableVouchers: availableVouchers })
+});
+
+router.get("/editVoucher/:VoucherId", async function (req, res) {
+    const voucherId = req.params.VoucherId;
+    const VoucherFound = await Vouchers.findOne({ where: { id: voucherId } });
+
+    res.render("member/editVouchers", { VoucherFound: VoucherFound })
+});
+
+
+router.post("/editVoucher/:VoucherId", async function (req, res) {
+    const id = req.headers.referer.split('/')[3];
+    const voucherId = req.params.VoucherId;
+    const VoucherFound = await Vouchers.findOne({ where: { id: voucherId } });
+    if (!VoucherFound) {
+        flashMessage(res, "error", "Voucher not found");
+        res.redirect("back");
+    }
+    else {
+        let { category, name, price, discount, description } = req.body;
+
+        if (description == '') {
+            flashMessage(res, "error", "Description cannot be null");
+            res.redirect("back");
+        }
+        else {
+            if (category === 'delivery' || category === 'free-gift') {
+                if (discount != 100) {
+                    flashMessage(res, "error", "Delivery should have 100% discount")
+                    res.redirect("back");
+                }
+                else {
+                    VoucherFound.VoucherName = name;
+                    VoucherFound.VoucherCategory = category;
+                    VoucherFound.price = price;
+                    VoucherFound.description = description;
+                    VoucherFound.discount = discount;
+                    await VoucherFound.save();
+                    flashMessage(res, "success", "Voucher has been successfully updated");
+                    res.redirect("back");
+                }
+            }
+            else {
+                VoucherFound.VoucherName = name;
+                VoucherFound.VoucherCategory = category;
+                VoucherFound.price = price;
+                VoucherFound.description = description;
+                VoucherFound.discount = discount;
+                await VoucherFound.save();
+                flashMessage(res, "success", "Voucher has been successfully updated");
+                res.redirect("back");
+            }
+        }
+    }
+
 });
 module.exports = router;

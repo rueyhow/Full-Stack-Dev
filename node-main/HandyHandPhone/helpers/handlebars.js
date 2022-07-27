@@ -49,6 +49,12 @@ const addition = function (a, b) {
     b = parseInt(b)
     return a + b;
 }
+const total = function (a, b , c , d) {
+    a = parseInt(a)
+    b = parseInt(b)
+    c = parseFloat(c)
+    return ((a + b + c) * d)
+}
 
 const getProperty = function(context , options){
     var ret = "";
@@ -59,5 +65,5 @@ const getProperty = function(context , options){
     return ret;
 }
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart};
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart , total};
 

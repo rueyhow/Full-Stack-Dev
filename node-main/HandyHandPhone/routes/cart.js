@@ -2,9 +2,11 @@ const express = require('express');
 const ensureAuthenticated = require('../helpers/auth');
 const flashMessage = require('../helpers/messenger');
 const router = express.Router();
-const CartItem = require('../models/cart')
-const Product = require('../models/Product')
-
+const CartItem = require('../models/cart');
+const Product = require('../models/Product');
+const User = require('../models/User');
+const UserVouchers = require('../models/Voucher').UserVouchers;
+const cookieParser = require("cookie-parser");
 
 router.get('/', ensureAuthenticated, async (req, res) => {
     const userId = req.user.id;
@@ -90,4 +92,98 @@ router.post('/cart/:id/:action', async (req, res) => {
 
 });
 
+
+// rueyhow's try
+
+router.get('/testCart' , async function(req, res){
+    // get cookies
+    var discount = 1;
+    var deliveryDiscount = 15;
+    if(req.cookies.voucherDiscount != undefined){
+        discount = req.cookies.voucherDiscount[0];
+    }
+    if (req.cookies.DeliveryDiscount !== undefined){
+        deliveryDiscount = req.cookies.DeliveryDiscount[0];
+    }
+    const userId = req.user.dataValues.id;
+    const cartItems = await CartItem.findAll({
+        where: { userId },
+        include: { model: Product }
+    });
+
+    const UserCart = await CartItem.findAll({ where: { userId: req.user.dataValues.id } }, { include: Product })
+    var megaPrice = 0;
+    for (var i = 0; i < UserCart.length; i++) {
+        const ItemPrice = await Product.findByPk(UserCart[i].productId);
+        megaPrice += UserCart[i].quantity * ItemPrice.price;
+    }
+    const tax = parseInt(megaPrice * 0.02);
+
+    // get user's vouchers
+    const userVouchers = await UserVouchers.findAll({where : {userId : req.user.dataValues.id}});
+    res.render("cart/testCart" , {cartItems: cartItems , megaPrice:megaPrice , tax: tax , deliver: deliveryDiscount , UserVouchers : userVouchers , discount : discount})
+});
+
+
+router.get("/action/:id/:action" , async(req , res)=>{
+    const CartId = req.params.id;
+    var action = req.params.action;
+    const cartItem = await CartItem.findByPk(CartId, { include: Product });
+    if (action == 'add') { cartItem.quantity += 1; }
+    else if (action == 'minus') { cartItem.quantity -= 1; }
+    else if (action =='remove') {
+        const cartItem = await CartItem.findOne({ where: { id: CartId } });
+        await cartItem.destroy();
+    }
+    const quantity = cartItem.quantity;
+    const totalPrice = cartItem.quantity * cartItem.product.price;
+
+    if (quantity == 0) {
+        await cartItem.destroy();
+    } else {
+        await cartItem.save();
+    }
+
+    flashMessage(res , "success", "Cart Updated")
+    res.redirect("back");
+});
+
+router.get("/redeemVoucher/:VoucherCode" , async(req , res)=>{
+    // normal code
+    const userId = req.user.dataValues.id;
+    const voucherCode = req.params.VoucherCode;
+    UserVouchers.findOne({where : {userId : userId , VoucherCode : voucherCode}})
+    .then(data=>{
+        if(!req.cookies.voucherDiscount && !req.cookies.DeliveryDiscount){
+            if(data.expired == false){
+                if (data.VoucherCategory == "discount"){
+                    const discountPercentage = data.discount / 100
+                    res.cookie("voucherDiscount" , [1-discountPercentage , data.VoucherCode] , {httpOnly: true});
+                    flashMessage(res , "success", "Discount Applied!")
+                    res.redirect("back");
+                }
+                else if (data.VoucherCategory == "delivery"){
+                    res.cookie("DeliveryDiscount" , [0, data.VoucherCode] , {httpOnly: true})
+                    flashMessage(res , "success", "Discount Applied!")
+                    res.redirect("back");
+                }
+            }
+            else{
+                flashMessage(res, "error" , 'Voucher has expired and cannot be used anymore');
+                res.redirect("back");
+            }
+        }
+        else{
+            flashMessage(res, "error", 'You have already applied a voucher!');
+            res.redirect("back");
+        }
+        
+    })
+});
+
+router.get('/revokeVouchers' , async function(req, res) {
+    res.clearCookie("voucherDiscount");
+    res.clearCookie("DeliveryDiscount");
+    res.redirect("back");
+});
 module.exports = router;
