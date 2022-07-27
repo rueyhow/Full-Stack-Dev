@@ -8,7 +8,8 @@ class CartItem extends Sequelize.Model {}
 CartItem.init(
     {
         quantity: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            defaultValue: 1
         }
     },
     { 

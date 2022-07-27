@@ -31,18 +31,30 @@
                                     <div>Price: {{calculate this.product.price this.quantity}}</div>
                                     <div>Quantity: {{this.quantity}}</div>
                                     <div>
-                                        <a href="#" class="btn btn-primary quantity-btn" data-value="add" data-id="{{this.id}}">+</a>
-                                        <a href="#" class="btn btn-secondary quantity-btn" data-value="minus" data-id="{{this.id}}">-</a>
+                                        <a href="#" class="btn btn-primary quantity-btn" data-action="add" data-id="{{this.id}}">+</a>
+                                        <a href="#" class="btn btn-secondary quantity-btn" data-action="minus" data-id="{{this.id}}">-</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     {{/each}}
                     <script>
+                        // get all elements with class="quantity-btn"
                         const modifyQuantityBtn = document.querySelectorAll(".quantity-btn");
+
+                        // assigns event listener to every button
                         modifyQuantityBtn.forEach((btn) => {
-                            btn.addEventListener("click", () => {
-                                fetch(`/cart/cart/${btn.dataset.id}/${btn.dataset.value}`, {method: 'POST'})
+                            btn.addEventListener("click", () => { 
+                                // when the button is clicked, the code below will run
+
+                                // send a request to url="/cart/cart/<cart item id>/<action>"
+                                // the url will contain the cart item id and action
+                                // possible actions:
+                                //      add
+                                //      minus
+                                fetch(`/cart/cart/${btn.dataset.id}/${btn.dataset.action}`, { method: 'POST' })
+
+                                // refreshes the page to update the number
                                 location.reload();
                             })
                         })

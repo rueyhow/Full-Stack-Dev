@@ -1,4 +1,5 @@
 const moment = require('moment');
+const CartItem = require('../models/cart')
 
 const formatDate = function (date, targetFormat) {
     return moment(date).format(targetFormat);
@@ -27,4 +28,20 @@ const calculate = function (a, b) {
     return a * b;
 }
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate};
+const isInCart = async function (pId, uId) {
+    console.log("pId: ",pId)
+    console.log("uId: ",uId)
+    const productId = parseInt(pId);
+    const userId = parseInt(uId);
+    const cartItem = await CartItem.findOne({
+        where: { userId, productId }
+    })
+
+    if (cartItem) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate, isInCart};
