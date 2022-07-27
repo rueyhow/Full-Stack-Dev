@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/assets/css/feedback.css">
+</head>
+
+<body>
+  {{!-- update user information section --}}
+  <h1 class="text-center mt-3 mb-3"></h1>
+  <div class="card">
+    {{!-- <div class="card-header">
+      <div class="row">
+        <div class="col">Sample Data</div>
+        <div class="col">
+          <a href="/sample_data/add" class="btn btn-success btn-sm float-end">Add</a>
+        </div>
+      </div>
+    </div> --}}
+    {{#ifeq user.admin true}}
+    <div class="card-body">
+      <h1>Users Created</h1>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Mobile Number</th>
+            <th>Admin Status</th>
+            <th>Member Status</th>
+            <th>Profile Description</th>
+            <th>Profile Picture</th>
+            <th>Edit User Profile</th>
+            <th>Enable Admin</th>
+            <th>Enable Member</th>
+          </tr>
+          {{#each sampleData}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.mobile}}</td>
+            <td>{{this.admin}}</td>
+            <td>{{this.member}}</td>
+            {{#ifeq this.description ""}}
+            <td>None</td>
+            {{else}}
+            <td>{{this.description}}</td>
+            {{/ifeq}}
+            <td>
+
+              {{#ifeq this.profilePicture "none"}}
+              <img class="rounded-circle" height="30px;" width="30px;" src="/assets/img/profile.jpg">
+              {{else}}
+              <img src="data:image/png;base64, {{this.profilePicture}}" class="rounded-circle" height="30px;"
+                width="30px;">
+              {{/ifeq}}
+            </td>
+            <td>
+              <a href="/admin/updateUserFromAdmin/{{this.id}}" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+            <td>
+              {{#ifeq this.admin true}}
+              <a href="/admin/updateAdmin/{{this.id}}" class="btn btn-danger btn-sm">Disable Admin</a>
+              {{else}}
+              <a href="/admin/updateAdmin/{{this.id}}" class="btn btn-success btn-sm">Enable Admin</a>
+              {{/ifeq}}
+            </td>
+            <td>
+              {{#ifeq this.member false}}
+              <a href="/admin/updateMember/{{this.id}}" class="btn btn-warning btn-sm">Enable Member</a>
+              {{else}}
+              <a href="/admin/updateMember/{{this.id}}" class="btn btn-warning btn-sm">Disable Member</a>
+              {{/ifeq}}
+            </td>
+          </tr>
+          {{!--
+          {{#ifeq sampleData.length 0}}
+          <tr>
+            <td colspan="5">No Data Found</td>
+          </tr>
+          {{/ifeq}} --}}
+          {{/each}}
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  {{!-- created admin user portion --}}
+
+  <section class="intro">
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+              <div class="card mask-custom">
+                <div class="card-body p-5 text-black">
+
+                  <div class="my-4">
+
+                    <h2 class="text-center mb-5">Create Admin User</h2>
+
+                    <form method="post">
+                      <!-- 2 column grid layout with text inputs for the first and last names -->
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-outline form-white">
+                            <input type="text" id="form3Example2" class="form-control form-control-lg" name="name"
+                              value="{{name}}" />
+                            <label class="form-label" for="form3Example2">Username</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Email input -->
+                      <div class="form-outline form-white mb-4">
+                        <input type="email" id="form3Example3" class="form-control form-control-lg" name="email"
+                          value="{{email}}">
+                        <label class="form-label" for="form3Example3">Email address</label>
+                      </div>
+
+                      <!-- Password input -->
+                      <div class="form-outline form-white mb-4">
+                        <input type="password" id="form3Example4" class="form-control form-control-lg"
+                          name="password" />
+                        <label class="form-label" for="form3Example4">Password</label>
+                      </div>
+
+
+                      <!-- Submit button -->
+                      <button type="submit" class="btn btn-light btn-block mb-4">Create Admin User</button>
+                    </form>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  {{!-- feedback portion --}}
+  {{#ifeq user.admin true}}
+  <div class="demo">
+    <h2 class="penName">HandyHandPhone Feedback</h2>
+    <div class="mainCard">
+      <div class="mainCardHeader"></div>
+      <div class="mainCardContent">
+        {{#ifeq feedbackdata.length 0}}
+        <h1>no feedback</h1>
+        {{else}}
+        {{#each feedbackdata}}
+        <div class="miniCard">
+          <h4>{{this.subject}}</h4>
+          <p>{{this.name}}</p>
+          <p>{{this.email}}</p>
+          <p>{{this.message}}</p>
+          <p>Reply Status : {{this.status}}</p>
+          <a href="" class="btn btn-primary">Reply</a>
+          <a href="/admin/deletefeedback/{{this.id}}" class="btn btn-danger">Delete</a>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/ifeq}}
+  </div>
+  {{else}}
+  <h1>Your are not authorised</h1>
+  {{/ifeq}}
+
+
+  {{!-- ticket section --}}
+
+  <h1 class="text-center mt-3 mb-3"></h1>
+  <div class="card">
+
+    <div class="card-body">
+      <h1>Ticket Management</h1>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tr>
+            <th>Ticket ID</th>
+            <th>Ticket Message</th>
+            <th>Ticket Type</th>
+            <th>Ticket Category</th>
+            <th>Ticket Completion Status</th>
+            <th>View Ticket</th>
+            <th>Take Up Ticket</th>
+            <th>Assigned Status</th>
+
+            <th>Delete Ticket</th>
+          </tr>
+          {{#each TicketData}}
+          <tr>
+            <td>{{this.ticketId}}</td>
+            <td>{{this.message}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.status}}</td>
+            <td>
+              <a href="/ticket/replyTicket/{{this.ticketId}}" class="btn btn-primary btn-sm">View</a>
+            </td>
+            {{#ifeq this.assigned false}}
+            <td><a href="/ticket/takeUpTicket/{{this.ticketId}}/{{user.id}}" class="btn btn-primary btn-sm">Take Up Ticket</a></td>
+            {{else}}
+            <td><h5>Ticket has already been taken up and assigned</h5></td>
+            {{/ifeq}}
+            <td>{{this.assigned}}</td>
+
+            <td>
+              {{#ifeq this.status true}}
+              <a href="/ticket/deleteTicket/{{this.ticketId}}" class="btn btn-primary btn-sm">Delete</a>
+              {{else}}
+              <h5>Ticket has not been completed</h5>
+              {{/ifeq}}
+            </td>
+
+          </tr>
+          {{!--
+          {{#ifeq sampleData.length 0}}
+          <tr>
+            <td colspan="5">No Data Found</td>
+          </tr>
+          {{/ifeq}} --}}
+          {{/each}}
+        </table>
+
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <h1>You are not authorised</h1>
+  {{/ifeq}}
+
+</body>
+
+</html>

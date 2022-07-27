@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "handyhandphone",
+  "private_key_id": "1075b995e1dea90409cbf62f8473277085c563fe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDPzm8mBhXe/6Oh\n9eZB1BVnWWx19Zhc1XZsV34tbujhAEKzITIzRMmbXLmZF9IBslMcxfYPl2jehTZ6\nUMuSxfGKIi0Wz3rTqbP3DaYXSioyVPA9cf4mx8L5z4UaprlLEzTnyNLNOqfZ6qxL\n+QOxeuYzSUiYe4oqPk3uSFenzJf3CWLYrXc+OnjXnXHWuZlVwrLTAtf6525u7Mvz\nKogd1kKbqC4d6aQzE50wTHiJ2nerjbJ98kV584iNkbl0I5UzVS/7vSqW2R/DKF0k\nvHu/rhgH7EZbTDZyYyolRRgsOpsGJjMO5WnJYFwKbs20Oszw3isbY6X9y3yRfJDk\nUhAvh5lJAgMBAAECggEAAfYoQy7/RZq65hBaxzAL8CzuSspB0Q2ER8dHJgFkIhyV\nJJj5fvWlJAnq6BSrGzA+W9kMBq9mkmQmRJ8O3uCutB+4tnyIo6cYT2qR8OoWriEy\nX9gbvqy3zNEeR+c/PEPPBemVwNFvDG3sSK7N777R3bXRQTw4TIgIRwmohylVnWO1\nSigJaHboTMu+/HAuzQcncKPEaD0oUT2GHikUsZl2m3dpm67A28I9vznICAy7xU7g\n8MIllg3r1ERiLdHqRfOhppshqJbNghpKo9XIM8JEM45FB+d+0UEqkD8hEi8/7Psy\njIZCOu7A/DAnVNJQGXzN3isS4D0LxXuDTjwa24IwsQKBgQD/oY3bSvlscbjxWnwz\nbVeUtIdJqYMz1G97nrsc3rOgZcH/snXIFesBLyn4gr1FB8cymBGctgpx4u+t7lc3\n6BeVkYzUIyfTSsDJJbSGqjQPOBnKt+YE5bviClzFrOZhbyqaA/t2DdefxSoiuJB/\nMO4/+BhLcPihAxAk6uT3ACRIkQKBgQDQGzXtyGWCqqvYz8MD2TqpgcQBxX5GwAGJ\nXF7tKdyp/64uYV8MXuo5N+cP5oT8aXffy8VO1MVKG/vQkok8MQ3eLuVGYHdFk/Rv\nedAguZ8WfWFe24NGtL/FvF+GxILjrZaqLRT8zyU+2ukaGrGhRN2C+Ef5HwnJzU9j\nBsHXfuzhOQKBgD3V6YerWixmUfNoDPUvtOjOxo8GByvJbnI70k1IfbEGDGh61czh\nqGgv7Xokvf3txLyzVkdPLbWgzJOJPOXUKahPff5uxppw0bOWgFW25ELuMib8VxLG\nM62ZDhnvGgdlqat53SEQdiE6w1eEx8dMocUtkUrmd+4S3JvhiiNJkH1RAoGAEkSh\nOktiJdNHnJO4Ycka7jBW/XTRvfIy8FTsfFM1bLLmHmorxtE6LGWs4edxexrjDAE+\nQ8pHu1azhz6lz2Pa/MsPE1t6fOAdEAAYdhb1USsWdhY88uMBBqGfnRv5BXWCiVPF\nyN+CPH9JASKgvzBlZY7X+pVv7YgZVO8N6xXYQ3kCgYEAxxBpwiX06f1CR7SgNj1K\nRoWtvexhvGj3VTACKFj00Du8ThGijH9IWcAQ6K+kI8BG9XgMBtJfeCMGT0JKVZlq\nS7ibbwZZGCgz2eCyb4ee2Bq3+AH6lrl/C84AJUtN6bBm23YiZsk0Xyh36rsSdDlO\nSCtAcNb0dcH4GcCJw+Ei9+w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "handyhandphone@handyhandphone.iam.gserviceaccount.com",
+  "client_id": "112783644013666197262",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/handyhandphone%40handyhandphone.iam.gserviceaccount.com"
+}

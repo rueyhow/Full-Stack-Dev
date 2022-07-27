@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "filereader": "^0.10.3"
+    "i": "^0.3.7",
+    "jszip": "^3.10.0",
+    "nodemon": "^2.0.19"
   }
 }

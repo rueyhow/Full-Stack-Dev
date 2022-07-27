@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Portfolio Details - Techie Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link rel="stylesheet" href="/assets/css/availableVouchers.css">
+  <style>
+    .rankImage {
+      width: 500px !important;
+      height: 500px !important;
+      position: relative;
+      left: 100px;
+    }
+
+    .d {
+      height: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <h2>Available Points : {{user.websitePoints}}</h1>
+      <!-- ======= Portfolio Details Section ======= -->
+      <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-8">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+                  {{#ifeq user.membershipRank "gold"}}
+                  <img src="/assets/icons/gold-bar.png" alt="" class="rankImage">
+                  {{else}}
+                  {{#ifeq user.membershipRank "platinum"}}
+                  <img src="\assets\icons\platinum.png" alt="" class="rankImage">
+                  {{else}}
+                  {{#ifeq user.membershipRank "sliver"}}
+                  <img src="\assets\icons\silver-cup.png" alt="" class="rankImage">
+                  {{else}}
+                  {{#ifeq user.membershipRank "immortal"}}
+                  <img src="/assets/icons/phoenix.png" alt="" class="rankImage">
+                  {{/ifeq}}
+                  {{/ifeq}}
+                  {{/ifeq}}
+                  {{/ifeq}}
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="portfolio-info">
+                <h3>Membership information</h3>
+                <ul>
+                  <li><strong>Rank</strong>: {{user.membershipRank}}</li>
+                  <li><strong>Username</strong>: {{user.name}}</li>
+                  <li><strong>Website Points</strong>: {{user.websitePoints}}</li>
+                  <li><strong>User Email</strong>: {{user.email}}</li>
+                  {{#ifeq user.birthday null}}
+                  <label for="birthday"><strong>Update Birthday : </strong></label>
+                  <input type="date" id="birthday" name="birthday">
+                  {{else}}
+                  {{/ifeq}}
+
+                </ul>
+              </div>
+              <div class="portfolio-description">
+                <h2>Welcome to HandyHandPhone's Membership Program!</h2>
+                <p>
+                  Welcome to the HandyHandPhone's Membership Program! We are glad to have you here!
+                  Becoming a member will be automatic when you register an account with us!
+                  A member has 4 different tiers , all with different benefits
+                  Obviously , the higher the tier , the better the benefits!
+                </p>
+                <p>
+                  You might ask , how do i get points?
+
+                  Well , every single time you make a purchase you will receieve a random amount of points according
+                  to your purchase amount. Oh yea! You will get a 200 points on your birthday!</p>
+
+                <p> Well , here are the tiers distrubution of our membership :
+                  Tier 1 : 0 points : sliver
+                  Tier 2 : 1000 points : gold
+                  Tier 3 : 2000 points : plat
+                  Tier 4 : Above 3000 : points Immortal </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+  {{!-- voouchers portion --}}
+  <h2>My Vouchers</h2>
+  {{#each YourVoucher}}
+  <div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <article class="blog-card">
+        <div class="blog-card__background">
+          <div class="card__background--wrapper">
+            <div class="card__background--main" style="background-image: url('/assets/img/HandyHandPhone-logos.jpeg')">
+              <div class="card__background--layer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-card__head">
+          <span class="date__box">
+            <span class="date__day">11</span>
+            <span class="date__month">JAN</span>
+          </span>
+        </div>
+        <div class="blog-card__info">
+          <h5>{{this.VoucherCategory}}</h5>
+          <h5>{{this.promotion}}</h5>
+          <h6>Expiry Date : {{this.expiryDate}}</h6>
+          <h6>{{this.description}}</h6>
+          {{#ifeq this.expired false}}
+          <a href="#" class="btn btn--with-icon"><i class="btn-icon fa fa-long-arrow-right"></i>Redeem</a>
+          {{else}}
+          <h1>Your Voucher has expired</h1>
+          {{/ifeq}}
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+<section class="detail-page">
+  <div class="container mt-5">
+    
+  </div>
+</section>
+  <h2>Vouchers For Sale</h2>
+
+  <div class="voucherdiv">
+     {{#each VoucherData}}
+    <div class="card" style="width: 18rem;" id = 'card1'>
+    <img class="card-img-top" src="\assets\img\HandyHandPhone-logo.jpeg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{this.VoucherCategory}}</h5>
+      <h3>{{this.VoucherName}}</h3>
+      <p class="card-text"><Strong> <h1>Price : {{this.price}}</h1></Strong>
+      </p>
+      <p class="card-text">
+       {{this.description}}
+      </p>
+        <a href="/member/purchaseVoucher/{{this.id}}" class = 'btn2'>Purchase</a>
+    </form>
+    </div>
+  </div>
+    {{/each}}
+  </div>
+
+</body>
+
+</html>

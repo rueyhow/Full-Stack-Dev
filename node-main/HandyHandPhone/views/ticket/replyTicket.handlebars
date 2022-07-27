@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/replyTicket.css">
+    <style>
+        /* for toggle behavior */
+    </style>
+</head>
+
+<body>
+    <div class="body1">
+
+        <!-- Vertical navbar -->
+
+        <div class="vertical-nav bg-dark" id="sidebar">
+            <div class="py-4 px-3 mb-4 bg-dark">
+                <div class="media-body">
+                    <h4 class="font-weight-white text-white mb-0">Ticket Information</h4>
+                    <p class="font-weight-white text-white mb-0">Ticket Submitted by : {{user1.name}}</p>
+                </div>
+            </div>
+            {{#ifeq TicketData.status false}}
+            <div class="nav flex-column bg-dark mb-0">
+                <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Category :
+                    {{TicketData.category}}</p>
+                <p class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket Finish Status :
+                    {{TicketData.status}}</p>
+            </div>
+            {{#ifeq user.admin true}}
+            <div class="nav flex-column bg-dark mb-0">
+                {{#ifeq PermissionData null}}
+                {{#ifeq TicketData.assigned true}}
+                <a class="btn btn-warning" href="/ticket/requestAccess">
+                    Request Access
+                </a>
+                {{else}}
+                <a class="btn btn-warning" href="/ticket/takeUpTicket/{{TicketId}}">Take Up Ticket</a>
+                {{/ifeq}}
+                {{else}}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Give Permission
+                </button>
+                {{/ifeq}}
+            </div>
+            {{/ifeq}}
+            {{else}}
+            <div class="nav flex-column bg-dark mb-0">
+                <h2 class="text-white font-weight-bold text-uppercase px-3 small pb-4 mb-0">Ticket has been closed</h2>
+            </div>
+            {{/ifeq}}
+        </div>
+
+        <!-- End vertical navbar -->
+
+        <div class="page-content p-5" id="content">
+            <!-- Toggle button -->
+            <!-- Demo content -->
+            <h2 class="display-4 text-white">Ticket Response Section</h2>
+            <p class="lead text-white mb-0">This is where your ticket issues will be held and settled
+            </p>
+            <div class="separator"></div>
+            <p class="lead text-white mb-0 text-bold">Ticket Message :
+                {{TicketData.message}}</p>
+
+            {{#each ResponseData}}
+            <div class="projcard-container">
+
+                <div class="projcard projcard-blue">
+                    <div class="projcard-innerbox">
+                        {{#ifeq this.admin true}}
+                        <img class="projcard-img" src="/assets/img/HandyHandPhone-logos.jpeg" />
+                        {{else}}
+                        <img class="projcard-img" src="/assets/img/HandyHandPhone-logo.jpeg" />
+                        {{/ifeq}}
+                        <div class="projcard-textbox">
+                            <div class="projcard-title">Sent by , User ID : {{this.senderId}}</div>
+                            <div class="projcard-subtitle">Ticket Response {{addition @index 1}}</div>
+                            <div class="projcard-bar"></div>
+                            {{#ifeq this.reply false}}
+                            <h5>No Text Reply</h5>
+                            {{else}}
+                            <div class="projcard-description">{{this.reply}}</div>
+                            {{/ifeq}}
+                            <!-- Button trigger modal -->
+                            {{#ifeq this.TicketImages false}}
+                            <h6>No Image was submitted</h6>
+                            {{else}}
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter-{{@index}}">
+                                View Images Submitted
+                            </button>
+                            <a href="/ticket/downloadPictures/{{this.ResponseId}}"
+                                    class="btn btn-warning">Download Pictures Submitted</a>
+                            </div>
+                            {{/ifeq}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalCenter-{{@index}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{#each this.TicketImages}}
+                                <div class="imageBox">
+                                    <div class="gallery">
+                                        <div class="img-w">
+                                            <a data-lightbox="images"
+                                                href="https://storage.cloud.google.com/handyhandphone/{{this.base64}}"><img
+                                                    id="image"
+                                                    src="https://storage.cloud.google.com/handyhandphone/{{this.base64}}"
+                                                    alt=""/></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{/each}}
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator"></div>
+            {{/each}}
+
+
+            {{#ifeq TicketData.status false}}
+            {{!-- response forms section --}}
+            <div class="text-white">
+                <form class="text-center border border-light p-5" method="POST" id="form69"
+                    enctype="multipart/form-data">
+                    <p class="h4 mb-4">Send your response</p>
+                    <p>Ticket Id {{TicketId}}</p>
+                    <p>Your user ID {{user.id}}</p>
+                    <!-- Message -->
+                    <div class="form-group">
+                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"
+                            placeholder="Message" name="reply"></textarea>
+                    </div>
+
+                    {{!-- images --}}
+                    {{!-- <input type="file" name="img"> --}}
+
+                    {{!-- test --}}
+                    <label for="files">Upload Images (Visualise Problem)</label>
+                    <input id="files" type="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg"
+                        name="imageFile">
+
+                    <output id="result"></output>
+                    <button class="btn btn-info btn-block" type="submit">Send</button>
+                    <!-- Send button -->
+                </form>
+            </div>
+            {{#ifeq user.admin true}}
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter1">
+                Complete Ticket
+            </button>
+            {{/ifeq}}
+            {{else}}
+            <h1 class="text-white font-weight-bold text-uppercase large">Ticket Closed</h1>
+            {{/ifeq}}
+
+        </div>
+
+    </div>
+
+
+
+    {{!-- admin users popup --}}
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal Give permission -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Admin Users (Give Permission)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{#getProperty AdminUsers}}
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-left">
+                                        <span>Name of admin : {{property}} Permission : {{value}}</span>
+                                    </div>
+                                    {{#ifeq value "false"}}
+                                    <div class="align-self-center">
+                                        <a href="/ticket/giveTicketPermission/{{property}}" class="btn btn-success"
+                                            id="permi">Give Permission</a>
+                                    </div>
+                                    {{else}}
+                                    <div class="align-self-center">
+                                        <a href="/ticket/removeTicketPermission/{{property}}" class="btn btn-danger"
+                                            id="permi">Remove Permission</a>
+                                    </div>
+                                    {{/ifeq}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    {{/getProperty}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Complete Ticket -->
+
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle1">Complete Ticket (select reason)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/ticket/completeTicket" method="POST">
+                        <label>Reasons</label>
+                        <select class="browser-default custom-select mb-4" name="reason">
+                            <option value="" disabled>Choose option</option>
+                            <option value="Problem has been solved" name="reason" selected>Problem has been
+                                solved
+                            </option>
+                            <option value="No reply from sender after 2 weeks" name="reason">No reply from
+                                sender
+                                after 2 weeks</option>
+                            <option value="Sender replying with irrelevant information" name="reason">Sender
+                                replying
+                                with irrelevant information</option>
+                            <option value="Others" name="reason">Others</option>
+                        </select>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit and Close Ticket</button>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/lightbox-plus-jquery.min.js"></script>
+<script src="/assets/js/replyTicket.js"></script>
+
+</html>

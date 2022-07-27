@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 require('dotenv').config();
-const fileUpload = require("express-fileupload")
+const fileUpload = require("express-fileupload");
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -107,8 +107,9 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const adminRoute = require("./routes/admin");
-const voucherRoute = require("./routes/voucher");
-const cartRoute = require("./routes/cart")
+const memberRoute = require("./routes/member");
+const cartRoute = require("./routes/cart");
+const ticketRoute = require("./routes/ticket");
 
 
 
@@ -116,45 +117,14 @@ const cartRoute = require("./routes/cart")
 app.use('/', mainRoute);
 app.use('/user', userRoute);
 app.use('/product' , productRoute);
-app.use('/admin' , adminRoute)
-app.use('/cart' , cartRoute)
-app.use('/voucher' , voucherRoute)
+app.use('/admin' , adminRoute);
+app.use('/cart' , cartRoute);
+app.use('/member' , memberRoute);
+app.use('/ticket' , ticketRoute);
 
 
-// IRFAN'S MOCK DATA //
-const Product = require('./models/Product')
-Product.findAndCountAll()
-	.then(async (data) => {
-	if (data.count == 0) {
-		Product.create({
-			name: 'Iphone 500',
-			price: 300,
-			stock: 20,
-			description: 'A wonderfull Iphone!!'
-		})
-		Product.create({
-			name: 'Handphone Seventeen',
-			price: 400,
-			stock: 15,
-			description: 'An outstanding mobile device!!'
-		})
-	}
-})
 
-const User = require('./models/User')
-const CartItem = require('./models/cart')
-User.findByPk(12) // Ruey how
-	.then(async user => {
-		const product = await Product.findOne({ where: {name: 'Handphone Seventeen' }})
-		const count = await CartItem.findAndCountAll({where: { productId: product.id, userId: user.id }})
-		if (count.count == 0) {
-			await CartItem.create({
-				productId: product.id,
-				userId: user.id,
-				quantity: 1
-			})
-		}
-	})
+
 
 /*
 * Creates a port for express server since we don't want our app to clash with well known
