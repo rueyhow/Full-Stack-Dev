@@ -62,9 +62,14 @@
                   <li><strong>Website Points</strong>: {{user.websitePoints}}</li>
                   <li><strong>User Email</strong>: {{user.email}}</li>
                   {{#ifeq user.birthday null}}
+                  <form action="/member/updateBirthday/{{user.id}}" method="post" enctype="multipart/form-data">
                   <label for="birthday"><strong>Update Birthday : </strong></label>
                   <input type="date" id="birthday" name="birthday">
+                  <button class = 'btn2' type = "submit">Update Birthday</button>
+                  </form>
                   {{else}}
+                  <li><strong>User Birthday</strong>: {{user.birthday}}</li>
+                  <a href="/member/redeemBirthdayGift/{{user.id}}" class="btn2" style = "position: relative; top :20px;">Redeem Birthday Gift</a>
                   {{/ifeq}}
 
                 </ul>

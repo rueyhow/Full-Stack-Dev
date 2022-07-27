@@ -5,9 +5,9 @@ const router = express.Router();
 const User = require('../models/User');
 const Vouchers = require('../models/Voucher').Vouchers;
 const UserVouchers = require('../models/Voucher').UserVouchers;
+const Transaction = require('../models/Transaction');
 
-
-router.get('/memberPage', ensureAuthenticated , async (req, res) => {
+router.get('/memberPage', ensureAuthenticated, async (req, res) => {
     // update users rank or membership tiers
     // tier 1 : 1000 points sliver
     // tier 2 : 2000 points gold
@@ -123,14 +123,66 @@ router.get('/purchaseVoucher/:VoucherId', async (req, res) => {
                 expired: false
             })
             await findUser.save();
+
+            let transaction = await Transaction.create({
+                transactionCategory: "Voucher Purchase",
+                price: Voucher.price,
+                information: "Voucher Bought With Website Points",
+                completed: true,
+                userId: req.user.dataValues.id
+            });
+
             flashMessage(res, "success", "Voucher has successfully been purchased");
         }
 
     }
     res.redirect("back");
 });
-router.get('/updateBirthday/:userId' , async (req, res) => {
+router.post('/updateBirthday/:userId', async (req, res) => {
     const userId = req.params.userId;
+
+    const birthday = req.body.birthday;
+    console.log(birthday)
+
+    // finding user
+    const user = await User.findOne({ where: { id: userId } });
+    if (user) {
+        user.birthday = birthday;
+        await user.save();
+        flashMessage(res, "success", "Birthday has successfully been updated");
+    }
     res.redirect("back");
+});
+
+
+router.get('/redeemBirthdayGift/:id', async (req, res) => {
+    const userid = req.params.id;
+
+    const findRedeem = await Transaction.findOne({ where: { userId: userid, transactionCategory: "birthday" } });
+
+    const user = await User.findByPk(userid);
+
+    const d = new Date();
+    if (!findRedeem) {
+        if (parseInt(user.birthday.split('-')[1]) == (d.getMonth())) {
+            Transaction.create({ transactionCategory: "birthday", price: 200, completed: true, information: "Birthday Gift Redeemed", userId: userid })
+                .then(async (data) => {
+                    user.websitePoints += 200;
+                    await user.save();
+                    flashMessage(res, "success", "200 Birthday Points Has Been Redeemed");
+                    res.redirect("back");
+                });
+        }
+        else {
+            flashMessage(res, "error", "Not your Birthday Month");
+            res.redirect("back");
+        }
+
+
+    }
+    else {
+        flashMessage(res, "error", "Birthday Gift has been redeemed , wait till next year!");
+        res.redirect("back");
+    }
 });
 module.exports = router;

@@ -9,10 +9,11 @@ const Ticket = require("../models/Ticket").Ticket;
 const Response = require("../models/Ticket").Response;
 const Permissions = require("../models/Ticket").Permissions;
 const bcrypt = require('bcryptjs');
-
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
-
+const ensureAuthenticated = require('../helpers/auth');
+const Transaction = require('../models/Transaction');
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 function sendEmail(toEmail, url1) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const message = {
@@ -21,12 +22,12 @@ function sendEmail(toEmail, url1) {
         from: `Handy Hand Phone <${process.env.SENDGRID_SENDER_EMAIL}>`,
         personalizations: [
             {
-              to: toEmail,
-              dynamic_template_data: {
-                url: url1
-              },
+                to: toEmail,
+                dynamic_template_data: {
+                    url: url1
+                },
             },
-          ],
+        ],
     };
 
     // Returns the promise from SendGrid to the calling function
@@ -38,17 +39,17 @@ function sendEmail(toEmail, url1) {
 }
 
 
-router.get('/AdminPage', async(req, res, next) =>{
+router.get('/AdminPage', async (req, res, next) => {
 
     const sampleData = await User.findAll();
     const data = await Feedback.findAll();
     const TicketData = await Ticket.findAll();
-    res.render('admin/AdminPage', { sampleData: sampleData , feedbackdata: data , TicketData : TicketData });
+    res.render('admin/AdminPage', { sampleData: sampleData, feedbackdata: data, TicketData: TicketData });
 });
 
 
-router.post('/AdminPage' , async (req,res)=>{
-    let { name, email, password} = req.body;
+router.post('/AdminPage', async (req, res) => {
+    let { name, email, password } = req.body;
 
     let isValid = true;
     if (password.length < 6) {
@@ -77,7 +78,7 @@ router.post('/AdminPage' , async (req,res)=>{
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             // Use hashed password
-            let user = await User.create({ name, email, password: hash, verified: 0 , mobile : 0 , member : false , admin : true, description : null , profilePicture : "none" , websitePoints : 0});
+            let user = await User.create({ name, email, password: hash, verified: 0, mobile: 0, member: false, admin: true, description: null, profilePicture: "none", websitePoints: 0 });
 
             // Send email
             let token = jwt.sign(email, process.env.APP_SECRET);
@@ -183,6 +184,12 @@ router.get('/deletefeedback/:id', (req, res) => {
                 res.redirect("back");
             }
         })
+
+});
+
+router.get('/charts', ensureAuthenticated, async (req, res) => {
+    const VoucherTransaction = await Transaction.findAll({ where: { transactionCategory: "Voucher Purchase" } });
+    res.render('admin/charts')
 
 });
 module.exports = router;

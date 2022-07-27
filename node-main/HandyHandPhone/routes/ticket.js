@@ -384,14 +384,28 @@ router.post("/completeTicket", async (req, res) => {
     try {
         let { reason } = req.body;
         var TicketId = req.headers.referer.split('/')[5];
+        const TicketMaster = await Permissions.findOne({where:{TicketID : TicketId , AdminID : req.user.dataValues.id}});
         if (reason) {
             Ticket.findOne({ where: { ticketId: TicketId } })
                 .then(async (ticket) => {
-                    ticket.status = true;
-                    ticket.completedReason = reason;
-                    await ticket.save();
-                    flashMessage(res, "success", "Ticket has been closed due to reason : " + reason);
-                    res.redirect("../admin/AdminPage");
+                    if (TicketMaster.level == 1){
+                        if(ticket.assigned == true){
+                            ticket.status = true;
+                            ticket.completedReason = reason;
+                            await ticket.save();
+                            flashMessage(res, "success", "Ticket has been closed due to reason : " + reason);
+                            res.redirect("../admin/AdminPage");
+                        }
+                        else{
+                            flashMessage(res, "error", "Ticket cannot be closed without being assigned");
+                            res.redirect('back');
+                        }
+                    }
+                    else{
+                        flashMessage(res, "error", "Ticket cannot be closed by NON Ticket Master");
+                        res.redirect('back');
+                    }
+
                 })
 
         }
