@@ -6,55 +6,56 @@
                     <div class="card mask-custom">
                         <div class="card-body p-5 text-black">
 
-                            <div class="-4">
-
-                                <h1 class="text-center mb-5">New Product</h2>
-
-                                    <form method="post">
-                                        <!-- 2 column grid layout with text inputs for the first and last names -->
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-outline form-white">
-                                                    <input type="text" id="form3Example2"
-                                                        class="form-control form-control-lg" name="name"
-                                                        value="{{name}}" />
-                                                    <label class="form-label" for="form3Example2">Product name</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Email input -->
-                                        <div class="form-outline form-white mb-4">
-                                            <input type="number" id="form3Example3" class="form-control form-control-lg"
-                                                name="price" value="{{email}}">
-                                            <label class="form-label" for="form3Example3">Price</label>
-                                        </div>
-
-                                        <!-- Password input -->
-                                        <div class="form-outline form-white mb-4">
-                                            <input type="number" id="form3Example4" class="form-control form-control-lg"
-                                                name="stock" />
-                                            <label class="form-label" for="form3Example4">Stock Amount</label>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <textarea class="form-control" name="description"
-                                                id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            <label for="exampleFormControlTextarea1">Product Description </label>
-                                        </div>
 
 
-                                        <!-- Submit button -->
-                                        <button type="submit" class="btn btn-light btn-block mb-4">Submit</button>
+                            <h1 class="text-center mb-5">New Product</h2>
 
-                                    </form>
+                                <form method="post"  enctype="multipart/form-data">
+                                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                                    <div class="form-outline form-white">
+                                        <input type="text" id="form3Example2" class="form-control form-control-lg"
+                                            name="name" value="{{name}}" />
+                                        <label class="form-label" for="form3Example2">Product name</label>
+                                    </div>
 
-                            </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input type="number" id="form3Example3" class="form-control form-control-lg"
+                                            name="price" value="{{email}}">
+                                        <label class="form-label" for="form3Example3">Price</label>
+                                    </div>
+
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input type="number" id="form3Example4" class="form-control form-control-lg"
+                                            name="stock"/>
+                                        <label class="form-label" for="form3Example4">Stock Amount</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="description"
+                                            id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <label for="exampleFormControlTextarea1">Product Description </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" id="productPic" name="productPic">
+                                        <label class="form-label" for="productPic">Product Picture</label>
+                                    </div>
+
+
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-success btn-block mb-4">Submit</button>
+
+                                </form>
 
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
