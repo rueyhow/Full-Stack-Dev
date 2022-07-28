@@ -7,27 +7,28 @@
     <div style="width: 60vw; background-color:azure; " class="p-5 mx-auto">
         <h3 class="text-primary text-center">Featured Products</h3>
 
-        <div style="display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;"></div>
-        {{#each products}}
+        <div class="row">
+            {{#each products}}
 
-        <div class="col my-3">
-            <a href="">
-                <h4 class="text-center">{{this.name}}</h4>
-                <img src="" class="img-fluid bg-light p-5"
-                    style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;" alt="prod img">
-                <div class="rating px-auto my-2"
-                    style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p class="text-center">${{this.price}}</p>
+            <div class="col-4 my-3">
+                <a href="">
+                    <h4 class="text-center">{{this.name}}</h4>
+                    <img src="data:image/png;base64, {{this.productPic}}" class="img-fluid bg-light p-5"
+                        style="" alt="prod img">
+                    <p class="text-center">${{this.price}}</p>
 
                 <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
                     class="btn btn-success mt-auto"><a href="/cart/addcart/{{this.id}}">Add To Cart</a></button>
         {{/each}}
+
+                    <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
+                        class="btn btn-success mt-auto"><a class="text-white" href="/cart/addcart/{{this.id}}">Add To
+                            Cart</a></button>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+
 
     </div>
     <!--<div class="card border-primary"

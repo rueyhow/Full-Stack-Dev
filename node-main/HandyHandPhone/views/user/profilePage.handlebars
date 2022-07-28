@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,159 +9,169 @@
     <link rel="stylesheet" href="/assets/css/profilePage.css">
     <link rel="stylesheet" href="/assets/js/profilePage.js">
 </head>
+
 <body>
     {{!-- profile card / info area --}}
-<section class="section about-section gray-bg" id="about">
-    <div class="container">
-        <div class="row align-items-center flex-row-reverse">
-            <div class="col-lg-6">
-                <div class="about-text go-to">
-                    <h3 class="dark-color">{{user.name}}</h3>
-                    <p>Hi! I am a customer viewing HandyHandPhone's website!</p>
-                    <div class="row about-list">
+    <section class="section about-section gray-bg" id="about">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color">{{user.name}}</h3>
+                        <p>Hi! I am a customer viewing HandyHandPhone's website!</p>
+                        <div class="row about-list">
 
-                        <div class="col-md-6">
-                            <div class="media">
-                                <p>Email : {{user.email}}</p>
-                            </div>
-                            <div class="media">
-                                <p>Username : {{user.name}}</p>
-                            </div>
-                            <div class="media">
-                                <p>Mobile : {{user.mobile}}</p>
-                            </div>
-                            <div class="media">
-                                <p>Description : {{user.description}}</p>
-                            </div>
-                             <div class="media">
-                                <p>Website Points : {{user.websitePoints}}</p>
-                            </div>
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <p>Email : {{user.email}}</p>
+                                </div>
+                                <div class="media">
+                                    <p>Username : {{user.name}}</p>
+                                </div>
+                                <div class="media">
+                                    <p>Mobile : {{user.mobile}}</p>
+                                </div>
+                                <div class="media">
+                                    <p>Description : {{user.description}}</p>
+                                </div>
+                                <div class="media">
+                                    <p>Website Points : {{user.websitePoints}}</p>
+                                </div>
 
-                            <div class="media">
-                                <a class="btn btn-primary" href="/user/logout">log out</a>
-                            </div>
+                                <div class="media">
+                                    <a class="btn btn-primary" href="/user/logout">log out</a>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="about-avatar">
+                        {{#ifeq user.profilePicture "none"}}
+                        <img src="\assets\img\profile.jpg" alt="" height="300px" width="300px"
+                            style="position:relative;left:120px;">
+                        {{else}}
+                        <img src="data:image/png;base64, {{user.profilePicture}}" height="300px" width="300px"
+                            style="position:relative;left:120px;">
+                        {{/ifeq}}
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6">
-                <div class="about-avatar">
-                    {{#ifeq user.profilePicture "none"}}
-                    <img src="\assets\img\profile.jpg" alt="" height="300px" width="300px"
-                        style="position:relative;left:120px;">
-                    {{else}}
-                    <img src="data:image/png;base64, {{user.profilePicture}}" height="300px" width="300px" style="position:relative;left:120px;">
-                    {{/ifeq}}
+
+        </div>
+    </section>
+
+
+
+    {{!-- edit profile part --}}
+    <form method="POST" action="/user/profilePage/{{user.id}}" enctype="multipart/form-data">
+        <div class="container rounded  mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        {{#ifeq user.profilePicture "none"}}
+                        <img class="rounded-circle mt-5" width="150px" height="150px" src="/assets/img/profile.jpg">
+                        {{else}}
+                        <img src="data:image/png;base64, {{user.profilePicture}}" height="150px" width="150px">
+                        {{/ifeq}}
+
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Name</label>
+                                <input type="text" class="form-control" value="{{user.name}}" placeholder="first name"
+                                    name="name">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Mobile Number</label>
+                                <input type="text" class="form-control" placeholder="enter phone number"
+                                    value="{{user.mobile}}" name="mobile">
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Email ID</label>
+                                <input type="text" class="form-control" placeholder="enter email id"
+                                    value="{{user.email}}" name="email">
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-4">
+                            <div class="col-md-12"><label class="labels">Enter your profile description
+                                    (optional)</label>
+                                <input type="textarea" class="form-control" placeholder="Description"
+                                    name="description">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center experience">
+                            <span>Edit ProfilePicture</span>
+                            <span class="border px-3 p-1 add-experience"><input type="file" id="img" name="img"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mt-5 text-center">
+                    <button class="btn btn-primary profile-button" type="submit">Save
+                        Profile</button>
                 </div>
             </div>
         </div>
-
-    </div>
-</section>
+    </form>
 
 
 
-{{!-- edit profile part --}}
-<form method="POST" action="/user/profilePage/{{user.id}}" enctype="multipart/form-data">
-    <div class="container rounded  mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    {{#ifeq user.profilePicture "none"}}
-                    <img class="rounded-circle mt-5" width="150px" height="150px" src="/assets/img/profile.jpg">
-                    {{else}}
-                     <img src="data:image/png;base64, {{user.profilePicture}}" height="150px" width="150px">
-                    {{/ifeq}}
+    {{!-- datatable portion --}}
 
-                    </span>
-                </div>
+    {{!-- ticket cards --}}
+    {{#each TicketData}}
+    <div class="blog-card">
+        <div class="meta">
+            <div class="photo"
+                style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)">
             </div>
-
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">Name</label>
-                            <input type="text" class="form-control" value="{{user.name}}" placeholder="first name"
-                                name="name">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label>
-                            <input type="text" class="form-control" placeholder="enter phone number"
-                                value="{{user.mobile}}" name="mobile">
-                        </div>
-
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Email ID</label>
-                            <input type="text" class="form-control" placeholder="enter email id" value="{{user.email}}"
-                                name="email">
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-4">
-                        <div class="col-md-12"><label class="labels">Enter your profile description (optional)</label>
-                            <input type="textarea" class="form-control" placeholder="Description" name="description">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Profile Picture</span><span class="border px-3 p-1 add-experience"><input type="file" id="img" name="img"></span></div>
-                </div>
-            </div>
-
-            
-            <div class="mt-5 text-center">
-                <button class="btn btn-primary profile-button" type="submit">Save
-                    Profile</button>
-            </div>
+            <ul class="details">
+                <li class="author">Ticket ID : #{{this.ticketId}}</li>
+                <li class="date">{{this.createdAt}}</li>
+                <li>Ticket Type : {{this.type}}</li>
+            </ul>
+        </div>
+        <div class="description">
+            <h1>Ticket ID : #{{this.ticketId}}</h1>
+            <h2>Ticket Type : {{this.type}}</h2>
+            <h2>Ticket Category : {{this.category}}</h2>
+            <p>Sent At : {{this.createdAt}}</p>
+            <p>{{this.message}}</p>
+            <p>Completed Status : {{this.status}}</p>
+            {{#ifeq this.status true}}
+            <p class="btn btn-success">
+                <a href="/ticket/replyTicket/{{this.ticketId}}">View Ticket</a>
+            </p>
+            {{else}}
+            <p class="btn btn-primary">
+                <a href="/ticket/replyTicket/{{this.ticketId}}">Reply</a>
+            </p>
+            {{/ifeq}}
         </div>
     </div>
-</form>
-
-
-
-{{!-- datatable portion --}}
-
-{{!-- ticket cards --}}
-{{#each TicketData}}
-  <div class="blog-card">
-    <div class="meta">
-      <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
-      <ul class="details">
-        <li class="author">Ticket ID : #{{this.ticketId}}</li>
-        <li class="date">{{this.createdAt}}</li>
-        <li>Ticket Type : {{this.type}}</li>
-      </ul>
-    </div>
-    <div class="description">
-      <h1>Ticket ID : #{{this.ticketId}}</h1>
-      <h2>Ticket Type : {{this.type}}</h2>
-      <h2>Ticket Category : {{this.category}}</h2>
-      <p>Sent At : {{this.createdAt}}</p>
-      <p>{{this.message}}</p>
-      <p>Completed Status : {{this.status}}</p>
-      {{#ifeq this.status true}}
-      <p class="btn btn-success">
-        <a href="/ticket/replyTicket/{{this.ticketId}}">View Ticket</a>
-      </p>
-      {{else}}
-    <p class="btn btn-primary">
-        <a href="/ticket/replyTicket/{{this.ticketId}}">Reply</a>
-      </p>
-      {{/ifeq}}
-    </div>
-  </div>
-   <div class="separator"></div>
-{{/each}}
+    <div class="separator"></div>
+    {{/each}}
 </body>
+
 </html>
