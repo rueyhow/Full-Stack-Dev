@@ -112,6 +112,15 @@
         <td>${{deliver}}</td>
       </tr>
       <tr>
+        {{#ifeq discountedAmount 0}}
+        {{else}}
+        <tr>
+          <td>Discounted Amount : </td>
+          <td>{{discountedAmount}}</td>
+        </tr>
+        {{/ifeq}}
+      </tr>
+      <tr>
         <td>Total</td>
         <td>${{total megaPrice tax deliver discount}}</td>
       </tr>

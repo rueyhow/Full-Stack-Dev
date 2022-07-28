@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/assets/css/product.css">
 <h1 class="text-center my-3">Products</h1>
 
 <button class="btn border px-auto"><a href="addproduct">Add Product</a></button>
@@ -26,8 +27,6 @@
 
                 <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
                     class="btn btn-success mt-auto"><a href="/cart/addcart/{{this.id}}">Add To Cart</a></button>
-            </a>
-        </div>
         {{/each}}
 
     </div>
@@ -40,5 +39,12 @@
             <a href="/product/deleteProduct/{{this.id}}">Delete button</a>
         </div> -->
 </div>
+<script>
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', e => {
+        button.classList.toggle('added');
+    });
+});
+</script>
 
 </div>

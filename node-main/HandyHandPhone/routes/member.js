@@ -168,8 +168,9 @@ router.get('/redeemBirthdayGift/:id', async (req, res) => {
     const user = await User.findByPk(userid);
 
     const d = new Date();
+    console.log(d.getMonth()+1 , user.birthday.split('-')[1])
     if (!findRedeem) {
-        if (parseInt(user.birthday.split('-')[1]) == (d.getMonth())) {
+        if (parseInt(user.birthday.split('-')[1]) == (d.getMonth()+1)) {
             Transaction.create({ transactionCategory: "birthday", price: 200, completed: true, information: "Birthday Gift Redeemed", userId: userid })
                 .then(async (data) => {
                     user.websitePoints += 200;

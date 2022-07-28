@@ -1,6 +1,9 @@
+const { request } = require('express');
 const moment = require('moment');
-const CartItem = require('../models/cart')
-
+const CartItem = require('../models/cart');
+const User = require('../models/user');
+const express = require('express');
+global.length = 0;
 const formatDate = function (date, targetFormat) {
     return moment(date).format(targetFormat);
 };
@@ -65,5 +68,16 @@ const getProperty = function(context , options){
     return ret;
 }
 
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart , total};
+async function getLength(id){
+    const Cart = await CartItem.findAll({where :{userId : id}})
+    return Cart.length;
+}
+const getCartLength = function (id){
+    getLength(id).then(x=>{
+        length = x;
+    })
+    return length;
+}
+
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart , total , getCartLength};
 
