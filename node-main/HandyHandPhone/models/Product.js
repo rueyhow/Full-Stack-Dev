@@ -9,7 +9,7 @@ Product.init(
         price: { type: Sequelize.DECIMAL },
         stock: { type: Sequelize.INTEGER },
         description: { type: Sequelize.STRING },
-        productPic: { type: Sequelize.TEXT('medium')}
+        productPic: { type: Sequelize.STRING}
     },
     {
         sequelize: db,

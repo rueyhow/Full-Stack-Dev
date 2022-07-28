@@ -32,11 +32,10 @@ router.post('/addproduct', (req, res) => {
 	let stock = req.body.stock;
 	let description = req.body.description;
 	let img = req.files.productPic.data;
-	console.log(img);
 	let base64 = buffer.from(img).toString('base64')
 	
 	Product.create(
-		{ name, price, stock, description, base64 }
+		{ name: name, price: price, stock:stock, description:description, productPic: base64 }
 	).then((product) => {
 		console.log(product.toJSON());
 		res.redirect('/product/productpage');
