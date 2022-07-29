@@ -11,6 +11,9 @@ const session = require('express-session');
 const path = require('path');
 require('dotenv').config();
 const fileUpload = require("express-fileupload");
+const CartItem = require('./models/cart');
+const Product = require('./models/Product');
+const User = require('./models/User');
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -30,7 +33,9 @@ const app = express();
 * */
 const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
-	helpers: helpers,
+	helpers: {helpers , getCartLength : function(){
+		
+	}},
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
