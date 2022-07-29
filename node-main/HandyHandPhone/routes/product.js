@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const Product = require('../models/Product');
+// Required for file upload
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({ dest: './public/data/productimage/' })
+
 
 
 router.get('/product', (req, res) => {
@@ -19,14 +24,18 @@ router.get('/addproduct', (req, res) => {
 	res.render('product/addproduct');
 });
 
+
 router.post('/addproduct', (req, res) => {
+	var buffer = require('buffer/').Buffer;
 	let name = req.body.name;
 	let price = req.body.price;
 	let stock = req.body.stock;
-	let description = req.body.description.slice(0, 100);
-
+	let description = req.body.description;
+	let img = req.files.productPic.data;
+	let base64 = buffer.from(img).toString('base64')
+	
 	Product.create(
-		{ name, price, stock, description }
+		{ name: name, price: price, stock:stock, description:description, productPic: base64 }
 	).then((product) => {
 		console.log(product.toJSON());
 		res.redirect('/product/productpage');

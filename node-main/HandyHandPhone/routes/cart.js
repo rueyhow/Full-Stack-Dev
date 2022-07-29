@@ -94,7 +94,6 @@ router.post('/cart/:id/:action', async (req, res) => {
 
 
 // rueyhow's try
-
 router.get('/testCart' , async function(req, res){
     // get cookies
     var discount = 1;
@@ -110,7 +109,6 @@ router.get('/testCart' , async function(req, res){
         where: { userId },
         include: { model: Product }
     });
-
     const UserCart = await CartItem.findAll({ where: { userId: req.user.dataValues.id } }, { include: Product })
     var megaPrice = 0;
     for (var i = 0; i < UserCart.length; i++) {
@@ -118,10 +116,14 @@ router.get('/testCart' , async function(req, res){
         megaPrice += UserCart[i].quantity * ItemPrice.price;
     }
     const tax = parseInt(megaPrice * 0.02);
-
+    var TotalAmount = megaPrice + deliveryDiscount + tax;
+    var discountedAmount = TotalAmount - (TotalAmount * discount);
+    if(discount == 1){
+        discountedAmount = 0;
+    }
     // get user's vouchers
     const userVouchers = await UserVouchers.findAll({where : {userId : req.user.dataValues.id}});
-    res.render("cart/testCart" , {cartItems: cartItems , megaPrice:megaPrice , tax: tax , deliver: deliveryDiscount , UserVouchers : userVouchers , discount : discount})
+    res.render("cart/testCart" , {cartItems: cartItems , megaPrice:megaPrice , tax: tax , deliver: deliveryDiscount , UserVouchers : userVouchers , discount : discount , discountedAmount : discountedAmount ,})
 });
 
 

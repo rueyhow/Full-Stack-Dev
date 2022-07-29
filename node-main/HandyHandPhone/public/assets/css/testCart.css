@@ -54,7 +54,7 @@
   
   .btn {
     display: inline-block;
-    background: #ff523b;
+    background: rgba(24, 6, 185, 0.8);
     color: #ffffff;
     padding: 8px 30px;
     margin: 30px 0;
@@ -128,7 +128,7 @@
   }
   .title::after {
     content: "";
-    background: #ff523b;
+    background: rgba(24, 6, 185, 0.8);
     width: 80px;
     height: 5px;
     border-radius: 5px;
@@ -144,11 +144,11 @@
   }
   
   .rating .fas {
-    color: #ff523b;
+    color: rgba(24, 6, 185, 0.8);
   }
   
   .rating .far {
-    color: #ff523b;
+    color: rgba(24, 6, 185, 0.8);
   }
   
   .col-4:hover {
@@ -197,7 +197,7 @@
   
   .fa-quote-left {
     font-size: 34px;
-    color: #ff523b;
+    color: rgba(24, 6, 185, 0.8);
   }
   
   .col-3 p {
@@ -342,7 +342,7 @@
   }
   
   select {
-    border: 1px solid #ff523b;
+    border: 1px solid rgba(24, 6, 185, 0.8);
     padding: 5px;
   }
   
@@ -356,7 +356,7 @@
   
   .page-btn span {
     display: inline-block;
-    border: 1px solid #ff523b;
+    border: 1px solid rgba(24, 6, 185, 0.8);
     margin-left: 10px;
     width: 40px;
     height: 40px;
@@ -366,7 +366,7 @@
   }
   
   .page-btn span:hover {
-    background: #ff523b;
+    background: rgba(24, 6, 185, 0.8);
     color: #ffffff;
   }
   
@@ -402,7 +402,7 @@
     padding-left: 10px;
     font-size: 20px;
     margin-right: 10px;
-    border: 1px solid #ff523b;
+    border: 1px solid rgba(24, 6, 185, 0.8);
   }
   
   input:focus {
@@ -410,7 +410,7 @@
   }
   
   .single-product .fas {
-    color: #ff523b;
+    color: rgba(24, 6, 185, 0.8);
     margin-left: 10px;
   }
   
@@ -474,7 +474,7 @@
   }
   
   .total-price table {
-    border-top: 3px solid #ff523b;
+    border-top: 3px solid rgba(24, 6, 185, 0.8);
     width: 100%;
     max-width: 400px;
   }
