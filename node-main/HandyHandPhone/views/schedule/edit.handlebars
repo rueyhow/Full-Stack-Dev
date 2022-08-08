@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="\assets\css\address.css">
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="mb-0">Edit Schedule</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="date" id="form7Example1" class="form-control" name="date"
+                                    value="{{schedule.date}}" />
+                                <label class="form-label" for="form7Example1">Date</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="time" id="form7Example1" class="form-control" name="time"
+                                    value="{{schedule.time}}" />
+                                <label class="form-label" for="form7Example1">Time</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Text input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form7Example2" class="form-control" name="isAvailable"
+                            value="{{schedule.isAvailable}}" />
+                        <label class=" form-label" for="form7Example2">Availablity</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        Save
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>

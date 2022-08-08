@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Orderstatus = require('../models/Orderstatus');
 const Deliverydetails = require('../models/Deliverydetails');
 const Voucher = require('../models/Voucher');
+const Schedule = require('../models/Schedule');
 
 // const Video = require('../models/Video');
 const Product = require('../models/Product');

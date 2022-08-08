@@ -1,40 +1,77 @@
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
-<link rel="stylesheet" href="\assets\css\schedule.css">
-<link rel="stylesheet" href="\views\schedule\schedule.js">
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
-
-<div class="" id="ds">Delivery Schedule</div>
-<div class="container-fluid px-0 px-sm-4 mx-auto">
-    <div class="row justify-content-center mx-0">
-        <div class="col-lg-10">
-            <div class="card border-0">
-                <form autocomplete="off">
-                    <div class="card-header bg-dark">
-                        <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1">
-                            <input type="text" id="dp1" class="datepicker" placeholder="Pick Date" name="date"
-                                readonly><span class="fa fa-calendar"></span>
+<div class="container mt-5">
+    <div class="delivery">
+        <div class="card">
+            <h4 class="card-header">Delivery Details</h4>
+            <div class="card-body">
+                <div>Delivery Schedule</div>
+                <br>
+                <div class="d-flex" id="dates">
+                    <div class="mr-3 p-2">
+                        <h6>Mon</h6>
+                        <p>10 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Tue</h6>
+                        <p>11 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Wed</h6>
+                        <p>12 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Thurs</h6>
+                        <p>13 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Fri</h6>
+                        <p>14 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Sat</h6>
+                        <p>15 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Sun</h6>
+                        <p>16 May</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Morning</div>
+                            <div style="color: green;">Available</div>
                         </div>
                     </div>
-                    <div class="card-body p-3 p-sm-5">
-                        <div class="row text-center mx-0">
-                            <div class="col-md-2 col-4 my-1 px-2">
-                                <div class="cell py-1">9:00AM - 10:00AM</div>
-                            </div>
-                            <div class="col-md-2 col-4 my-1 px-2">
-                                <div class="cell py-1">2:00PM - 3:00PM</div>
-                            </div>  
-                            <div class="col-md-2 col-4 my-1 px-2">
-                                <div class="cell py-1">4:00PM - 5:00PM</div>
-                            </div>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Afternoon</div>
+                            <div style="color:green;">Available</div>
+                        </div>
                     </div>
-                </form>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Evening</div>
+                            <div style="color: red;">Not Available</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    for (let i = 0; i < 7; i++) {
+        const today = new Date()
+        const tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + i+1)
+        document.getElementById("dates").children[i].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short'})
+        document.getElementById("dates").children[i].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
+    }
+
+    if ("{{schedule.date}}" == tomorrow){
+        
+
+    }
+
+</script>
