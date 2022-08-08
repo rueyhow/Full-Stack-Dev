@@ -56,7 +56,7 @@ const total = function (a, b , c , d) {
     a = parseInt(a)
     b = parseInt(b)
     c = parseFloat(c)
-    return ((a + b + c) * d)
+    return ((a* d) + b + c)
 }
 
 const getProperty = function(context , options){

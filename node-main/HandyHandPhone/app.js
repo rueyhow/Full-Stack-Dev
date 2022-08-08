@@ -33,9 +33,7 @@ const app = express();
 * */
 const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
-	helpers: {helpers , getCartLength : function(){
-		
-	}},
+	helpers: helpers,
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));

@@ -219,4 +219,8 @@ router.get('/auth/failure' , (req,res)=>{
     flashMessage(res, "error" , "Email has not been verified or you have not created your account");
     res.redirect("/");
 })
+
+router.get("/test"  , async function (req, res){
+    res.render("user/index")
+});
 module.exports = router;

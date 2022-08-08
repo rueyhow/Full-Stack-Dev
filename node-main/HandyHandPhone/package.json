@@ -50,6 +50,7 @@
     "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
     "sequelize": "^6.20.0",
+    "stripe": "^10.0.0",
     "zip-folder": "^1.0.0"
   }
 }

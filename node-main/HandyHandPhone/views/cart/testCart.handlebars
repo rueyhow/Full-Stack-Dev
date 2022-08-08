@@ -116,13 +116,20 @@
         {{else}}
         <tr>
           <td>Discounted Amount : </td>
-          <td>{{discountedAmount}}</td>
+          <td>${{discountedAmount}}</td>
         </tr>
         {{/ifeq}}
       </tr>
       <tr>
         <td>Total</td>
         <td>${{total megaPrice tax deliver discount}}</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/cart/create-checkout-session/{{total megaPrice tax deliver discount}}/{{discountedAmount}}/{{tax}}" method="POST">
+          <button type = "submit" class = "btn btn-primary">Check Out</button>
+          </form>
+          </td>
       </tr>
     </table>
   </div>
