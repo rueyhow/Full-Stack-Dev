@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <div class="delivery">
+        <div class="card">
+            <h4 class="card-header">Delivery Details</h4>
+            <div class="card-body">
+                <div>Delivery Schedule</div>
+                <br>
+                <div class="d-flex" id="dates">
+                    <div class="mr-3 p-2">
+                        <h6>Mon</h6>
+                        <p>10 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Tue</h6>
+                        <p>11 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Wed</h6>
+                        <p>12 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Thurs</h6>
+                        <p>13 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Fri</h6>
+                        <p>14 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Sat</h6>
+                        <p>15 May</p>
+                    </div>
+                    <div class="mr-3 p-2">
+                        <h6>Sun</h6>
+                        <p>16 May</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Morning</div>
+                            <div style="color: green;">Available</div>
+                        </div>
+                    </div>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Afternoon</div>
+                            <div style="color:green;">Available</div>
+                        </div>
+                    </div>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div>Evening</div>
+                            <div style="color: red;">Not Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    for (let i = 0; i < 7; i++) {
+        const today = new Date()
+        const tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + i+1)
+        document.getElementById("dates").children[i].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short'})
+        document.getElementById("dates").children[i].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
+    }
+
+    if ("{{schedule.date}}" == tomorrow){
+        
+
+    }
+
+</script>
