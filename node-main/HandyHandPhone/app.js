@@ -113,6 +113,10 @@ const adminRoute = require("./routes/admin");
 const memberRoute = require("./routes/member");
 const cartRoute = require("./routes/cart");
 const ticketRoute = require("./routes/ticket");
+const orderstatusRoute = require("./routes/orderstatus");
+const deliverydetailsRoute = require("./routes/deliverydetails");
+const scheduleRoute = require("./routes/schedule");
+
 
 
 
@@ -124,7 +128,9 @@ app.use('/admin' , adminRoute);
 app.use('/cart' , cartRoute);
 app.use('/member' , memberRoute);
 app.use('/ticket' , ticketRoute);
-
+app.use('/orderstatus', orderstatusRoute);
+app.use('/deliverydetails', deliverydetailsRoute);
+app.use('/schedule', scheduleRoute);
 
 
 
