@@ -296,19 +296,9 @@ router.post("/create-checkout-session/:total/:discountedAmount/:tax", async func
                 unit_amount: Item.price * 100 * discount,
             },
             quantity: UserCart[i].quantity,
+            tax_behavior: "exclusive",
         })
     }
-    CartArray.push(
-        {
-            price_data: {
-                currency: "sgd",
-                product_data: {
-                    name: "tax"
-                },
-                unit_amount: req.params.tax * 100,
-            },
-            quantity: 1,
-        })
     try {
         // Create a checkout session with Stripe
         const session = await stripe.checkout.sessions.create({
@@ -359,7 +349,7 @@ router.post("/create-checkout-session/:total/:discountedAmount/:tax", async func
                   }
                 },
               ],
-
+              
 
             payment_method_types: ["card"],
             line_items: CartArray,
