@@ -5,13 +5,11 @@ const Product = require('../models/Product');
 // Required for file upload
 const fs = require('fs');
 const multer = require('multer');
+const { profileEnd } = require('console');
 const upload = multer({ dest: './public/data/productimage/' })
 
 
 
-router.get('/product', (req, res) => {
-	res.render('/product/product');
-});
 
 router.get('/productpage', (req, res) => {
 	Product.findAll({}).then((products) => {
@@ -41,6 +39,18 @@ router.post('/addproduct', (req, res) => {
 		res.redirect('/product/productpage');
 	}).catch(err => console.log(err))
 });
+
+router.get('/productdetails/:id', (req, res) => {
+	var id = req.params.id;
+	Product.findByPk(id)
+		.then((product) => {
+			res.render('product/productdetails', { product: product });
+		})
+		.catch(err => console.log(err));
+		
+
+})
+
 
 router.get('/editProduct/:id', (req, res) => {
 	var id = req.params.id;

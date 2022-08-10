@@ -1,0 +1,18 @@
+<div class="container mt-5">
+    <div class="row p-2">
+        <div class="col-6">
+            <img src="data:image/png;base64, {{product.productPic}}" class="img-fluid bg-light mx-auto d-block"
+                style="height: 500px;" alt="prod img">
+        </div>
+        <div class="col-6 my-auto">
+            <div class="my-auto">
+                <h3>{{product.name}}</h3>
+                <h4 class="text-success">${{product.price}}</h4>
+                <h4>{{product.description}}</h4>
+                <button style="width:100%" class="btn btn-success mt-auto d-block"><a class="text-white"
+                        href="/cart/addcart/{{this.id}}">Add To
+                        Cart</a></button>
+            </div>
+        </div>
+    </div>
+</div>
