@@ -44,12 +44,74 @@
     </tr>
 {{/each}}
   </table>
+{{#each savedAddress}}
+<h1>{{this}}</h1>
+{{/each}}
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
     User Vouchers
 </button>
 <a href="/cart/revokeVouchers" class="btn-btn-success">Revoke Vouchers</a>
 
-<!-- Modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Delivery modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <h3 class="d-flex justify-content-center row">Delivery details Summary</h3>
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            <div class="rounded">
+                <div class="table-responsive table-borderless">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <div class="toggle-btn">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                </th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Unit No.</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            {{#each deliverydetails}}
+                            <tr class="cell-1">
+                                <td class="text-center">
+                                    <div class="toggle-btn">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                </td>
+                                <td>{{this.firstname}}</td>
+                                <td>{{this.lastname}}</td>
+                                <td>{{this.unitnumber}}</td>
+                                <td>{{this.address}}</td>
+                                <td>{{this.phone}}</td>
+                                <td><a href="/cart/useAddress/{{this.id}}" class="btn btn-success">
+                                    Use
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Voucher Model -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -97,6 +159,9 @@
     </div>
   </div>
 </div>
+
+
+
   <div class="total-price">
     <table>
       <tr>

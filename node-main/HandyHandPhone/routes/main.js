@@ -4,6 +4,7 @@ const flashMessage = require('../helpers/messenger');
 
 
 router.get('/', async function(req, res){
+    req.session.user = {};
 	res.render('home');
 });
 

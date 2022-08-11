@@ -8,7 +8,6 @@ const Schedule = db.define('schedule',
         isAvailable: { type: Sequelize.BOOLEAN }
 
     });
-Schedule.sync({ force: true });
 console.log("The table for the Schedule model was just (re)created!");
 
 module.exports = Schedule;

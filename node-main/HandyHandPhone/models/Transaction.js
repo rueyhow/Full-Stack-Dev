@@ -20,6 +20,12 @@ Transaction.init({
     }, 
     completed : {
         type : Sequelize.BOOLEAN , allowNull : true
+    },
+    items : {
+        type : Sequelize.JSON , allowNull : true  , unique : false , defaultValue : null
+    },
+    address : {
+        type : Sequelize.JSON , allowNull : true  , unique : false , defaultValue : null
     }
 },
 {
@@ -29,6 +35,5 @@ Transaction.init({
 
 Transaction.belongsTo(User, { foreignKey: "userId" })
 User.hasMany(Transaction, { foreignKey: "userId" })
-
 
 module.exports = Transaction;

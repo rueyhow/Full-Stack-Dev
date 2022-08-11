@@ -1,4 +1,5 @@
 const express = require('express');
+const flashMessage = require('../helpers/messenger');
 const router = express.Router();
 const Deliverydetails = require('../models/Deliverydetails')
 
@@ -15,17 +16,16 @@ router.post('/deliverydetails', (req, res) => {
 
 	Deliverydetails.create(
 		{
-			firstname, lastname, unitnumber, address, phone
+			firstname, lastname, unitnumber, address, phone , userId : req.user.dataValues.id
 		}).then((deliverydetails) => {
 			console.log(deliverydetails.toJSON());
+			flashMessage(res , "Success" , "Delivery Details belonging to" , firstname + lastname , " has been created")
 			res.redirect('/deliverydetails/deliverydetails');
 		}).catch(err => console.log(err))
 });
 
 router.get('/detailsummary', (req, res) => {
-	Deliverydetails.findAll({
-		raw: true
-	})
+	Deliverydetails.findAll({where : {userId : req.user.dataValues.id}})
 		.then((deliverydetails) => {
 			// pass object to listVideos.handlebar
 			res.render('deliverydetails/detailsummary', { deliverydetails });
