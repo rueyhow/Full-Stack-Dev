@@ -19,7 +19,7 @@ router.post('/deliverydetails', (req, res) => {
 			firstname, lastname, unitnumber, address, phone , userId : req.user.dataValues.id
 		}).then((deliverydetails) => {
 			console.log(deliverydetails.toJSON());
-			flashMessage(res , "Success" , "Delivery Details belonging to" , firstname + lastname , " has been created")
+			flashMessage(res , "success" , "Delivery Details belonging to "  + firstname + lastname + " has been created")
 			res.redirect('/deliverydetails/deliverydetails');
 		}).catch(err => console.log(err))
 });

@@ -14,6 +14,7 @@ const fs = require("fs");
 const ensureAuthenticated = require('../helpers/auth');
 require('../helpers/auth2');
 const Ticket = require("../models/Ticket").Ticket;
+const Transaction = require("../models/Transaction");
 
 const sgMail = require('@sendgrid/mail');
 
@@ -164,7 +165,8 @@ router.get('/logout', (req, res) => {
 // profile page routes
 router.get('/profilePage/:id' ,ensureAuthenticated, async(req,res) => {
     const TicketData = await Ticket.findAll({where:{userId : req.user.dataValues.id}});
-    res.render('user/profilePage' , {TicketData : TicketData});
+    const TransactionHistory = await Transaction.findAll({where : {userId : req.user.dataValues.id}})
+    res.render('user/profilePage' , {TicketData : TicketData , TransactionHistory : TransactionHistory});
 });
 
 

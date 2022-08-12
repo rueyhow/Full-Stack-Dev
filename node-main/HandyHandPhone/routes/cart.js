@@ -185,7 +185,7 @@ router.get("/redeemVoucher/:VoucherCode", async (req, res) => {
             res.redirect("back");
           }
           else if (data.VoucherCategory == "delivery") {
-            req.session.user.DeliveryDiscount = [1 - discountPercentage, data.VoucherCode];
+            req.session.user.DeliveryDiscount = [0, data.VoucherCode];
             flashMessage(res, "success", "Discount Applied!")
             res.redirect("back");
           }
@@ -239,7 +239,7 @@ router.post("/create-checkout-session/:total/:discountedAmount/:tax", async func
     discount = req.session.user.voucherDiscount[0];
   }
   const shippingArray = [];
-  if (req.session.user.DeliveryDiscount !== undefined) {
+  if (req.session.user.DeliveryDiscount != undefined) {
     shippingArray.push({
       shipping_rate_data: {
         type: 'fixed_amount',
@@ -330,50 +330,7 @@ router.post("/create-checkout-session/:total/:discountedAmount/:tax", async func
   try {
     // Create a checkout session with Stripe
     const session = await stripe.checkout.sessions.create({
-      shipping_options: [
-        {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: 1000,
-              currency: 'sgd',
-            },
-            display_name: 'Express Shipping',
-            // Delivers between 5-7 business days
-            delivery_estimate: {
-              minimum: {
-                unit: 'business_day',
-                value: 5,
-              },
-              maximum: {
-                unit: 'business_day',
-                value: 7,
-              },
-            }
-          }
-        },
-        {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: 3000,
-              currency: 'sgd',
-            },
-            display_name: 'Next day air',
-            // Delivers in exactly 1 business day
-            delivery_estimate: {
-              minimum: {
-                unit: 'business_day',
-                value: 1,
-              },
-              maximum: {
-                unit: 'business_day',
-                value: 1,
-              },
-            }
-          }
-        },
-      ],
+      shipping_options: shippingArray,
       payment_method_types: ["card"],
       customer_email: req.user.dataValues.email,
       payment_intent_data : {

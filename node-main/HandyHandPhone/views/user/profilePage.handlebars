@@ -172,6 +172,13 @@
     </div>
     <div class="separator"></div>
     {{/each}}
+
+
+    {{#each TransactionHistory}}
+    <p>Transaction ID {{this.transactionId}}</p>
+    <p>{{this.address.firstname}}</p>
+    <p>{{this.address.address}}</p>
+    {{/each}}
 </body>
 
 </html>
