@@ -7,33 +7,36 @@
             </div>
             <div class="card-body">
                 <form method="post">
-                    <!-- 2 column grid layout with text inputs for the first and last names -->
-                    <div class="form-outline mb-4">
-                        <div class="form-outline mb-4">
-                            <div class="form-outline mb-4">
-                                <input type="date" id="form7Example2" class="form-control" name="date" />
-                                <label class="form-label" for="form7Example1">Date</label>
-                            </div>
+                    <!-- date -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <input type="date" id="date" class="form-control" name="date" />
+                            <label class="form-label" for="date">Date</label>
                         </div>
-                        <div class="form-outline mb-4">
-                            <div class="form-outline mb-4">
-                                <button type="" id="form7Example2" class="form-control" name="time" />
-                                <select id="form7Example2" class="form-control" name="time" />
+                    </div>
+                    <!-- time -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <select id="time" class="form-control" name="time">
                                 <option value="1">Morning</option>
                                 <option value="2">Afternoon</option>
                                 <option value="3">Evening</option>
-                                <label class="form-label" for="form7Example1">Time</label>
-                            </div>
-                        </div>
-                        <!-- Text input -->
-                        <div class="form-outline mb-4">
-                            <input type="radio" id="form7Example2a" name="isAvailable" value=1 />
-                            <label for="form7Example2a">Available</label>
-                            <br>
-                            <input type="radio" id="form7Example2b" name="isAvailable" value=0 />
-                            <label class=" form-label" for="form7Example2b">Not Available</label>
+                            </select>
+                            <label class="form-label" for="time">Time</label>
                         </div>
                     </div>
+                    <!-- availability -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <select id="availability" class="form-control" name="availability">
+                                <option value="1">Available 1</option>
+                                <option value="2">Available 2</option>
+                                <option value="3">Unavailable</option>
+                            </select>
+                            <label class="form-label" for="availability">Availability</label>
+                        </div>  
+                    </div>
+                    <!-- submit button -->
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
                         Save
                     </button>

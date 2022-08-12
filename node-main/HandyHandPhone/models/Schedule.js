@@ -5,9 +5,10 @@ const Schedule = db.define('schedule',
     {
         date: { type: Sequelize.DATEONLY },
         time: { type: Sequelize.INTEGER },
-        isAvailable: { type: Sequelize.BOOLEAN }
+        availability: { type: Sequelize.INTEGER }
 
     });
+Schedule.sync({ force: true });
 console.log("The table for the Schedule model was just (re)created!");
 
 module.exports = Schedule;
