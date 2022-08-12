@@ -7,29 +7,36 @@
             </div>
             <div class="card-body">
                 <form method="post">
-                    <!-- 2 column grid layout with text inputs for the first and last names -->
-                    <div class="row mb-4">
-                        <div class="col">
-                            <div class="form-outline">
-                                <input type="date" id="form7Example1" class="form-control" name="date"
-                                    value="{{schedule.date}}" />
-                                <label class="form-label" for="form7Example1">Date</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-outline">
-                                <input type="time" id="form7Example1" class="form-control" name="time"
-                                    value="{{schedule.time}}" />
-                                <label class="form-label" for="form7Example1">Time</label>
-                            </div>
+                    <!-- date -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <input type="date" id="date" class="form-control" name="date" value="{{schedule.date}}"/>
+                            <label class="form-label" for="date">Date</label>
                         </div>
                     </div>
-                    <!-- Text input -->
-                    <div class="form-outline mb-4">
-                        <input type="text" id="form7Example2" class="form-control" name="isAvailable"
-                            value="{{schedule.isAvailable}}" />
-                        <label class=" form-label" for="form7Example2">Availablity</label>
+                    <!-- time -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <select id="time" class="form-control" name="time" value="{{schedule.time}}">
+                                <option value="1">Morning</option>
+                                <option value="2">Afternoon</option>
+                                <option value="3">Evening</option>
+                            </select>
+                            <label class="form-label" for="time">Time</label>
+                        </div>
                     </div>
+                    <!-- availability -->
+                    <div class="row mb-2">
+                        <div class="form-outline mb-2">
+                            <select id="availability" class="form-control" name="availability" value="{{schedule.availability}}">
+                                <option value="1">Available 1</option>
+                                <option value="2">Available 2</option>
+                                <option value="3">Unavailable</option>
+                            </select>
+                            <label class="form-label" for="availability">Availability</label>
+                        </div>  
+                    </div>
+                    <!-- submit button -->
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
                         Save
                     </button>
@@ -38,8 +45,6 @@
 
         </div>
     </div>
-
-
 </div>
 </div>
 </div>

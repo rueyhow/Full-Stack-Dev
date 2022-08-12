@@ -11,11 +11,11 @@ router.get('/schedule', (req, res) => {
 router.post('/schedule', (req, res) => {
 	let date = req.body.date;
 	let time = req.body.time;
-	let isAvailable = req.body.isAvailable;
+	let availability = req.body.availability;
 
 	Schedule.create(
 		{
-			date, time, isAvailable
+			date, time, availability
 		}).then((schedule) => {
 			console.log(schedule.toJSON());
 			res.redirect('/schedule/schedule');
@@ -38,11 +38,11 @@ router.get('/create', (req, res) => {
 router.post('/create', (req, res) => {
 	let date = req.body.date;
 	let time = req.body.time;
-	let isAvailable = req.body.isAvailable;
+	let availability = req.body.availability;
 
 	Schedule.create(
 		{
-			date, time, isAvailable
+			date, time, availability
 		}).then((schedule) => {
 			console.log(schedule.toJSON());
 			res.redirect('/schedule/create');
@@ -63,11 +63,11 @@ router.get('/update', (req, res) => {
 router.post('/edit/:id', (req, res) => {
 	let date = req.body.date;
 	let time = req.body.time;
-	let isAvailable = req.body.isAvailable;
+	let availability = req.body.availability;
 
 	Schedule.update(
 		{
-			date, time, isAvailable
+			date, time, availability
 		},
 		{ where: { id: req.params.id } }
 	)

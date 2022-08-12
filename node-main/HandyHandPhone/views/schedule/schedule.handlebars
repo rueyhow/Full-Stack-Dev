@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="\assets\css\schedule.css">
 <div class="container mt-5">
     <div class="delivery">
         <div class="card">
@@ -5,53 +6,76 @@
             <div class="card-body">
                 <div>Delivery Schedule</div>
                 <br>
-                <div class="d-flex" id="dates">
+                <div class="d-flex pagination" id="dates">
                     <div class="mr-3 p-2">
-                        <h6>Mon</h6>
-                        <p>10 May</p>
+                        <a href="#" id="one">
+                            <h5>Mon</h5>
+                            <p>10 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Tue</h6>
-                        <p>11 May</p>
+                        <a href="#" id="two">
+                            <h5>Tue</h5>
+                            <p>11 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Wed</h6>
-                        <p>12 May</p>
+                        <a href="#" id="three">
+                            <h5>Wed</h5>
+                            <p>12 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Thurs</h6>
-                        <p>13 May</p>
+                        <a href="#" id="four">
+                            <h5>Thurs</h5>
+                            <p>13 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Fri</h6>
-                        <p>14 May</p>
+                        <a href="#" id="five">
+                            <h5>Fri</h5>
+                            <p>14 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Sat</h6>
-                        <p>15 May</p>
+                        <a href="#" id="six">
+                            <h5>Sat</h5>
+                            <p>15 May</p>
+                        </a>
                     </div>
                     <div class="mr-3 p-2">
-                        <h6>Sun</h6>
-                        <p>16 May</p>
+                        <a href="#" id="seven">
+                            <h5>Sun</h5>
+                            <p>16 May</p>
+                        </a>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="card w-100">
                         <div class="card-body">
-                            <div>Morning</div>
-                            <div style="color: green;">Available</div>
+                            <div>
+                                <h6>Morning</h6>
+                            </div>
+                            <div>Available 1</div>
+                            <div>Available 2</div>
                         </div>
                     </div>
                     <div class="card w-100">
                         <div class="card-body">
-                            <div>Afternoon</div>
-                            <div style="color:green;">Available</div>
+                            <div>
+                                <h6>Afternoon</h6>
+                            </div>
+                            <div>Available 1</div>
+                            <div>Available 2</div>
                         </div>
                     </div>
                     <div class="card w-100">
                         <div class="card-body">
-                            <div>Evening</div>
-                            <div style="color: red;">Not Available</div>
+                            <div>
+                                <h6>Evening</h6>
+                            </div>
+                            <div>Available 1</div>
+                            <div>Available 2</div>
                         </div>
                     </div>
                 </div>
@@ -64,14 +88,97 @@
     for (let i = 0; i < 7; i++) {
         const today = new Date()
         const tomorrow = new Date(today)
-        tomorrow.setDate(tomorrow.getDate() + i+1)
-        document.getElementById("dates").children[i].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short'})
-        document.getElementById("dates").children[i].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
+        tomorrow.setDate(tomorrow.getDate() + i + 1)
+        document.getElementById("dates").children[i].children[0].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short' })
+        document.getElementById("dates").children[i].children[0].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
     }
+    function abc() {
+        var a = document.getElementById("one");
+        var b = document.getElementById("two");
+        var c = document.getElementById("three");
+        var d = document.getElementById("four");
+        var e = document.getElementById("five");
+        var f = document.getElementById("six");
+        var g = document.getElementById("seven");
 
-    if ("{{schedule.date}}" == tomorrow){
-        
+        const one = document.getElementById("one")
+        one.addEventListener("click", () => {
+            a.classList.add("active")
+            b.classList.remove("active")
+            c.classList.remove("active")
+            d.classList.remove("active")
+            e.classList.remove("active")
+            f.classList.remove("active")
+            g.classList.remove("active")
+        });
 
+        const two = document.getElementById("two")
+        two.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.add("active")
+            c.classList.remove("active")
+            d.classList.remove("active")
+            e.classList.remove("active")
+            f.classList.remove("active")
+            g.classList.remove("active")
+        });
+
+        const three = document.getElementById("three")
+        three.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.remove("active")
+            c.classList.add("active")
+            d.classList.remove("active")
+            e.classList.remove("active")
+            f.classList.remove("active")
+            g.classList.remove("active")
+        });
+
+        const four = document.getElementById("four")
+        four.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.remove("active")
+            c.classList.remove("active")
+            d.classList.add("active")
+            e.classList.remove("active")
+            f.classList.remove("active")
+            g.classList.remove("active")
+        });
+
+        const five = document.getElementById("five")
+        five.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.remove("active")
+            c.classList.remove("active")
+            d.classList.remove("active")
+            e.classList.add("active")
+            f.classList.remove("active")
+            g.classList.remove("active")
+        });
+
+        const six = document.getElementById("six")
+        six.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.remove("active")
+            c.classList.remove("active")
+            d.classList.remove("active")
+            e.classList.remove("active")
+            f.classList.add("active")
+            g.classList.remove("active")
+        });
+
+        const seven = document.getElementById("seven")
+        seven.addEventListener("click", () => {
+            a.classList.remove("active")
+            b.classList.remove("active")
+            c.classList.remove("active")
+            d.classList.remove("active")
+            e.classList.remove("active")
+            f.classList.remove("active")
+            g.classList.add("active")
+        });
     }
+    abc()
+
 
 </script>
