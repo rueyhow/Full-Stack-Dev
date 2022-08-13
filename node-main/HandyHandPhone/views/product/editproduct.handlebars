@@ -32,13 +32,15 @@
 
                                         <!-- Password input -->
                                         <div class="form-outline form-white mb-4">
-                                            <input type="number" value="{{product.stock}}" id="form3Example4" class="form-control form-control-lg"
-                                                name="stock" />
+                                            <input type="number" value="{{product.stock}}" id="form3Example4"
+                                                class="form-control form-control-lg" name="stock" />
                                             <label class="form-label" for="form3Example4">Stock Amount</label>
                                         </div>
 
                                         <div class="form-group">
-                                            <textarea class="form-control" placeholder="{{product.description}}" value="{{product.description}}" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea class="form-control" value="{{product.description}}"
+                                                name="description" id="exampleFormControlTextarea1"
+                                                rows="3">{{product.description}}</textarea>
                                             <label for="exampleFormControlTextarea1">Product Description </label>
                                         </div>
 

@@ -2,6 +2,8 @@
 <style>
 </style>
 <button class="btn border px-auto"><a href="addproduct">Add Product</a></button>
+<button class="btn border px-auto"><a href="productadmin">Admin</a></button>
+
 <div class="card card-body">
 
     <div style="width: 60vw; background-color:azure; " class="p-5 mx-auto">
@@ -20,15 +22,8 @@
 
                     <p class="text-center text-success">${{this.price}}</p>
 
-<<<<<<< Updated upstream
-                    <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
-                        class="btn btn-success mt-auto"><a class="text-white" href="/cart/addcart/{{this.id}}">Add To
-                            Cart</a></button>
-                </a>
-=======
                 <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
                     class="btn btn-success mt-auto"><a style="color:wheat" href="/cart/addcart/{{this.id}}">Add To Cart</a></button>
->>>>>>> Stashed changes
             </div>
             {{/each}}
         </div>

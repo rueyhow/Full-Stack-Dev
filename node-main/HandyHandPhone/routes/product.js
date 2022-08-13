@@ -17,6 +17,12 @@ router.get('/productpage', (req, res) => {
 	});
 });
 
+router.get('/productadmin', (req, res) => {
+	Product.findAll({}).then((products) => {
+		res.render('product/productadmin', { products: products })
+	});
+});
+
 router.get('/addproduct', (req, res) => {
 
 	res.render('product/addproduct');
