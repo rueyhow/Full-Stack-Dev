@@ -234,7 +234,6 @@ router.post("/create-checkout-session/:total/:discountedAmount/:tax", async func
   if (!req.session.user.amounts){
     req.session.user.amounts = [DiscountAmount , TotalAmount];
   }
-
   if (req.session.user.voucherDiscount != undefined) {
     discount = req.session.user.voucherDiscount[0];
   }
@@ -367,23 +366,18 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
   let month = date.getMonth()+1;
   let year = date.getFullYear();
   let fullDate = day + "/" + month + "/" + year + ".";
+  var voucherData = null;
   const session1 = await stripe.checkout.sessions.retrieve(
     sessionId,
   );
   const shippingTotal = session1.shipping_cost.amount_total;
-
-// clear cookies as well as cart from session
-
-  // res.clearCookie("voucherDiscount");
-  // res.clearCookie("DeliveryDiscount");
-
-  // const Cart = await CartItem.findAll({where  : { userId: req.user.dataValues.id }});
-  // if (Cart != undefined){
-  //     for (var i = 0 ; i < Cart.length ; i++){
-  //         Cart[i].destroy();
-  //     }
-  // }
-
+  // getting voucher information
+  if (req.session.user.voucherDiscount != null){
+    voucherData = JSON.stringify({voucherCode : req.session.user.voucherDiscount[1] , percentage : req.session.user.voucherDiscount[0] , discountedAmount : req.session.user.amounts[0] });
+  }
+  else if (req.session.user.DeliveryDiscount != null){
+    voucherData = JSON.stringify({voucherCode : req.session.user.DeliveryDiscount[1] , percentage : req.session.user.DeliveryDiscount[0] , discountedAmount : 20});
+  }
 
   // adding items into template jsonify array
   for (var i = 0 ; i <orderDetails.length; i++){
@@ -406,6 +400,7 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
     items : CartDetails , 
     userId : req.user.dataValues.id,
     address : JSON.parse(req.session.user.address),
+    voucher : JSON.parse(voucherData),
   })
 
   // creating template for transaction email
@@ -440,15 +435,58 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
     });
   }
   sendConfirmationEmail();
+  // clearing everything
+  // clear cart
+  const Cart = await CartItem.findAll({where  : { userId: req.user.dataValues.id }});
+  if (Cart != undefined){
+      for (var i = 0 ; i < Cart.length ; i++){
+          Cart[i].destroy();
+      }
+  }
+  // redeem of used voucher
+  const VoucherCode = JSON.parse(voucherData).voucherCode;
+  const voucher = await UserVouchers.findOne({where : {VoucherCode : VoucherCode}})
+  if (!voucher && !VoucherCode){
+    flashMessage(res ,"error" , "Voucher not found");
+  }
+  else{
+    voucher.destroy();
+  }
+
+
+  // adding points to the user after transaction
+  const user = await User.findByPk(req.user.dataValues.id);
+  // generate random % number
+  function getRandomFloat(min, max, decimals) {
+    const str = (Math.random() * (max - min) + min).toFixed(decimals);
+  
+    return parseFloat(str);
+  }
+  const calculatedAmount = Math.round((req.session.user.amounts[1]) * getRandomFloat(0.25 , 0.35 , 2))
+
+
+  user.websitePoints += calculatedAmount
+  user.save();
+
+  flashMessage(res , "success" , "Order has been completed " + calculatedAmount.toString() + " points has been added to your account");
+  // resetting session data
+  req.session.user.voucherDiscount = null;
+  req.session.user.deliveryDiscount = null;
+  req.session.user.sessionId = null;
+  req.session.user.address = null;
+  req.session.user.megaprice = null;
+  req.session.user.amounts = null;
+
   res.render("cart/success");
 });
 
 router.get('/cancel', async function (req, res) {
-  res.clearCookie("voucherDiscount");
-  res.clearCookie("DeliveryDiscount");
-  res.clearCookie("sessionId");
-  res.clearCookie("megaprice");
-  res.clearCookie("Address");
+  req.session.user.voucherDiscount = null;
+  req.session.user.deliveryDiscount = null;
+  req.session.user.sessionId = null;
+  req.session.user.address = null;
+  req.session.user.megaprice = null;
+  req.session.user.amounts = null;
   res.render("cart/cancel");
 });
 

@@ -26,6 +26,9 @@ Transaction.init({
     },
     address : {
         type : Sequelize.JSON , allowNull : true  , unique : false , defaultValue : null
+    },
+    voucher : {
+        type : Sequelize.JSON , allowNull : true  , unique : false , defaultValue : null
     }
 },
 {
