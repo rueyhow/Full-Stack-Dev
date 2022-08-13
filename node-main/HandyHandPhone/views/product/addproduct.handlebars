@@ -10,25 +10,31 @@
 
                             <h1 class="text-center mb-5">New Product</h2>
 
-                                <form method="post"  enctype="multipart/form-data">
-                                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                                <form method="post" enctype="multipart/form-data">
                                     <div class="form-outline form-white">
                                         <input type="text" id="form3Example2" class="form-control form-control-lg"
-                                            name="name" value="{{name}}" />
+                                            name="name"  />
                                         <label class="form-label" for="form3Example2">Product name</label>
+                                    </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <label for="category">Category: </label>
+                                        <select id="category" name="category">
+                                            <option value="Mobile Device">Mobile Device</option>
+                                            <option value="Accesories">Accesories</option>
+                                        </select>
                                     </div>
 
 
                                     <div class="form-outline form-white mb-4">
                                         <input type="number" id="form3Example3" class="form-control form-control-lg"
-                                            name="price" value="{{email}}">
+                                            name="price">
                                         <label class="form-label" for="form3Example3">Price</label>
                                     </div>
 
 
                                     <div class="form-outline form-white mb-4">
                                         <input type="number" id="form3Example4" class="form-control form-control-lg"
-                                            name="stock"/>
+                                            name="stock" />
                                         <label class="form-label" for="form3Example4">Stock Amount</label>
                                     </div>
 
@@ -42,8 +48,6 @@
                                         <input type="file" class="form-control" id="productPic" name="productPic">
                                         <label class="form-label" for="productPic">Product Picture</label>
                                     </div>
-
-
 
                                     <!-- Submit button -->
                                     <button type="submit" class="btn btn-success btn-block mb-4">Submit</button>

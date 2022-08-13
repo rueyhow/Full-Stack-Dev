@@ -35,7 +35,6 @@ router.post('/addproduct', (req, res) => {
 	Product.create(
 		{ name: name, price: price, stock:stock, description:description, productPic: base64 }
 	).then((product) => {
-		console.log(product.toJSON());
 		res.redirect('/product/productpage');
 	}).catch(err => console.log(err))
 });
