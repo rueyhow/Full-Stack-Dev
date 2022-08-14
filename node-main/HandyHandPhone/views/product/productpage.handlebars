@@ -1,44 +1,34 @@
 <h1 class="text-center my-3">Products</h1>
 <style>
 </style>
-<button class="btn border px-auto"><a href="addproduct">Add Product</a></button>
 <button class="btn border px-auto"><a href="productadmin">Admin</a></button>
 
 <div class="card card-body">
 
-    <div style="width: 60vw; background-color:azure; " class="p-5 mx-auto">
-        <h3 class="text-primary text-center">Featured Products</h3>
+  <div style="width: 65vw; background-color:azure; " class="p-5 mx-auto">
 
-        <div class="row">
-            {{#each products}}
-
-            <div class="col-4 my-3">
-                <a href="/product/productdetails/{{this.id}}">
-                    <h4 class="text-center">{{this.name}}</h4>
-                    <div style="">
-                        <img src="data:image/png;base64, {{this.productPic}}" class=" img-fluid bg-light p-5"
-                            style="" alt="prod img">
-                    </div>
-
-                    <p class="text-center text-success">${{this.price}}</p>
-
-                    <button style="display: block;  margin-left: auto;  margin-right: auto; width: 50%;"
-                        class="btn btn-success mt-auto"><a class="text-white" href="/cart/addcart/{{this.id}}">Add To
-                            Cart</a></button>
-                </a>
-            </div>
-            {{/each}}
-        </div>
-
+    <div class="row">
+      <div class="col-6 card card-body">
+        <a href="/product/productmobile"><h3 class="text-center">Mobile Phones</h3></a>
+        <img
+          class="img-fluid mx-auto"
+          style="width: 300px; height: 290px; object-fit: contain; "
+          src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-13-blue-select-2021?wid=940&hei=1112&fmt=png-alpha&.v=1645572386470"
+          alt="fone"
+        />
+      </div>
+      <div class="col-6 card card-body">
+        <a href="/product/productaccessories"><h3
+            class="text-center"
+          >Accesories</h3></a>
+        <img
+          class="img-fluid mx-auto"
+          style="width: 300px; height: 300px; object-fit: cover;"
+          src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/MWP22?wid=2000&hei=2000&fmt=jpeg&qlt=95&.v=1591634795000"
+          alt="fone"
+        />
+      </div>
     </div>
-    <!--<div class="card border-primary"
-            style="flex-basis: 33%;padding: 10px; min-width: 200px;margin-bottom: 50px;transition: transform 0.2s;">
 
-            <p style="color:black;">{{this.name}}</p>
-            <a href="/product/editProduct/{{this.id}}" class="card-link mb-2"> <i class="fas fa-pencil-alt"></i> Edit
-            </a>
-            <a href="/product/deleteProduct/{{this.id}}">Delete button</a>
-        </div> -->
-</div>
-
+  </div>
 </div>

@@ -22,7 +22,13 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="form-outline form-white mb-4">
+                                            <label for="category">Category:</label>
+                                            <select id="category" name="category">
+                                                <option value="Mobile Device"{{#ifeq product.category 'Mobile Device'}}selected{{/ifeq}} >Mobile Device</option>
+                                                <option value="Accessories" {{#ifeq product.category 'Accessories'}}selected{{/ifeq}} >Accessories</option>
+                                            </select>
+                                        </div>
                                         <!-- Email input -->
                                         <div class="form-outline form-white mb-4">
                                             <input type="number" id="form3Example3" class="form-control form-control-lg"
