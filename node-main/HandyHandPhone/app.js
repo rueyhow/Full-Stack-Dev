@@ -31,6 +31,19 @@ const app = express();
 * 3. 'defaultLayout' specifies the main.handlebars file under views/layouts as the main template
 *
 * */
+async function getUserCartCount(UserId) {
+    const cart = await CartItem.findOne({ where: { UserId } });
+    if (cart){
+        const cartItems = await CartItem.findAll({ where: { id: cart.id } });
+        var count = 0;
+        cartItems.forEach(item => count += item.quantity)
+    }
+    else{
+        count = 0
+    }
+    return count;
+}
+
 const helpers = require('./helpers/handlebars');
 app.engine('handlebars', engine({
 	helpers: helpers,
@@ -98,11 +111,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Place to define global variables
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
 	res.locals.messages = req.flash('message');
 	res.locals.errors = req.flash('error');
 	res.locals.user = req.user || null;
-	next();
+	res.locals.cartcount  = req.isAuthenticated()
+	? await getUserCartCount(req.user.id)
+	: 0;
+	next();  
 });
 
 // mainRoute is declared to point to routes/main.js

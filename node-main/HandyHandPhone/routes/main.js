@@ -3,17 +3,17 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 
 
+
+
 router.get('/', async function(req, res){
     req.session.user = {};
 	res.render('home');
 });
 
 
-router.get('/about', (req, res) => {
-	const author = 'Your Name';
-	res.render('about', { author });
+router.get('/aboutUs', (req, res) => {
+	res.render('about/index');
 });
-
 
 
 router.post('/flash', (req, res) => {

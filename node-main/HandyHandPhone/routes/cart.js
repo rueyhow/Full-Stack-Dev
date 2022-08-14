@@ -443,17 +443,15 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
           Cart[i].destroy();
       }
   }
+  var VoucherCode = null;
   // redeem of used voucher
-  const VoucherCode = JSON.parse(voucherData).voucherCode;
-  const voucher = await UserVouchers.findOne({where : {VoucherCode : VoucherCode}})
-  if (!voucher && !VoucherCode){
-    flashMessage(res ,"error" , "Voucher not found");
+  if (voucherData != null){
+    VoucherCode = JSON.parse(voucherData).voucherCode;
   }
-  else{
+  const voucher = await UserVouchers.findOne({where : {VoucherCode : VoucherCode}})
+  if (voucher && VoucherCode){
     voucher.destroy();
   }
-
-
   // adding points to the user after transaction
   const user = await User.findByPk(req.user.dataValues.id);
   // generate random % number
@@ -463,7 +461,7 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
     return parseFloat(str);
   }
   const calculatedAmount = Math.round((req.session.user.amounts[1]) * getRandomFloat(0.25 , 0.35 , 2))
-
+  console.log(calculatedAmount , req.session.user.amounts[1]);
 
   user.websitePoints += calculatedAmount
   user.save();
