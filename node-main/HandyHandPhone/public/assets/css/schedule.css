@@ -19,3 +19,7 @@
   background-color: #ddd;
   border-radius: 5px;
 }
+
+#testbutton.clicked {
+  background-color: lightgreen;
+}

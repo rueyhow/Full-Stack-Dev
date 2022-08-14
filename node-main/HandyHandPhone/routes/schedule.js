@@ -2,10 +2,18 @@ const express = require('express');
 const Schedule = require('../models/Schedule');
 const router = express.Router();
 const Test = require('../models/Schedule')
+const { Op } = require("sequelize")
 
 
 router.get('/schedule', (req, res) => {
-	res.render('schedule/schedule');
+	Schedule.findAll({
+		raw: true
+	})
+		.then((schedule) => {
+			res.render('schedule/schedule', { schedule });
+		})
+		.catch(err => console.log(err));
+	// res.render('schedule/schedule');
 });
 
 router.post('/schedule', (req, res) => {
@@ -20,6 +28,24 @@ router.post('/schedule', (req, res) => {
 			console.log(schedule.toJSON());
 			res.redirect('/schedule/schedule');
 		}).catch(err => console.log(err))
+});
+
+router.get('/schedule/:date', (req, res) => {
+	Schedule.findAll({
+		where: {
+			date: {
+				[Op.eq]: req.params.date
+			}
+		}
+	})
+		.then((schedule) => {
+			const morning = schedule[0].availability;
+			const afternoon = schedule[1].availability;
+			const evening = schedule[2].availability;
+			res.render('schedule/schedule', { morning, afternoon, evening });
+		})
+		.catch(err => console.log(err));
+	// res.render('schedule/schedule');
 });
 
 router.get('/schedule/:id', (req, res) => {

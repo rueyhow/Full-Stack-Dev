@@ -53,31 +53,28 @@
                 </div>
                 <div class="d-flex justify-content-between" id="avail">
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Morning</h6>
                             </div>
-                            <div id="a1">Available 1</div>
-                            <div id="a2">Available 2</div>
-                        </div>
+                            <div id="morning" class="aaa">a</div>
+                        </button>
                     </div>
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Afternoon</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
-                        </div>
+                            <div id="afternoon" class="aaa">b</div>
+                        </button>
                     </div>
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Evening</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
-                        </div>
+                            <div id="evening" class="aaa">c</div>
+                        </button>
                     </div>
                 </div>
                 <br>
@@ -99,7 +96,43 @@
         tomorrow.setDate(tomorrow.getDate() + i + 1)
         document.getElementById("dates").children[i].children[0].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short' })
         document.getElementById("dates").children[i].children[0].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
+        const year = '' + tomorrow.getFullYear();
+        var month = tomorrow.getMonth() + 1;
+        month = ('0' + month).slice(-2);
+        const date = ('0' + tomorrow.getDate()).slice(-2);
+
+        if (i == 0) (document.getElementById("one").href = year + '-' + month + '-' + date)
+        if (i == 1) (document.getElementById("two").href = year + '-' + month + '-' + date)
+        if (i == 2) (document.getElementById("three").href = year + '-' + month + '-' + date)
+        if (i == 3) (document.getElementById("four").href = year + '-' + month + '-' + date)
+        if (i == 4) (document.getElementById("five").href = year + '-' + month + '-' + date)
+        if (i == 5) (document.getElementById("six").href = year + '-' + month + '-' + date)
+        if (i == 6) (document.getElementById("seven").href = year + '-' + month + '-' + date)
+
     }
+
+    function test(condition) {
+        if (document.getElementsByClassName("aaa") == "Unavailable") {
+            btn.attr('disabled', 'disabled');
+        } else {
+
+        }
+
+        html += '<button type="button" ' + enableBtn + '> Click </button></div>';
+
+        $("#testLocation").html(html);
+    }
+
+    $('#test').on('click', function () {
+        test(true)
+    });
+
+
+    let testButton = document.getElementById("testbutton");
+
+    testButton.addEventListener("click", () => {
+        testButton.classList.toggle('clicked');
+    })
 
     function addClass() {
         var a = document.getElementById("one");
@@ -188,15 +221,9 @@
         });
     }
     addClass()
-    
-    console.log("{{schedule}}")
 
-
-
-    function changeA() {
-        console.log("");
-        document.getElementById("a1").innerHTML = "test";
-        console.log();
-    }
+    document.getElementById("morning").innerHTML = "{{morning}}"
+    document.getElementById("afternoon").innerHTML = "{{afternoon}}"
+    document.getElementById("evening").innerHTML = "{{evening}}"
 
 </script>
