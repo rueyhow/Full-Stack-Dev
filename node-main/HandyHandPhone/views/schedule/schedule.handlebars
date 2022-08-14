@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="\assets\css\schedule.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <div class="container mt-5">
     <div class="delivery">
         <div class="card">
             <h4 class="card-header">Delivery Details</h4>
             <div class="card-body">
-                <div>Delivery Schedule</div>
+                <div>Delivery Schedule of Order ID : {{this.transactionId}}</div>
                 <br>
                 <div class="d-flex pagination" id="dates" name="date">
                     <div class="mr-3 p-2">
@@ -88,6 +89,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     for (let i = 0; i < 7; i++) {

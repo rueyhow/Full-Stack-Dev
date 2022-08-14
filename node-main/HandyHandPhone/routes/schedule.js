@@ -2,15 +2,17 @@ const express = require('express');
 const Schedule = require('../models/Schedule');
 const router = express.Router();
 const Test = require('../models/Schedule')
-const { Op } = require("sequelize")
+const { Op } = require("sequelize");
+const flashMessage = require('../helpers/messenger');
+const Transaction = require('../models/Transaction');
 
-
-router.get('/schedule', (req, res) => {
+router.get('/schedule', async(req, res) => {
+	const userTransaction = await Transaction.findAll({where : {userId : req.user.dataValues.id , transactionCategory : "order"}})
 	Schedule.findAll({
 		raw: true
 	})
 		.then((schedule) => {
-			res.render('schedule/schedule', { schedule });
+			res.render('schedule/schedule', { schedule});
 		})
 		.catch(err => console.log(err));
 	// res.render('schedule/schedule');
@@ -61,18 +63,28 @@ router.get('/create', (req, res) => {
 	res.render('schedule/create');
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async(req, res) => {
 	let date = req.body.date;
 	let time = req.body.time;
 	let availability = req.body.availability;
 
-	Schedule.create(
-		{
-			date, time, availability
-		}).then((schedule) => {
-			console.log(schedule.toJSON());
-			res.redirect('/schedule/create');
-		}).catch(err => console.log(err))
+	// Schedule.create(
+	// 	{
+	// 		date : date, time : time, availability : availability,
+	// 	}).then((schedule) => {
+	// 		console.log(schedule.toJSON());
+	// 		res.redirect('/schedule/create');
+	// 	}).catch(err => console.log(err))
+	let find = await Schedule.findOne({where : {date :date  , time : time}});
+	if(!find){
+		let schedule = await Schedule.create({date : date, time : time, availability : availability});
+		flashMessage(res , "success" , "Schedule has beenc created");
+		res.redirect("back");
+	}
+	else{
+		flashMessage(res , "error" , "Schedule Already Exits");
+		res.redirect("back");
+	}
 });
 
 router.get('/update', (req, res) => {

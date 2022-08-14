@@ -388,7 +388,8 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
         productId : `${orderDetails[i].productId}`,
         quantity : `${orderDetails[i].quantity}`,
         price : `${productdetail.price}`,
-        total : productdetail.price * orderDetails[i].quantity
+        total : productdetail.price * orderDetails[i].quantity,
+        picture : productdetail.productPic,
     })
   }
   // create and enter order into database
