@@ -1,0 +1,21 @@
+<div class="p-5 mx-auto rounded bg-light" style="width: 70vw;">
+  <h2 class="text-center">Accesories</h2>
+  <div class="row" style="">
+    {{#each products}}
+      <div class="rounded d-flex justify-content-center border border-info m-5 p-5 bg-gradient-light">
+        <a href="/product//productdetails/{{this.id}}">
+            <h3 class="text-center">{{this.name}}</h3>
+          <img
+            class="img mx-auto"
+            style="width: 220px; height: 250px; object-fit: contain; "
+            src="https://storage.cloud.google.com/handyhandphone/{{this.productPic}}"
+            alt="prodimg"
+          />
+          <h5 class="text-success text-center pt-4">${{this.price}}</h4>
+        </a>
+        
+
+      </div>
+    {{/each}}
+  </div>
+</div>
