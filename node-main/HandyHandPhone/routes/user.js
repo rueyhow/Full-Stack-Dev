@@ -170,18 +170,17 @@ router.get('/profilePage/:id' ,ensureAuthenticated, async(req,res) => {
 });
 
 
-router.post('/profilePage/:id' ,ensureAuthenticated, (req,res) =>{
+router.post('/profilePage/:id' ,ensureAuthenticated, async(req,res) =>{
     var buffer = require('buffer/').Buffer;
+    const user = await User.findByPk(req.user.dataValues.id);
     let { name, email, mobile,description } = req.body;
-
-    var img = req.files.img.data;
-
+    let base64 = user.profilePicture;
+    if(req.files){
+        var img = req.files.img.data;
+        base64 = buffer.from(img).toString('base64')
+    }
     var userID = req.params.id;
-    console.log(img);
 
-    let base64 = buffer.from(img).toString('base64')
-
-    
     var query = 
     `UPDATE users
     SET name = "${name}",

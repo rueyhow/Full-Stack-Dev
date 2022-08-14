@@ -1,208 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/testCart.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/assets/css/testCart.css">
 </head>
+
 <body>
-    <div class="container">
+  <div class="container">
 
-<!-- cart items details -->
-{{#ifeq cartItems.length 0}}
+    <!-- cart items details -->
+    {{#ifeq cartItems.length 0}}
+    <div class="container-fluid  mt-100">
+      <div class="row">
 
-{{else}}
-<h1 class = "title1">{{user.name}}'s Cart</h1>
-<div class="container cart-page">
-  <table>
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Subtotal</th>
-    </tr>
-{{#each cartItems}}
-    <tr>
-      <td>
-        <div class="cart-info">
-          <img src="/assets/img/HandyHandPhone-logos.jpeg" alt="" />
-          <div>
-            <p>{{this.product.name}}</p>
-            <small>Price : {{this.product.price}}</small>
-            <br />
-            <a href="/cart/action/{{this.id}}/remove">Remove</a>
+        <div class="col-md-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h5>Cart</h5>
+            </div>
+            <div class="card-body cart">
+              <div class="col-sm-12 empty-cart-cls text-center">
+                <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                <h3><strong>Your Cart is Empty</strong></h3>
+                <h4>Add something to make me happy :)</h4>
+                <a href="/product/productpage" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue
+                  shopping</a>
+
+
+              </div>
+            </div>
           </div>
+
+
         </div>
-      </td>
-      <td>
-        <a href="/cart/action/{{this.id}}/add" class = "btn btn-primary">+</a>
-        {{this.quantity}}
-        <a href="/cart/action/{{this.id}}/minus" class = "btn btn-primary">-</a>
-        </td>
-      <td>${{calculate this.product.price this.quantity}}</td>
-    </tr>
-{{/each}}
-  </table>
-{{#each savedAddress}}
-<h1>{{this}}</h1>
-{{/each}}
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    User Vouchers
-</button>
-<a href="/cart/revokeVouchers" class="btn-btn-success">Revoke Vouchers</a>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Delivery modal</button>
+      </div>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <h3 class="d-flex justify-content-center row">Delivery details Summary</h3>
-<div class="container mt-5">
-    <div class="d-flex justify-content-center row">
-        <div class="col-md-10">
-            <div class="rounded">
-                <div class="table-responsive table-borderless">
-                    <table class="table">
+    </div>
+
+    {{else}}
+    <h1 class="title1">{{user.name}}'s Cart</h1>
+    <div class="container cart-page">
+      <table>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+          <button class = "btn btn-warning">Clear Cart</button>
+        {{#each cartItems}}
+        <tr>
+          <td>
+            <div class="cart-info">
+              <img src="/assets/img/HandyHandPhone-logos.jpeg" alt="" />
+              <div>
+                <p>{{this.product.name}}</p>
+                <small>Price : {{this.product.price}}</small>
+                <br />
+                <a href="/cart/action/{{this.id}}/remove">Remove</a>
+              </div>
+            </div>
+          </td>
+          <td>
+            <a href="/cart/action/{{this.id}}/add" class="btn btn-primary">+</a>
+            {{this.quantity}}
+            <a href="/cart/action/{{this.id}}/minus" class="btn btn-primary">-</a>
+          </td>
+          <td>${{calculate this.product.price this.quantity}}</td>
+        </tr>
+        {{/each}}
+      </table>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        User Vouchers
+      </button>
+      <a href="/cart/revokeVouchers" class="btn-btn-success">Revoke Vouchers</a>
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Address for Delivery</button>
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <h3 class="d-flex justify-content-center row">Delivery details Summary</h3>
+            <div class="container mt-5">
+              <div class="d-flex justify-content-center row">
+                <div class="col-md-10">
+                  <div class="rounded">
+                    <div class="table-responsive table-borderless">
+                      <table class="table">
                         <thead>
-                            <tr>
-                                <th class="text-center">
-                                    <div class="toggle-btn">
-                                        <div class="inner-circle"></div>
-                                    </div>
-                                </th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Unit No.</th>
-                                <th>Address</th>
-                                <th>Phone</th>
-                                <th></th>
-                            </tr>
+                          <tr>
+                            <th class="text-center">
+                              <div class="toggle-btn">
+                                <div class="inner-circle"></div>
+                              </div>
+                            </th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Unit No.</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th></th>
+                          </tr>
                         </thead>
                         <tbody class="table-body">
-                            {{#each deliverydetails}}
-                            <tr class="cell-1">
-                                <td class="text-center">
-                                    <div class="toggle-btn">
-                                        <div class="inner-circle"></div>
-                                    </div>
-                                </td>
-                                <td>{{this.firstname}}</td>
-                                <td>{{this.lastname}}</td>
-                                <td>{{this.unitnumber}}</td>
-                                <td>{{this.address}}</td>
-                                <td>{{this.phone}}</td>
-                                <td><a href="/cart/useAddress/{{this.id}}" class="btn btn-success">
-                                    Use
-                                    </a>
-                                </td>
-                            </tr>
-                            {{/each}}
+                          {{#each deliverydetails}}
+                          <tr class="cell-1">
+                            <td class="text-center">
+                              <div class="toggle-btn">
+                                <div class="inner-circle"></div>
+                              </div>
+                            </td>
+                            <td>{{this.firstname}}</td>
+                            <td>{{this.lastname}}</td>
+                            <td>{{this.unitnumber}}</td>
+                            <td>{{this.address}}</td>
+                            <td>{{this.phone}}</td>
+                            <td><a href="/cart/useAddress/{{this.id}}" class="btn btn-success">
+                                Use
+                              </a>
+                            </td>
+                          </tr>
+                          {{/each}}
                         </tbody>
-                    </table>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Voucher Model -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Vouchers Available</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          {{#each UserVouchers}}
-  <div class="container mt-5">
-  <div class="row">
-    <div class="col-12">
-      <article class="blog-card">
-        <div class="blog-card__background">
-          <div class="card__background--wrapper">
-            <div class="card__background--main" style="background-image: url('/assets/img/HandyHandPhone-logos.jpeg')">
-              <div class="card__background--layer"></div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="blog-card__head">
+      </div>
+    </div>
+
+
+    <!-- Voucher Model -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Vouchers Available</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{#each UserVouchers}}
+            <div class="container mt-5">
+              <div class="row">
+                <div class="col-12">
+                  <article class="blog-card">
+                    <div class="blog-card__background">
+                      <div class="card__background--wrapper">
+                        <div class="card__background--main"
+                          style="background-image: url('/assets/img/HandyHandPhone-logos.jpeg')">
+                          <div class="card__background--layer"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="blog-card__head">
+                    </div>
+                    <div class="blog-card__info">
+                      <h5>{{this.VoucherCategory}}</h5>
+                      <h5>{{this.promotion}}</h5>
+                      <h6>Expiry Date : {{this.expiryDate}}</h6>
+                      <h6>{{this.description}}</h6>
+                      {{#ifeq this.expired false}}
+                      <a href="/cart/redeemVoucher/{{this.VoucherCode}}" class="btn btn--with-icon"><i
+                          class="btn-icon fa fa-long-arrow-right"></i>Redeem</a>
+                      {{else}}
+                      <h1>Your Voucher has expired</h1>
+                      {{/ifeq}}
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
-        <div class="blog-card__info">
-          <h5>{{this.VoucherCategory}}</h5>
-          <h5>{{this.promotion}}</h5>
-          <h6>Expiry Date : {{this.expiryDate}}</h6>
-          <h6>{{this.description}}</h6>
-          {{#ifeq this.expired false}}
-          <a href="/cart/redeemVoucher/{{this.VoucherCode}}" class="btn btn--with-icon"><i class="btn-icon fa fa-long-arrow-right"></i>Redeem</a>
-          {{else}}
-          <h1>Your Voucher has expired</h1>
+      </div>
+    </div>
+    <hr style = "width : 100% , height : 10px;">
+      <div class="total-price">
+        <div class = "address"> 
+        <h2>Saved Address : </h2>
+      {{#each savedAddress}}
+      <h4>{{this}}</h4>
+      {{/each}}</div>
+        <table>
+          <tr>
+            <td>Subtotal</td>
+            <td>${{megaPrice}}</td>
+          </tr>
+          <tr>
+            <td>Tax</td>
+            <td>${{tax}}</td>
+          </tr>
+          <tr>
+            {{#ifeq discountedAmount 0}}
+            {{else}}
+          <tr>
+            <td>Discounted Amount : </td>
+            <td>${{discountedAmount}}</td>
+          </tr>
           {{/ifeq}}
-        </div>
-      </article>
-    </div>
-  </div>
-</div>
-{{/each}}
+          </tr>
+          <tr>
+            <td>Total (without shipping)</td>
+            <td>${{total megaPrice tax discount}}</td>
+          </tr>
+          <tr>
+            <td>
+              <form
+                action="/cart/create-checkout-session/{{total megaPrice tax deliver discount}}/{{discountedAmount}}/{{tax}}"
+                method="POST">
+                <button type="submit" class="btn btn-primary">Check Out</button>
+              </form>
+            </td>
+          </tr>
+        </table>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+
+
   </div>
-</div>
 
+  {{/ifeq}}
 
-
-  <div class="total-price">
-    <table>
-      <tr>
-        <td>Subtotal</td>
-        <td>${{megaPrice}}</td>
-      </tr>
-      <tr>
-        <td>Tax</td>
-        <td>${{tax}}</td>
-      </tr>
-      <tr>
-        <td>Delivery Fee</td>
-        <td>${{deliver}}</td>
-      </tr>
-      <tr>
-        {{#ifeq discountedAmount 0}}
-        {{else}}
-        <tr>
-          <td>Discounted Amount : </td>
-          <td>${{discountedAmount}}</td>
-        </tr>
-        {{/ifeq}}
-      </tr>
-      <tr>
-        <td>Total</td>
-        <td>${{total megaPrice tax deliver discount}}</td>
-      </tr>
-      <tr>
-        <td>
-          <form action="/cart/create-checkout-session/{{total megaPrice tax deliver discount}}/{{discountedAmount}}/{{tax}}" method="POST">
-          <button type = "submit" class = "btn btn-primary">Check Out</button>
-          </form>
-          </td>
-      </tr>
-    </table>
+  <!-- Footer -->
   </div>
-</div>
-{{/ifeq}}
-
-<!-- Footer -->
-
-</div>
 </body>
+
 </html>

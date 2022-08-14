@@ -52,11 +52,10 @@ const addition = function (a, b) {
     b = parseInt(b)
     return a + b;
 }
-const total = function (a, b , c , d) {
+const total = function (a, b , d) {
     a = parseInt(a)
     b = parseInt(b)
-    c = parseFloat(c)
-    return ((a* d) + b + c)
+    return ((a* d) + b)
 }
 
 const getProperty = function(context , options){

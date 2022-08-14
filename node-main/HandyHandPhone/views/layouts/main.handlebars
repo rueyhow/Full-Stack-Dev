@@ -22,6 +22,7 @@
   <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
@@ -44,7 +45,6 @@
           <li><a class="nav-link scrollto" href="#about">About Us</a></li>
           <li><a class="nav-link" href="/product/productpage">productpage</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Vouchers</a></li>
-          <li><a class="nav-link scrollto" href="#team">Account</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -63,6 +63,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+          <li><a class="nav-link scrollto" href="/cart/testCart"><i class="fas fa-shopping-cart"></i>&nbsp;{{cartcount}}</a></li>
           {{#if user}}
           <li><a class="getstarted scrollto" href="/user/profilePage/{{user.id}}">Profile Page</a></li>
           {{else}}

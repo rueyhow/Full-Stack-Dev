@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/profilePage.css">
-    <link rel="stylesheet" href="/assets/js/profilePage.js">
 </head>
 
 <body>
@@ -135,7 +134,7 @@
         </div>
     </form>
 
-
+{{!-- membership --}}
 
     {{!-- datatable portion --}}
 
@@ -173,12 +172,6 @@
     <div class="separator"></div>
     {{/each}}
 
-
-    {{#each TransactionHistory}}
-    <p>Transaction ID {{this.transactionId}}</p>
-    <p>{{this.address.firstname}}</p>
-    <p>{{this.address.address}}</p>
-    {{/each}}
 </body>
 
 </html>
