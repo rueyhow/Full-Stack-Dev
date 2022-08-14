@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="\assets\css\schedule.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div class="container mt-5">
     <div class="delivery">
         <div class="card">
@@ -6,9 +7,9 @@
             <div class="card-body">
                 <div>Delivery Schedule</div>
                 <br>
-                <div class="d-flex pagination" id="dates">
+                <div class="d-flex pagination" id="dates" name="date">
                     <div class="mr-3 p-2">
-                        <a href="#" id="one">
+                        <a href="#" id="one" onclick='changeA()'>
                             <h5>Mon</h5>
                             <p>10 May</p>
                         </a>
@@ -50,14 +51,14 @@
                         </a>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between" id="avail">
                     <div class="card w-100">
                         <div class="card-body">
                             <div>
                                 <h6>Morning</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
+                            <div id="a1">Available 1</div>
+                            <div id="a2">Available 2</div>
                         </div>
                     </div>
                     <div class="card w-100">
@@ -79,6 +80,13 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <div>
+                    <button onclick="history.back()" class="btn btn-secondary mr-3 p-2">Back</button>
+                    <button type="submit" class="btn btn-primary mr-3 p-2">
+                        Confirm
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -92,7 +100,8 @@
         document.getElementById("dates").children[i].children[0].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short' })
         document.getElementById("dates").children[i].children[0].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
     }
-    function abc() {
+
+    function addClass() {
         var a = document.getElementById("one");
         var b = document.getElementById("two");
         var c = document.getElementById("three");
@@ -178,7 +187,16 @@
             g.classList.add("active")
         });
     }
-    abc()
+    addClass()
+    
+    console.log("{{schedule}}")
 
+
+
+    function changeA() {
+        console.log("");
+        document.getElementById("a1").innerHTML = "test";
+        console.log();
+    }
 
 </script>

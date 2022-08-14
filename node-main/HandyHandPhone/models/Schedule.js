@@ -4,10 +4,9 @@ const db = require('../config/DBConfig');
 const Schedule = db.define('schedule',
     {
         date: { type: Sequelize.DATEONLY },
-        time: { type: Sequelize.INTEGER },
-        availability: { type: Sequelize.INTEGER }
+        time: { type: Sequelize.STRING },
+        availability: { type: Sequelize.STRING }
 
     });
-console.log("The table for the Schedule model was just (re)created!");
-
+    
 module.exports = Schedule;
