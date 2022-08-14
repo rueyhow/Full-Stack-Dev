@@ -1,14 +1,16 @@
 <link rel="stylesheet" href="\assets\css\schedule.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <div class="container mt-5">
     <div class="delivery">
         <div class="card">
             <h4 class="card-header">Delivery Details</h4>
             <div class="card-body">
-                <div>Delivery Schedule</div>
+                <div>Delivery Schedule of Order ID : {{this.transactionId}}</div>
                 <br>
-                <div class="d-flex pagination" id="dates">
+                <div class="d-flex pagination" id="dates" name="date">
                     <div class="mr-3 p-2">
-                        <a href="#" id="one">
+                        <a href="#" id="one" onclick='changeA()'>
                             <h5>Mon</h5>
                             <p>10 May</p>
                         </a>
@@ -50,39 +52,44 @@
                         </a>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between" id="avail">
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Morning</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
-                        </div>
+                            <div id="morning" class="aaa">a</div>
+                        </button>
                     </div>
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Afternoon</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
-                        </div>
+                            <div id="afternoon" class="aaa">b</div>
+                        </button>
                     </div>
                     <div class="card w-100">
-                        <div class="card-body">
+                        <button type="button" class="card-body" onclick="" id="testbutton">
                             <div>
                                 <h6>Evening</h6>
                             </div>
-                            <div>Available 1</div>
-                            <div>Available 2</div>
-                        </div>
+                            <div id="evening" class="aaa">c</div>
+                        </button>
                     </div>
+                </div>
+                <br>
+                <div>
+                    <button onclick="history.back()" class="btn btn-secondary mr-3 p-2">Back</button>
+                    <button type="submit" class="btn btn-primary mr-3 p-2">
+                        Confirm
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     for (let i = 0; i < 7; i++) {
@@ -91,8 +98,45 @@
         tomorrow.setDate(tomorrow.getDate() + i + 1)
         document.getElementById("dates").children[i].children[0].children[0].innerHTML = tomorrow.toLocaleString('default', { weekday: 'short' })
         document.getElementById("dates").children[i].children[0].children[1].innerHTML = tomorrow.getDate() + ' ' + tomorrow.toLocaleString('default', { month: 'short' })
+        const year = '' + tomorrow.getFullYear();
+        var month = tomorrow.getMonth() + 1;
+        month = ('0' + month).slice(-2);
+        const date = ('0' + tomorrow.getDate()).slice(-2);
+
+        if (i == 0) (document.getElementById("one").href = year + '-' + month + '-' + date)
+        if (i == 1) (document.getElementById("two").href = year + '-' + month + '-' + date)
+        if (i == 2) (document.getElementById("three").href = year + '-' + month + '-' + date)
+        if (i == 3) (document.getElementById("four").href = year + '-' + month + '-' + date)
+        if (i == 4) (document.getElementById("five").href = year + '-' + month + '-' + date)
+        if (i == 5) (document.getElementById("six").href = year + '-' + month + '-' + date)
+        if (i == 6) (document.getElementById("seven").href = year + '-' + month + '-' + date)
+
     }
-    function abc() {
+
+    function test(condition) {
+        if (document.getElementsByClassName("aaa") == "Unavailable") {
+            btn.attr('disabled', 'disabled');
+        } else {
+
+        }
+
+        html += '<button type="button" ' + enableBtn + '> Click </button></div>';
+
+        $("#testLocation").html(html);
+    }
+
+    $('#test').on('click', function () {
+        test(true)
+    });
+
+
+    let testButton = document.getElementById("testbutton");
+
+    testButton.addEventListener("click", () => {
+        testButton.classList.toggle('clicked');
+    })
+
+    function addClass() {
         var a = document.getElementById("one");
         var b = document.getElementById("two");
         var c = document.getElementById("three");
@@ -178,7 +222,10 @@
             g.classList.add("active")
         });
     }
-    abc()
+    addClass()
 
+    document.getElementById("morning").innerHTML = "{{morning}}"
+    document.getElementById("afternoon").innerHTML = "{{afternoon}}"
+    document.getElementById("evening").innerHTML = "{{evening}}"
 
 </script>

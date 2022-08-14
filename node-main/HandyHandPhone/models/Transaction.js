@@ -29,6 +29,9 @@ Transaction.init({
     },
     voucher : {
         type : Sequelize.JSON , allowNull : true  , unique : false , defaultValue : null
+    },
+    scheduleId : {
+        type : Sequelize.INTEGER , allowNull : true , unique : false , defaultValue : null,
     }
 },
 {
