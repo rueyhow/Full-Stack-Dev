@@ -166,7 +166,7 @@ router.get('/logout', (req, res) => {
 router.get('/profilePage/:id' ,ensureAuthenticated, async(req,res) => {
     const TicketData = await Ticket.findAll({where:{userId : req.user.dataValues.id}});
     const TransactionHistory = await Transaction.findAll({where : {userId : req.user.dataValues.id}})
-    res.render('user/profilePage' , {TicketData : TicketData , TransactionHistory : TransactionHistory});
+    res.render('user/profilePage' , {  TicketData : TicketData , TransactionHistory : TransactionHistory  });
 });
 
 

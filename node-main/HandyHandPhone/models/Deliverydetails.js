@@ -11,7 +11,8 @@ Deliverydetails.init(
         lastname: { type: Sequelize.STRING},
         unitnumber: { type: Sequelize.STRING},
         address: { type: Sequelize.STRING},
-        phone: { type: Sequelize.STRING}
+        postalcode: {type: Sequelize.INTEGER},
+        phone: { type: Sequelize.INTEGER}
 
     },
     { 

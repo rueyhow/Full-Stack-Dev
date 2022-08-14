@@ -89,7 +89,7 @@ router.post('/cart/:id/:action', async (req, res) => {
 
 
 
-// rueyhow's try
+// 
 router.get('/testCart', ensureAuthenticated , async function (req, res) {
   // get cookies
   var discount = 1;
@@ -141,7 +141,7 @@ router.get("/useAddress/:id" , async function (req, res) {
   // create cookie to store current saved address for this particular order
   // res.cookie('Address', JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname,unitnumber : Address.unitnumber , address : Address.address , phone : Address.phone} , {httpOnly:true , overwrite: true  , expires : 0 }))
   const sessiondata = req.session;
-  sessiondata.user.address = JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname,unitnumber : Address.unitnumber , address : Address.address , phone : Address.phone})
+  sessiondata.user.address = JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname,unitnumber : Address.unitnumber , address : Address.address , postalcode :Address.postalcode, phone : Address.phone})
   flashMessage(res , 'success' , "Address has been successfully updated")
   res.redirect("back");
 });
