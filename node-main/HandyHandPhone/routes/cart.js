@@ -139,9 +139,9 @@ router.get("/useAddress/:id" , async function (req, res) {
   const Address = await Deliverydetails.findByPk(id);
 
   // create cookie to store current saved address for this particular order
-  // res.cookie('Address', JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname,unitnumber : Address.unitnumber , address : Address.address , phone : Address.phone} , {httpOnly:true , overwrite: true  , expires : 0 }))
+  // res.cookie('Address', JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname, address : Address.address , postalcode :Address.postalcode, phone : Address.phone} , {httpOnly:true , overwrite: true  , expires : 0 }))
   const sessiondata = req.session;
-  sessiondata.user.address = JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname,unitnumber : Address.unitnumber , address : Address.address , postalcode :Address.postalcode, phone : Address.phone})
+  sessiondata.user.address = JSON.stringify({ firstname: Address.firstname ,lastname: Address.lastname, address : Address.address , postalcode :Address.postalcode, phone : Address.phone})
   flashMessage(res , 'success' , "Address has been successfully updated")
   res.redirect("back");
 });

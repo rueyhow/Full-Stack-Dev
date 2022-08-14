@@ -9,7 +9,6 @@ Deliverydetails.init(
     {
         firstname: { type: Sequelize.STRING},
         lastname: { type: Sequelize.STRING},
-        unitnumber: { type: Sequelize.STRING},
         address: { type: Sequelize.STRING},
         postalcode: {type: Sequelize.INTEGER},
         phone: { type: Sequelize.INTEGER}

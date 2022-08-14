@@ -10,16 +10,16 @@ router.get('/deliverydetails', (req, res) => {
 router.post('/deliverydetails', (req, res) => {
 	let firstname = req.body.firstname;
 	let lastname = req.body.lastname;
-	let unitnumber = req.body.unitnumber;
 	let address = req.body.address;
+	let postalcode = req.body.postalcode
 	let phone = req.body.phone;
 
 	Deliverydetails.create(
 		{
-			firstname, lastname, unitnumber, address, phone , userId : req.user.dataValues.id
+			firstname, lastname, address, postalcode, phone , userId : req.user.dataValues.id
 		}).then((deliverydetails) => {
 			console.log(deliverydetails.toJSON());
-			flashMessage(res , "success" , "Delivery Details belonging to "  + firstname + lastname + " has been created")
+			flashMessage(res , "success" , "Delivery Details belonging to "  + firstname + " " + lastname + " has been created")
 			res.redirect('/deliverydetails/deliverydetails');
 		}).catch(err => console.log(err))
 });
@@ -36,13 +36,13 @@ router.get('/detailsummary', (req, res) => {
 router.post('/editdetails/:id', (req, res) => {
 	let firstname = req.body.firstname;
 	let lastname = req.body.lastname;
-	let unitnumber = req.body.unitnumber;
 	let address = req.body.address;
+	let postalcode = req.body.postalcode;
 	let phone = req.body.phone;
 
 	Deliverydetails.update(
 		{
-			firstname, lastname, unitnumber, address, phone
+			firstname, lastname, address, postalcode, phone
 		},
 		{ where: { id: req.params.id } }
 	)

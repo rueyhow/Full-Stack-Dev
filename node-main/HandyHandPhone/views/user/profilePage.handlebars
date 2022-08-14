@@ -173,12 +173,39 @@
     <div class="separator"></div>
     {{/each}}
 
-
-    {{#each TransactionHistory}}
-    <p>Transaction ID {{this.transactionId}}</p>
-    <p>{{this.address.firstname}}</p>
-    <p>{{this.address.address}}</p>
-    {{/each}}
+    <div class="card mx-5 my-2">
+        <div class="card-header"><h5>Transaction History</h5></div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Information</th>
+                    <th scope="col">Completed</th>
+                    <th scope="col">Items</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Voucher</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each TransactionHistory}}
+                    <tr>
+                    <td scope="row">{{this.transactionId}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.information}}</td>
+                    <td>{{this.completed}}</td>
+                    <td>{{this.items}}</td>
+                    <td>{{this.address}}</td>
+                    <td>{{this.voucher}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>
