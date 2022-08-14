@@ -134,7 +134,7 @@
         </div>
     </form>
 
-{{!-- membership --}}
+    {{!-- membership --}}
 
     {{!-- datatable portion --}}
 
@@ -173,33 +173,94 @@
     {{/each}}
 
     <div class="card mx-5 my-2">
-        <div class="card-header"><h5>Transaction History</h5></div>
+        <div class="card-header">
+            <h5>Transaction History</h5>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Information</th>
-                    <th scope="col">Completed</th>
-                    <th scope="col">Items</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Voucher</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Information</th>
+                        <th scope="col">Completed</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Voucher</th>
+                        <th scope="col">Set Schedule</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each TransactionHistory}}
+                    {{#each All}}
                     <tr>
-                    <td scope="row">{{this.transactionId}}</td>
-                    <td>{{this.transactionCategory}}</td>
-                    <td>{{this.price}}</td>
-                    <td>{{this.information}}</td>
-                    <td>{{this.completed}}</td>
-                    <td>{{this.items.items}}</td>
-                    <td>{{this.address.address}}</td>
-                    <td>{{this.voucher}}</td>
+                        <td scope="row">{{this.transactionId}}</td>
+                        <td>{{this.transactionCategory}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.information}}</td>
+                        <td>{{this.completed}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter-{{@index}}">
+                                View Items
+                            </button>
+                        </td>
+                        <td>{{this.address.address}}</td>
+                        <td>{{this.voucher.voucherCode}}</td>
+                        <td><a href="/schedule/schedule/{{this.transactionId}}" class="btn btn-primary">Set Schedule For
+                                Order</a></td>
                     </tr>
+
+
+
+                    <div class="modal fade" id="exampleModalCenter-{{@index}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Order Items</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{#each this.items}}
+                                    <div class="row">
+                                        <div class="card">
+                                            <div class="row">
+                                                <div class="col-md-4">
+
+                                                    <img src="https://storage.googleapis.com/handyhandphone/{{this.picture}}"
+                                                        alt="" width='145px;' height='145px;'
+                                                        class='img-fluid rounded-start'>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="card-body">
+                                                        <strong>Product ID : </strong>{{this.productId}}<br>
+                                                        <strong>Product Name : </strong>{{this.name}}<br>
+                                                        <strong>Price: </strong>${{this.price}} <br>
+                                                        <strong>Description: </strong>{{this.description}} <br>
+                                                        <strong>Price: </strong>${{this.total}} <br>
+                                                        <strong>Quantity: </strong>{{this.quantity}} <br>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    {{/each}}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{/each}}
                 </tbody>
             </table>

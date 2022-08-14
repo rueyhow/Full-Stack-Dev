@@ -6,7 +6,7 @@
         <div class="card">
             <h4 class="card-header">Delivery Details</h4>
             <div class="card-body">
-                <div>Delivery Schedule of Order ID : {{this.transactionId}}</div>
+                <div>Delivery Schedule of Order ID : {{TransactionId}}</div>
                 <br>
                 <div class="d-flex pagination" id="dates" name="date">
                     <div class="mr-3 p-2">
@@ -93,6 +93,7 @@
 
 <script>
     for (let i = 0; i < 7; i++) {
+        var id = "{{TransactionId}}"
         const today = new Date()
         const tomorrow = new Date(today)
         tomorrow.setDate(tomorrow.getDate() + i + 1)
@@ -102,7 +103,6 @@
         var month = tomorrow.getMonth() + 1;
         month = ('0' + month).slice(-2);
         const date = ('0' + tomorrow.getDate()).slice(-2);
-
         if (i == 0) (document.getElementById("one").href = year + '-' + month + '-' + date)
         if (i == 1) (document.getElementById("two").href = year + '-' + month + '-' + date)
         if (i == 2) (document.getElementById("three").href = year + '-' + month + '-' + date)

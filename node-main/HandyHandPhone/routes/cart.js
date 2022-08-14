@@ -18,6 +18,8 @@ require('dotenv').config();
 const Transaction = require('../models/Transaction');
 const DeliveryDetails = require('../models/Deliverydetails');
 const Deliverydetails = require('../models/Deliverydetails');
+const internal = require('stream');
+
 router.get('/addcart/:productId', ensureAuthenticated, async (req, res) => {
   // get current user id = req.user.Datavalues.id;
   // req.params.example
@@ -115,7 +117,7 @@ router.get('/testCart', ensureAuthenticated , async function (req, res) {
   if (discount == 1) {
     discountedAmount = 0;
   }
-  const tax = parseInt(megaPrice * 0.02);
+  const tax = parseInt(megaPrice * discount * 0.02);
   var discountedAmount = megaPrice - (megaPrice * discount);
   if(!req.session.user.megaprice){
     req.session.user.megaprice = megaPrice;
@@ -392,6 +394,7 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
         picture : productdetail.productPic,
     })
   }
+  console.log(CartDetails);
   // create and enter order into database
   const Order = await Transaction.create({
     transactionCategory : "order" , 
@@ -411,11 +414,11 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
     delivery_details : JSON.parse(req.session.user.address),
     purchase_date : fullDate,
     name : req.user.dataValues.name,
-    total : req.session.user.amounts[1],
+    total : parseInt(req.session.user.amounts[1])  +  parseInt((shippingTotal / 100)),
     discountedAmount : req.session.user.amounts[0],
     shipping : shippingTotal / 100,
     subtotal : req.session.user.megaprice,
-    tax : 0.02 * req.session.user.megaprice,
+    tax : 0.02 * (parseInt(req.session.user.megaprice) - parseInt(req.session.user.amounts[0]))
   }
   ))
 

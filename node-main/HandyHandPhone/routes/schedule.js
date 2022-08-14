@@ -6,19 +6,20 @@ const { Op } = require("sequelize");
 const flashMessage = require('../helpers/messenger');
 const Transaction = require('../models/Transaction');
 
-router.get('/schedule', async(req, res) => {
+router.get('/schedule/:id', async(req, res) => {
+	const TransactionId = req.params.id;
 	const userTransaction = await Transaction.findAll({where : {userId : req.user.dataValues.id , transactionCategory : "order"}})
 	Schedule.findAll({
 		raw: true
 	})
 		.then((schedule) => {
-			res.render('schedule/schedule', { schedule});
+			res.render('schedule/schedule', { schedule , TransactionId : TransactionId});
 		})
 		.catch(err => console.log(err));
 	// res.render('schedule/schedule');
 });
 
-router.post('/schedule', (req, res) => {
+router.post('/schedule/:id', (req, res) => {
 	let date = req.body.date;
 	let time = req.body.time;
 	let availability = req.body.availability;
@@ -32,7 +33,8 @@ router.post('/schedule', (req, res) => {
 		}).catch(err => console.log(err))
 });
 
-router.get('/schedule/:date', (req, res) => {
+router.get('/schedule/:id/:date', (req, res) => {
+
 	Schedule.findAll({
 		where: {
 			date: {
@@ -50,7 +52,7 @@ router.get('/schedule/:date', (req, res) => {
 	// res.render('schedule/schedule');
 });
 
-router.get('/schedule/:id', (req, res) => {
+router.get('/schedule', (req, res) => {
 	Schedule.findByPk(req.params.id)
 		.then((schedule) => {
 			res.render('schedule/schedule', { schedule });

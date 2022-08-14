@@ -43,7 +43,7 @@ passport.use(new GoogleStrategy({
     User.findOne({where : { email: profile.emails[0].value }})
       .then((data) => {
         if (!data) {
-          // let user = User.create({ name: profile.displayName , email : profile.emails[0].value , password: null, verified: 0, mobile: 0, member: false, admin: false, description: null, profilePicture: "none", websitePoints: 0 });
+          // let user = User.create({ name: profile.displayName , email : profile.emails[0].value , password: null, verified: 0, mobile: 0, member: false, admin: false, description: null, profilePicture: "none", websitePoints: 0 , birthday : null });
           // let token = jwt.sign(profile.emails[0].value, process.env.APP_SECRET);
           // let url = `${process.env.BASE_URL}:${process.env.PORT}/user/verify/${user.id}/${token}`;
           // sendEmail(profile.emails[0].value, url)
@@ -55,7 +55,7 @@ passport.use(new GoogleStrategy({
           //     console.log(err);
           //     done(null, data);
           //   });
-          return done(null, false);
+          // return done(null, false);
         }
         else
         {

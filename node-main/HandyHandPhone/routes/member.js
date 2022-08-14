@@ -6,6 +6,7 @@ const User = require('../models/User');
 const Vouchers = require('../models/Voucher').Vouchers;
 const UserVouchers = require('../models/Voucher').UserVouchers;
 const Transaction = require('../models/Transaction');
+const { STRING } = require('sequelize');
 
 router.get('/memberPage', ensureAuthenticated, async (req, res) => {
     // update users rank or membership tiers
@@ -145,30 +146,34 @@ router.get('/purchaseVoucher/:VoucherId', async (req, res) => {
 });
 router.post('/updateBirthday/:userId', async (req, res) => {
     const userId = req.params.userId;
-
-    const birthday = req.body.birthday;
-    console.log(birthday)
-
-    // finding user
-    const user = await User.findOne({ where: { id: userId } });
-    if (user) {
-        user.birthday = birthday;
-        await user.save();
-        flashMessage(res, "success", "Birthday has successfully been updated");
+    console.log(typeof req.body.birthday)
+    if (typeof req.body.birthday == 'string') {
+        // finding user
+        const user = await User.findOne({ where: { id: userId } });
+        if (user) {
+            user.birthday = req.body.birthday;
+            await user.save();
+            flashMessage(res, "success", "Birthday has successfully been updated");
+        }
+        res.redirect("back");
     }
-    res.redirect("back");
+    else {
+        flashMessage(res, "error", "Please enter a valid birthdate");
+        res.redirect("back");
+    }
+
 });
 
 
 router.get('/redeemBirthdayGift/:id', async (req, res) => {
     const userid = req.params.id;
 
-    const findRedeem = await Transaction.findOne({ where: { userId: userid, transactionCategory: "birthday" } });
+    const findRedeem = await Transaction.findAll({ where: { userId: userid, transactionCategory: "birthday" } });
 
     const user = await User.findByPk(userid);
 
     const d = new Date();
-    console.log(d.getMonth()+1 , user.birthday.split('-')[1])
+    console.log();
     if (!findRedeem) {
         if (parseInt(user.birthday.split('-')[1]) == (d.getMonth()+1)) {
             Transaction.create({ transactionCategory: "birthday", price: 200, completed: true, information: "Birthday Gift Redeemed", userId: userid })
@@ -183,14 +188,12 @@ router.get('/redeemBirthdayGift/:id', async (req, res) => {
             flashMessage(res, "error", "Not your Birthday Month");
             res.redirect("back");
         }
-
-
     }
     else {
         flashMessage(res, "error", "Birthday Gift has been redeemed , wait till next year!");
         res.redirect("back");
     }
-});
+    });
 
 router.get("/editVoucher", async function (req, res) {
     const availableVouchers = await Vouchers.findAll();

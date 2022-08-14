@@ -169,6 +169,9 @@ router.get('/profilePage/:id' ,ensureAuthenticated, async(req,res) => {
     // show transaction history of all users
     const All = await Transaction.findAll({where : {transactionCategory : "order"}});
     const All1 = await Transaction.findAll({where : {transactionCategory : "voucher"}});
+    for(var i = 0; i < All.length ; i++){
+        console.log(All[i].items);
+    }
     res.render('user/profilePage' , {  TicketData : TicketData , TransactionHistory : TransactionHistory , All : All , All1 : All1  });
 });
 
