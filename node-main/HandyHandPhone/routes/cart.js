@@ -94,7 +94,13 @@ router.post('/cart/:id/:action', async (req, res) => {
 // 
 router.get('/testCart', ensureAuthenticated , async function (req, res) {
   // get cookies
-  var discount = 1;
+  const product = await Product.findAll();
+  const cartItems = await CartItem.findAll({
+    where: { userId : req.user.dataValues.id },
+    include: { model: Product }
+  });
+  if (product != null){
+    var discount = 1;
   var deliveryDiscount = 15;
   var savedAddress = undefined;
   if (req.session.user.voucherDiscount != undefined) {
@@ -104,10 +110,6 @@ router.get('/testCart', ensureAuthenticated , async function (req, res) {
     deliveryDiscount = req.session.user.DeliveryDiscount[0];
   }
   const userId = req.user.dataValues.id;
-  const cartItems = await CartItem.findAll({
-    where: { userId },
-    include: { model: Product }
-  });
   const UserCart = await CartItem.findAll({ where: { userId: req.user.dataValues.id } }, { include: Product })
   var megaPrice = 0;
   for (var i = 0; i < UserCart.length; i++) {
@@ -133,6 +135,10 @@ router.get('/testCart', ensureAuthenticated , async function (req, res) {
   }
 
   res.render("cart/testCart", { cartItems: cartItems, megaPrice: megaPrice, tax: tax, deliver: deliveryDiscount, UserVouchers: userVouchers, discount: discount, discountedAmount: discountedAmount, deliverydetails: deliverydetails , savedAddress : savedAddress})
+  }
+  else{
+    res.render("cart/testCart", { cartItems: cartItems, megaPrice: 0, tax: 0, deliver: 0, UserVouchers: 0, discount: 0, discountedAmount: 0, deliverydetails: 0 , savedAddress : 0})
+  }
 });
 // use saved address
 router.get("/useAddress/:id" , async function (req, res) { 
