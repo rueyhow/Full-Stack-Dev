@@ -51,12 +51,12 @@
           <th>Quantity</th>
           <th>Subtotal</th>
         </tr>
-          <button class = "btn btn-warning">Clear Cart</button>
+          <a class = "btn btn-warning" href="/cart/clearCart">Clear Cart</a>
         {{#each cartItems}}
         <tr>
           <td>
             <div class="cart-info">
-              <img src="https://storage.googleapis.com/handyhandphone/{{this.product.productPic}}"" alt="" />
+              <img src="https://storage.googleapis.com/handyhandphone/{{this.product.productPic}}">
               <div>
                 <p>{{this.product.name}}</p>
                 <small>Price : {{this.product.price}}</small>
