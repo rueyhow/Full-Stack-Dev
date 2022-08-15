@@ -168,12 +168,11 @@ router.post('/updateBirthday/:userId', async (req, res) => {
 router.get('/redeemBirthdayGift/:id', async (req, res) => {
     const userid = req.params.id;
 
-    const findRedeem = await Transaction.findAll({ where: { userId: userid, transactionCategory: "birthday" } });
+    const findRedeem = await Transaction.findOne({ where: { userId: userid, transactionCategory: "birthday" } });
 
     const user = await User.findByPk(userid);
 
     const d = new Date();
-    console.log();
     if (!findRedeem) {
         if (parseInt(user.birthday.split('-')[1]) == (d.getMonth()+1)) {
             Transaction.create({ transactionCategory: "birthday", price: 200, completed: true, information: "Birthday Gift Redeemed", userId: userid })

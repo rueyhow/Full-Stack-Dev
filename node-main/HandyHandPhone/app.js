@@ -32,11 +32,9 @@ const app = express();
 *
 * */
 async function getUserCartCount(UserId) {
-    const cart = await CartItem.findOne({ where: { UserId } });
+    const cart = await CartItem.findAndCountAll({ where: { UserId } });
     if (cart){
-        const cartItems = await CartItem.findAll({ where: { id: cart.id } });
-        var count = 0;
-        cartItems.forEach(item => count += item.quantity)
+		var count = cart.count;
     }
     else{
         count = 0
