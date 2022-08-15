@@ -45,7 +45,6 @@ router.delete('/delete/:cartItemId', ensureAuthenticated, async (req, res) => {
 });
 
 
-
 router.post('/cart/:id/create', async (req, res) => {
   // get product id from the url
   const productId = req.params.id;
@@ -92,6 +91,18 @@ router.post('/cart/:id/:action', async (req, res) => {
 
 
 // 
+router.get('/clearCart' , async function(req , res){
+  const Cart = await CartItem.findAll({where  : { userId: req.user.dataValues.id }});
+  if (Cart != undefined){
+      for (var i = 0 ; i < Cart.length ; i++){
+          Cart[i].destroy();
+      }
+  }
+  flashMessage(res , "success" , "Cart has been cleared")
+  res.redirect("back");
+});
+
+
 router.get('/testCart', ensureAuthenticated , async function (req, res) {
   // get cookies
   const product = await Product.findAll();
