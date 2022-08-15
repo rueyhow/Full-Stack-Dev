@@ -38,7 +38,12 @@ function sendEmail(toEmail, url1) {
     });
 }
 
-
+// history page
+router.get('/history' , ensureAuthenticated,async function (req, res){
+    const OrderHistory = await Transaction.findAll({where : {transactionCategory : "order"}});
+    const VoucherHistory = await Transaction.findAll({where : {transactionCategory : "Voucher Purchase"}});
+    res.render("admin/history" , {OrderHistory : OrderHistory, VoucherHistory : VoucherHistory})
+});
 router.get('/AdminPage', async (req, res, next) => {
 
     const sampleData = await User.findAll();

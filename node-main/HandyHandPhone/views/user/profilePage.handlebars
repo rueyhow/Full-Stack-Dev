@@ -8,7 +8,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/profilePage.css">
 </head>
+<style>
 
+</style>
 <body>
     {{!-- profile card / info area --}}
     <section class="section about-section gray-bg" id="about">
@@ -51,18 +53,18 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Admin Portal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <a href="/product/productadmin">Product BackEnd</a> <br>
-        <a href="/member/addvouchers">Voucher BackEnd</a> <br>
-        <a href="/admin/transactionHistory">All Transaction History</a> <br>
-        <a href="">Order Status</a> <br>
-        <a href="">Schedule</a> <br>
-        <a href="">Detail Summary</a> <br>
+        <a href="/product/productadmin" class = "btn btn-primary">Product BackEnd</a> <br> <hr>
+        <a href="/member/addvouchers" class = "btn btn-success">Voucher BackEnd</a> <br> <hr>
+        <a href="/admin/history" class = "btn btn-info">All Transaction History</a> <br> <hr>
+        <a href="/orderstatus/updateorderstatus" class = "btn btn-warning">Order Status</a> <br> <hr>
+        <a href="/schedule/update" class = "btn btn-danger">Schedule</a> <br> <hr>
+        <a href="/deliverydetails/detailsummary" class = "btn btn-secondary">Detail Summary</a> <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -161,6 +163,33 @@
     </form>
 
     {{!-- membership --}}
+<section class="text-white bg-gray-900">
+  <div class="max-w-screen-xl px-4 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-3xl font-extrabold text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-green-300 via-blue-500 to-purple-600">
+        Understand User Flow.
+
+        <span class="sm:block">
+          Increase Conversion.
+        </span>
+      </h1>
+
+      <p class="max-w-xl mx-auto mt-4 sm:leading-relaxed sm:text-xl">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus numquam ea!
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a class="block w-full px-12 py-3 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded sm:w-auto active:text-opacity-75 hover:bg-transparent hover:text-white focus:outline-none focus:ring" href="/get-started">
+          Get Started
+        </a>
+
+        <a class="block w-full px-12 py-3 text-sm font-medium text-white border border-blue-600 rounded sm:w-auto hover:bg-blue-600 active:bg-blue-500 focus:outline-none focus:ring" href="/about">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
     {{!-- datatable portion --}}
 
