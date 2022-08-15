@@ -77,6 +77,15 @@ const getCartLength = function (id){
     })
     return length;
 }
-
-module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart , total , getCartLength};
+const getVoucher = function(percentage){
+    var Percentage = null;
+    if (percentage !=0){
+        Percentage = 100 - (100*percentage)
+        return Percentage;
+    }
+    else{
+        return 0;
+    }
+}
+module.exports = { formatDate, replaceCommas, checkboxCheck, radioCheck  , ifeq, calculate , getProperty , addition , isInCart , total , getCartLength , getVoucher};
 

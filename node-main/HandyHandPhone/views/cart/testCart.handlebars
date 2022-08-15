@@ -85,7 +85,11 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <h3 class="d-flex justify-content-center row">Delivery details Summary</h3>
+            {{#ifeq deliverydetails.length 0}}
+            <h1 style = "margin:auto;" class="p-3">You have no saved addresses</h1>
+            <a href="/deliverydetails/deliverydetails" class = "btn btn-primary mx-auto my-3"  style = "margin: auto;width : 40%;!important">Add Address</a>
+            {{else}}
+            <h3 class="d-flex justify-content-center row">Delivery Details</h3>
             <div class="container mt-5">
               <div class="d-flex justify-content-center row">
                 <div class="col-md-10">
@@ -115,7 +119,7 @@
                                 <div class="inner-circle"></div>
                               </div>
                             </td>
-                            <td>{{this.firstname}}</td>
+                            <td>{{this.firstname}} </td>
                             <td>{{this.lastname}}</td>
                             <td>{{this.address}}</td>
                             <td>{{this.postalcode}}</td>
@@ -128,11 +132,13 @@
                           {{/each}}
                         </tbody>
                       </table>
+                       <a href="/deliverydetails/deliverydetails" class = "btn btn-primary mx-auto my-3"  style = "margin: auto;width : 40%;!important">Add Address</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            {{/ifeq}}
           </div>
         </div>
       </div>

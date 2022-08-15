@@ -259,10 +259,21 @@
                                 View Items
                             </button>
                         </td>
+                        {{#ifeq this.address.address null}}
+                        <td>No Address</td>
+                        {{else}}
                         <td>{{this.address.address}}</td>
-                        <td>{{this.voucher.voucherCode}}</td>
-                        <td><a href="/schedule/schedule/{{this.transactionId}}" class="btn btn-primary">Set Schedule For
-                                Order</a></td>
+                        {{/ifeq}}
+                        {{#ifeq this.voucher null}}
+                        <td>Voucher Not Used</td>
+                        {{else}}
+                        <td>{{ getVoucher this.voucher.percentage }}% off all products</td>
+                        {{/ifeq}}
+                        {{#ifeq this.transactionCategory "Voucher Purchase"}}
+                        <td>False</td>
+                        {{else}}
+                        <td><a href="/orderstatus/orderstatus/{{this.transactionId}}" class="btn btn-primary">View Order Status</a></td>
+                        {{/ifeq}}
                     </tr>
 
 

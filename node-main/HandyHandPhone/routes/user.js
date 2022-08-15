@@ -167,7 +167,7 @@ router.get('/profilePage/:id' ,ensureAuthenticated, async(req,res) => {
     const TicketData = await Ticket.findAll({where:{userId : req.user.dataValues.id}});
     const TransactionHistory = await Transaction.findAll({where : {userId : req.user.dataValues.id}})
     // show transaction history of all users
-    const All = await Transaction.findAll({where : {transactionCategory : "order"}});
+    const All = await Transaction.findAll({where : {userId : req.user.dataValues.id}});
     const All1 = await Transaction.findAll({where : {transactionCategory : "voucher"}});
     for(var i = 0; i < All.length ; i++){
         console.log(All[i].items);

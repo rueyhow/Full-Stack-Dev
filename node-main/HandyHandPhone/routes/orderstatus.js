@@ -1,10 +1,26 @@
 const express = require('express');
+const Transaction = require('../models/Transaction')
+const User = require('../models/User')
 const router = express.Router();
 const Orderstatus = require('../models/Orderstatus')
 
 
-router.get('/orderstatus', (req, res) => {
-	res.render('orderstatus/orderstatus');
+router.get('/orderstatus', async(req, res) => {
+	const orderId = req.session.user.orderId ;
+	const userId = await Transaction.findByPk(orderId);
+	const user = await User.findByPk(userId.userId);
+	const OrderStatus = await OrderStatus.create({
+		date :userId.createdAt, orderstatus : false, ordernumber : orderId,
+
+	})
+	res.render('orderstatus/orderstatus' , {orderId : orderId});
+});
+
+router.get('/orderstatus/:id', async(req, res) => {
+	const orderId = req.params.id;
+	const findOrder = await Orderstatus.findOne({where : {ordernumber : orderId}});
+	console.log(findOrder)
+	res.render('orderstatus/orderstatus' , {orderId : orderId , orderstatus : findOrder});
 });
 
 router.post('/orderstatus', (req, res) => {

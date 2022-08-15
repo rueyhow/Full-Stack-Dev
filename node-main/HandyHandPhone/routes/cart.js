@@ -495,8 +495,8 @@ router.get('/create-payment-intent', ensureAuthenticated, async function (req, r
   req.session.user.address = null;
   req.session.user.megaprice = null;
   req.session.user.amounts = null;
-
-  res.render("cart/success");
+  req.session.user.orderId = Order.transactionId;
+  res.render("schedule/schedule");
 });
 
 router.get('/cancel', async function (req, res) {
